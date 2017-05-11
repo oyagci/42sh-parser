@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   ft_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/27 10:32:48 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/11 17:19:31 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/11 17:30:06 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/11 17:31:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#include <unistd.h>
+#include <libft.h>
 
-extern int	g_errno;
-
-char		*ft_strerror(int err);
-
-#endif
+void			ft_perror(char *s)
+{
+	if (s != NULL)
+		ft_putendl_fd(s, STDERR_FILENO);
+}
