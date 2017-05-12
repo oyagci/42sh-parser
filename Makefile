@@ -1,8 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
+#    Makefile                                           :+:      :+:    :+:    # #                                                     +:+ +:+         +:+      #
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 10:19:19 by oyagci            #+#    #+#              #
@@ -110,9 +109,15 @@ _FILES_			+= linehistory/linehist_get_prevline.c \
 _FILES_			+= lexer/lexer.c \
 				   lexer/lexer_init.c \
 				   lexer/lexer_init_tlst.c \
+				   lexer/lexer_init_slst.c \
 				   lexer/lexer_delete.c \
 				   lexer/lexer_get_next_token.c \
-				   lexer/lexer_delimite_current_token.c
+				   lexer/lexer_delimite_current_token.c \
+				   lexer/lexer_del_token.c \
+				   lexer/lexer_del_symbol.c \
+				   lexer/lexer_symbol_top.c \
+				   lexer/lexer_symbol_push.c \
+				   lexer/lexer_current_add_char.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

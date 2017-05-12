@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_delete.c                                     :+:      :+:    :+:   */
+/*   lexer_init_slst.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 10:26:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 12:33:57 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/12 12:25:28 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/12 12:32:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <stdlib.h>
 
-void			lexer_delete(t_lexer **lexer)
+int				lexer_init_slst(t_lexer *lex)
 {
-	ft_lstdel(&(*lexer)->tlst, lexer_del_token);
-	ft_lstdel(&(*lexer)->slst, lexer_del_symbol);
-	free(*lexer);
-	*lexer = NULL;
+	t_list	*elem;
+
+	if ((elem = ft_lstnew(NULL, 0)) == NULL)
+		return (ERR);
+	if ((elem->content = ft_memalloc(sizeof(enum e_symbol))) == NULL)
+	{
+		free(elem);
+		return (ERR);
+	}
+	lex->slst = elem;
+	*(enum e_symbol *)elem->content = S_END;
+	return (OK);
 }

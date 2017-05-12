@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 09:57:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 11:17:12 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 13:11:33 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ enum					e_token
 	T_END,
 };
 
+enum					e_symbol
+{
+	S_END,
+	S_QUOTE,
+	S_OP
+};
+
 struct					s_lexer
 {
 	char	*input_p;
@@ -57,8 +64,17 @@ struct					s_token
 t_lexer					*lexer(char *input);
 t_lexer					*lexer_init(char *input);
 int						lexer_init_tlst(t_lexer *l);
-void					lexer_delete(t_lexer **lexer);
+int						lexer_init_slst(t_lexer *lex);
 int						lexer_get_next_token(t_lexer *lex);
 int						lexer_delimite_current_token(t_lexer *lex);
+
+enum e_symbol			lexer_symbol_top(t_lexer *lex);
+int						lexer_symbol_push(t_lexer *lex, enum e_symbol sym);
+
+int						lexer_current_add_char(t_lexer *lex);
+
+void					lexer_delete(t_lexer **lexer);
+void					lexer_del_token(void *content, size_t content_size);
+void					lexer_del_symbol(void *content, size_t content_size);
 
 #endif
