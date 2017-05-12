@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 09:57:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 13:57:56 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 16:17:39 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_token	t_token;
 enum					e_token
 {
 	T_TOKEN,
+	T_WORD,
 
 	T_LESS,
 	T_LESSAND,
@@ -44,12 +45,15 @@ enum					e_symbol
 {
 	S_END,
 	S_QUOTE,
-	S_OP
+	S_DQUOTE,
+	S_BSLASH,
+	S_OP,
 };
 
 struct					s_lexer
 {
 	char	*input_p;
+	char	quote;
 	t_list	*tlst;
 	t_list	*slst;
 	t_token	*current;

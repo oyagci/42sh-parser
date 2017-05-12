@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:43:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 14:00:49 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 16:01:00 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				is_last_opchar(t_lexer *lex)
 
 	token_c = lex->current->data[0];
 	input_c = *lex->input_p;
-	if (token_c == '<' && (input_c == '<' || input_c == '>'))
+	if (token_c == '<' && (input_c == '<' || input_c == '&'))
 		return (1);
 	if (token_c == '>' && (input_c == '>' || input_c == '&'))
 		return (1);
@@ -46,6 +46,31 @@ int				is_last_opchar(t_lexer *lex)
 	return (0);
 }
 
+int				lexer_check_top(t_lexer *lex)
+{
+	if (lexer_symbol_top(lex) == S_QUOTE)
+	{
+		if (*lex->input_p == '\'')
+			lexer_symbol_pop(lex);
+		lexer_current_add_char(lex);
+		return (1);
+	}
+	else if (lexer_symbol_top(lex) == S_BSLASH)
+	{
+		lexer_current_add_char(lex);
+		lexer_symbol_pop(lex);
+		return (1);
+	}
+	else if (lexer_symbol_top(lex) == S_DQUOTE)
+	{
+		if (*lex->input_p == '"')
+			lexer_symbol_pop(lex);
+		lexer_current_add_char(lex);
+		return (1);
+	}
+	return (0);
+}
+
 int				lexer_get_next_token(t_lexer *lex)
 {
 	if (*lex->input_p == '\0')
@@ -53,16 +78,28 @@ int				lexer_get_next_token(t_lexer *lex)
 		lexer_delimite_current_token(lex);
 		return (1);
 	}
-	else if (lexer_symbol_top(lex) == S_QUOTE)
+	else if (lexer_check_top(lex))
+		;
+	else if (*lex->input_p == '\\')
 	{
+		lexer_symbol_push(lex, S_BSLASH);
+		lexer_current_add_char(lex);
+	}
+	else if (*lex->input_p == '\'')
+	{
+		lexer_symbol_push(lex, S_QUOTE);
+		lexer_current_add_char(lex);
+	}
+	else if (*lex->input_p == '"')
+	{
+		lexer_symbol_push(lex, S_QUOTE);
+		lexer_current_add_char(lex);
 	}
 	else if (lexer_symbol_top(lex) == S_OP)
 	{
 		if (is_last_opchar(lex))
-		{
 			lexer_current_add_char(lex);
-			lexer_delimite_current_token(lex);
-		}
+		lexer_delimite_current_token(lex);
 		lexer_symbol_pop(lex);
 	}
 	else if (is_opstart(lex))
@@ -71,17 +108,18 @@ int				lexer_get_next_token(t_lexer *lex)
 		lexer_current_add_char(lex);
 		lexer_symbol_push(lex, S_OP);
 	}
-	else if (*lex->input_p == ' ')
+	else if (ft_isspace(*lex->input_p))
 	{
 		lexer_delimite_current_token(lex);
-		while (*lex->input_p && *lex->input_p == ' ')
+		while (ft_isspace(*lex->input_p))
 			lex->input_p += 1;
 	}
-	else
+	else if (*lex->input_p == '\n')
 	{
+		lexer_delimite_current_token(lex);
 		lexer_current_add_char(lex);
 	}
-	/* DEBUGGING */
-	lex->current && lex->current->data ? ft_putendl(lex->current->data) : 0;
+	else
+		lexer_current_add_char(lex);
 	return (OK);
 }

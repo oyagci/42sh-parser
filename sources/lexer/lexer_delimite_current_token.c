@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:58:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 13:59:25 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 16:43:45 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,32 @@ int				is_io_number(t_token *t, char *input)
 				return (0);
 			i += 1;
 		}
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
+/* TODO Error Handling */
 void			lexer_add_current(t_lexer *lex)
 {
 	t_list	*elem;
+	t_list	*tmp;
 
+	tmp = lex->tlst;
 	elem = ft_lstnew(NULL, 0);
-	/* TODO Error Handling */
 	elem->content = lex->current;
-	elem->next = lex->tlst;
-	lex->tlst = elem;
+	if (tmp && ((t_token *)tmp->content)->type != T_END)
+	{
+		while (((t_token *)tmp->next->content)->type != T_END)
+			tmp = tmp->next;
+		elem->next = tmp->next;
+		tmp->next = elem;
+	}
+	else
+	{
+		elem->next = lex->tlst;
+		lex->tlst = elem;
+	}
 }
 
 int				lexer_delimite_current_token(t_lexer *lex)
@@ -65,15 +78,17 @@ int				lexer_delimite_current_token(t_lexer *lex)
 
 	if (lex->current)
 	{
+		ft_putstr(lex->current->data);
+		ft_putendl("$");
 		if (is_io_number(lex->current, lex->input_p))
 			lex->current->type = T_IO_NUMBER;
 		else
 		{
 			type = get_token_type(lex->current);
-			lex->current->type = (type != 0 ? type : T_TOKEN);
+			lex->current->type = (type != 0 ? type : T_WORD);
 		}
 		lexer_add_current(lex);
-		lexer_token_new(lex);
+		lex->current = 0;
 	}
 	return (OK);
 }
