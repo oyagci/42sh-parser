@@ -117,7 +117,9 @@ _FILES_			+= lexer/lexer.c \
 				   lexer/lexer_del_symbol.c \
 				   lexer/lexer_symbol_top.c \
 				   lexer/lexer_symbol_push.c \
-				   lexer/lexer_current_add_char.c
+				   lexer/lexer_current_add_char.c \
+				   lexer/lexer_symbol_pop.c \
+				   lexer/lexer_token_new.c 
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

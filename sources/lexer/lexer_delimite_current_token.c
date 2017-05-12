@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:58:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 12:36:36 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 13:59:25 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,17 @@ int				is_io_number(t_token *t, char *input)
 	return (1);
 }
 
+void			lexer_add_current(t_lexer *lex)
+{
+	t_list	*elem;
+
+	elem = ft_lstnew(NULL, 0);
+	/* TODO Error Handling */
+	elem->content = lex->current;
+	elem->next = lex->tlst;
+	lex->tlst = elem;
+}
+
 int				lexer_delimite_current_token(t_lexer *lex)
 {
 	enum e_token	type;
@@ -61,6 +72,8 @@ int				lexer_delimite_current_token(t_lexer *lex)
 			type = get_token_type(lex->current);
 			lex->current->type = (type != 0 ? type : T_TOKEN);
 		}
+		lexer_add_current(lex);
+		lexer_token_new(lex);
 	}
 	return (OK);
 }

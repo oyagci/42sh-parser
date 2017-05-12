@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:43:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 13:24:04 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 14:00:49 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,40 +35,51 @@ int				is_last_opchar(t_lexer *lex)
 
 	token_c = lex->current->data[0];
 	input_c = *lex->input_p;
-	if (token_c == '<' && input_c == '<')
+	if (token_c == '<' && (input_c == '<' || input_c == '>'))
 		return (1);
-	if (token_c == '<' && input_c == '&')
+	if (token_c == '>' && (input_c == '>' || input_c == '&'))
+		return (1);
+	if (token_c == '|' && input_c == '|')
+		return (1);
+	if (token_c == '&' && input_c == '&')
 		return (1);
 	return (0);
 }
 
 int				lexer_get_next_token(t_lexer *lex)
 {
-	ft_putendl("lexer_get_next_token");
 	if (*lex->input_p == '\0')
 	{
 		lexer_delimite_current_token(lex);
 		return (1);
 	}
-	else if (lexer_symbol_top(lex) != S_QUOTE)
+	else if (lexer_symbol_top(lex) == S_QUOTE)
 	{
-		if (lexer_symbol_top(lex) != S_OP)
+	}
+	else if (lexer_symbol_top(lex) == S_OP)
+	{
+		if (is_last_opchar(lex))
 		{
-			if (is_opstart(lex))
-			{
-				lexer_delimite_current_token(lex);
-				lexer_current_add_char(lex);
-				lexer_symbol_push(lex, S_OP);
-			}
+			lexer_current_add_char(lex);
+			lexer_delimite_current_token(lex);
 		}
-		else
-		{
-			if (is_last_opchar(lex))
-			{
-				lexer_current_add_char(lex);
-				lexer_delimite_current_token(lex);
-			}
-		}
+		lexer_symbol_pop(lex);
+	}
+	else if (is_opstart(lex))
+	{
+		lexer_delimite_current_token(lex);
+		lexer_current_add_char(lex);
+		lexer_symbol_push(lex, S_OP);
+	}
+	else if (*lex->input_p == ' ')
+	{
+		lexer_delimite_current_token(lex);
+		while (*lex->input_p && *lex->input_p == ' ')
+			lex->input_p += 1;
+	}
+	else
+	{
+		lexer_current_add_char(lex);
 	}
 	/* DEBUGGING */
 	lex->current && lex->current->data ? ft_putendl(lex->current->data) : 0;
