@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   states.h                                           :+:      :+:    :+:   */
+/*   errno_str.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/07 10:11:25 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 11:29:48 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/11 17:17:08 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/11 17:18:41 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STATES_H
-# define STATES_H
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
 
-#endif
+int			main(void)
+{
+	for (int i = 1; i <= 31; i++)
+	{
+		printf("%s\n", strerror(i));
+	}
+	return (0);
+}

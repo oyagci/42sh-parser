@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   states.h                                           :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/07 10:11:25 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 11:29:48 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/12 10:06:30 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/12 10:47:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STATES_H
-# define STATES_H
+#include <lexer/lexer.h>
 
-#endif
+t_lexer			*lexer(char *input)
+{
+	t_lexer	*lex;
+	int		ret;
+
+	if ((lex = lexer_init(input)) == (void *)ERR)
+		return ((void *)ERR);
+	while (1)
+	{
+		ret = lexer_get_next_token(lex);
+		if (ret == ERR)
+		{
+			lexer_delete(&lex);
+			return ((void *)ERR);
+		}
+		else if (ret == 1)
+			break ;
+	}
+	return (lex);
+}

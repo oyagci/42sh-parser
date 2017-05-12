@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   states.h                                           :+:      :+:    :+:   */
+/*   lexer_get_next_token.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/07 10:11:25 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 11:29:48 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/12 10:43:59 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/12 11:25:38 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STATES_H
-# define STATES_H
+#include <lexer/lexer.h>
 
-#endif
+int				lexer_get_next_token(t_lexer *lex)
+{
+	if (*lex->input_p == '\0')
+	{
+		lexer_delimite_current_token(lex);
+	}
+	return (1);
+}

@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 10:19:19 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/11 17:00:29 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/12 10:58:19 by oyagci           ###   ########.fr        #
 # **************************************************************************** #
 
 CCRED			= \033[0;31m
@@ -105,7 +105,14 @@ _FILES_			+= linehistory/linehist_get_prevline.c \
 				   linehistory/linehist_copy_line.c \
 				   linehistory/linehist_load_prev.c \
 				   linehistory/linehist_load_next.c \
-				   linehistory/linehist_add.c \
+				   linehistory/linehist_add.c
+
+_FILES_			+= lexer/lexer.c \
+				   lexer/lexer_init.c \
+				   lexer/lexer_init_tlst.c \
+				   lexer/lexer_delete.c \
+				   lexer/lexer_get_next_token.c \
+				   lexer/lexer_delimite_current_token.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
