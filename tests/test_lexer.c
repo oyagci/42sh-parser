@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 10:47:19 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 16:52:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 17:13:25 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,30 @@ START_TEST(lexer_leading_single_tab_one_argument)
 }
 END_TEST
 
-Suite	*test_suite_lexer()
+START_TEST(lexer_leading_multiple_tab_one_argument)
+{
+	t_token tokens[] = {
+		{ T_WORD, "ls" },
+		{ T_END, NULL }
+	};
+
+	test_expected_tokens("\t\t\t\tls", tokens, sizeof(tokens) / sizeof(t_token));
+}
+END_TEST
+
+START_TEST(lexer_multiple_spaces_between_args)
+{
+	t_token tokens[] = {
+		{ T_WORD, "ls" },
+		{ T_WORD, "-la" },
+		{ T_END, NULL }
+	};
+
+	test_expected_tokens("ls \t -la", tokens, sizeof(tokens) / sizeof(t_token));
+}
+END_TEST
+
+Suite	*test_suite_lexer_simple()
 {
 	Suite *s;
 	TCase *tc_core;
@@ -110,21 +133,8 @@ Suite	*test_suite_lexer()
 	tcase_add_test(tc_core, lexer_leading_single_space_one_argument);
 	tcase_add_test(tc_core, lexer_leading_multiple_space_one_argument);
 	tcase_add_test(tc_core, lexer_leading_single_tab_one_argument);
+	tcase_add_test(tc_core, lexer_leading_multiple_tab_one_argument);
+	tcase_add_test(tc_core, lexer_multiple_spaces_between_args);
 	suite_add_tcase(s, tc_core);
 	return (s);
-}
-
-int		main(void)
-{
-	int number_failed;
-	Suite *s;
-	SRunner *sr;
-
-	s = test_suite_lexer();
-	sr = srunner_create(s);
-
-	srunner_run_all(sr, CK_NORMAL);
-	number_failed = srunner_ntests_failed(sr);
-	srunner_free(sr);
-	return ((number_failed == 0) ? EXIT_SUCCESS: EXIT_FAILURE);
 }
