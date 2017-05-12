@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:58:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 16:43:45 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/12 16:45:45 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ int				lexer_delimite_current_token(t_lexer *lex)
 
 	if (lex->current)
 	{
-		ft_putstr(lex->current->data);
-		ft_putendl("$");
 		if (is_io_number(lex->current, lex->input_p))
 			lex->current->type = T_IO_NUMBER;
 		else
