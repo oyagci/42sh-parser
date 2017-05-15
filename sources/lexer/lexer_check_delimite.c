@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_get_next_token.c                             :+:      :+:    :+:   */
+/*   lexer_check_delimite.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 10:43:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 10:55:12 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/15 10:51:31 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/15 10:51:42 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 
-int				lexer_get_next_token(t_lexer *lex)
+int				lexer_check_delimite(t_lexer *lex)
 {
-	if (*lex->input_p == '\0')
+	if (lexer_symbol_top(lex) == S_OP)
 	{
-		if (lexer_symbol_top(lex) != S_END)
-			ft_putendl("Huh... Terminate your quotes dude!");
+		if (is_last_opchar(lex))
+			lexer_current_add_char(lex);
 		lexer_delimite_current_token(lex);
+		lexer_symbol_pop(lex);
 		return (1);
 	}
-	else if (lexer_check_top(lex))
-		;
-	else if (lexer_check_quote(lex))
-		;
-	else if (lexer_check_delimite(lex))
-		;
-	else if (*lex->input_p == '\n')
+	else if (is_opstart(lex))
 	{
 		lexer_delimite_current_token(lex);
 		lexer_current_add_char(lex);
+		lexer_symbol_push(lex, S_OP);
+		return (1);
 	}
-	else
-		lexer_current_add_char(lex);
-	return (OK);
+	else if (ft_isspace(*lex->input_p))
+	{
+		lexer_delimite_current_token(lex);
+		while (ft_isspace(*lex->input_p))
+			lex->input_p += 1;
+		return (1);
+	}
+	return (0);
 }

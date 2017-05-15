@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_current_add_char.c                           :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 12:49:49 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 10:50:34 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/15 11:08:10 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/15 11:13:48 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer/lexer.h>
-#include <stdlib.h>
+#ifndef EXPAND_H
+# define EXPAND_H
 
-int				lexer_current_add_char(t_lexer *lex)
+enum	e_quote
 {
-	char	*tmp;
+	Q_NONE,
+	Q_SINGLE,
+	Q_DOUBLE,
+	Q_BACKSLASH	
+};
 
-	if (!lex->current)
-	{
-		if ((lex->current = ft_memalloc(sizeof(t_token))) == NULL)
-			return (ERR);
-		lex->current->data = ft_strnew(0);
-	}
-	tmp = ft_strcjoin(lex->current->data, *lex->input_p);
-	free(lex->current->data);
-	lex->current->data = tmp;
-	lex->input_p += 1;
-	return (OK);
-}
+#endif

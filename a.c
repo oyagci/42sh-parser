@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_current_add_char.c                           :+:      :+:    :+:   */
+/*   a.c                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 12:49:49 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 10:50:34 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/15 11:14:40 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/15 11:22:19 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer/lexer.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-int				lexer_current_add_char(t_lexer *lex)
+int main()
 {
-	char	*tmp;
+	char c;
+	char *a;
 
-	if (!lex->current)
-	{
-		if ((lex->current = ft_memalloc(sizeof(t_token))) == NULL)
-			return (ERR);
-		lex->current->data = ft_strnew(0);
-	}
-	tmp = ft_strcjoin(lex->current->data, *lex->input_p);
-	free(lex->current->data);
-	lex->current->data = tmp;
-	lex->input_p += 1;
-	return (OK);
+	for (int i = 0; i < 10; i++)
+		a = malloc(sizeof(char));
+	read(0, &c, 1);
 }

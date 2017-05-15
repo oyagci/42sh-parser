@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:58:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 16:45:45 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/15 11:06:08 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int				lexer_delimite_current_token(t_lexer *lex)
 			type = get_token_type(lex->current);
 			lex->current->type = (type != 0 ? type : T_WORD);
 		}
+		lexer_expand_current(lex);
 		lexer_add_current(lex);
 		lex->current = 0;
 	}
