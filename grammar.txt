@@ -1,38 +1,30 @@
 /* 42sh Grammar */
 
-%token	WORD
-%token	NAME
-%token	NEWLINE
-%token	IO_NUMBER
+%token	WORD /* String */
+%token	NAME /* String */
+%token	NEWLINE /* '\n' */
+%token	IO_NUMBER /* Integer */
 
-%token	AND_IF
-%token	OR_IF
-%token	LESS
-%token	GREAT
-%token	DLESS
-%token	DGREAT
-%token	LESSAND
-%token	GREATAND
-%token	PIPE
-%token	RBRACE
-%token	LBRACE
-%token	SEMICOL
+%token	AND_IF /* '&&' */
+%token	OR_IF /* '||' */
+%token	LESS /* '<' */
+%token	GREAT /* '>' */
+%token	DLESS /* '<<' */
+%token	DGREAT /* '>>' */
+%token	LESSAND /* '<&' */
+%token	GREATAND /* '>&' */
+%token	PIPE /* '|' */
+%token	LBRACE /* '(' */
+%token	RBRACE /* ')' */
+%token	SEMICOL /* ';' */
 
-%start program
+%start complete_command
 %%
-program				: linebreak complete_commands linebreak
-					| linebreak
-					;
-
-complete_commands	: complete_commands newline_list complete_command
-					| complete_command
-					;
-
-complete_command	: list separator_op
+complete_command	: list SEMICOL
 					| list
 					;
 
-list				: list separator_op and_or
+list				: list SEMICOL and_or
 					| and_or
 					;
 
@@ -63,7 +55,7 @@ compound_list		: linebreak term
 					| linebreak term separator
 					;
 
-term				: term separator_op and_or
+term				: term SEMICOL and_or
 					| and_or
 					;
 
@@ -116,17 +108,14 @@ io_here				: DLESS here_end
 here_end			: WORD
 					;
 
-newline_list		: NEWLINE
-					| newline_list NEWLINE
+newline_list		: newline_list NEWLINE
+					| NEWLINE
 					;
 
 linebreak			: newline_list
 					|
 					;
 
-separator_op		: SEMICOL
-					;
-
-separator			: separator_op linebreak
+separator			: SEMICOL linebreak
 					| newline_list
 					;

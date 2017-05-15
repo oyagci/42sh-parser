@@ -124,9 +124,18 @@ _FILES_			+= lexer/lexer.c \
 				   lexer/lexer_check_quote.c \
 				   lexer/lexer_check_delimite.c \
 				   lexer/is_last_op_char.c \
-				   lexer/is_opstart.c
+				   lexer/is_opstart.c \
 
-_FILES_			+= parser/ptree_init.c
+_FILES_			+= parser/ptree_init.c \
+				   parser/cmd_name.c \
+				   parser/io_file.c \
+				   parser/filename.c \
+				   parser/io_redirect.c \
+				   parser/io_here.c \
+				   parser/del_node.c \
+				   parser/del_filename.c \
+				   parser/del_io_file.c \
+				   parser/del_io_redirect.c \
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
