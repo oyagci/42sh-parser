@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:58:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 11:06:08 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/15 13:30:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 enum e_token	get_token_type(t_token *t)
 {
 	char *const			ops[] = { "<<", "<&", ">>", ">&", "||", "&&", "<", ">",
-		";", "|" };
+		";", "|", "\n" };
 	const enum e_token	types[] = { T_DLESS, T_LESSAND, T_DGREAT, T_GREATAND,
-		T_OR, T_AND, T_LESS, T_GREAT, T_SEMICOL, T_PIPE };
+		T_OR, T_AND, T_LESS, T_GREAT, T_SEMICOL, T_PIPE, T_NEWLINE };
 	size_t const		sz = sizeof(ops) / sizeof(char *);
 	size_t				i;
 
@@ -85,7 +85,6 @@ int				lexer_delimite_current_token(t_lexer *lex)
 			type = get_token_type(lex->current);
 			lex->current->type = (type != 0 ? type : T_WORD);
 		}
-		lexer_expand_current(lex);
 		lexer_add_current(lex);
 		lex->current = 0;
 	}

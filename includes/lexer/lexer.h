@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 09:57:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 11:06:03 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/15 13:29:16 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ enum					e_token
 	T_SEMICOL,
 	T_IO_NUMBER,
 
+	T_NEWLINE,
 	T_END,
 };
 
@@ -89,8 +90,6 @@ void					lexer_del_symbol(void *content, size_t content_size);
 int						lexer_check_delimite(t_lexer *lex);
 int						lexer_check_quote(t_lexer *lex);
 int						lexer_check_top(t_lexer *lex);
-
-int						lexer_expand_current(t_lexer *lex);
 
 int						is_opstart(t_lexer *lex);
 int						is_last_opchar(t_lexer *lex);

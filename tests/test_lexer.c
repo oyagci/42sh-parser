@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 10:47:19 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 17:13:25 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/15 13:32:20 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void			test_expected_tokens(char *input, t_token *tokens, size_t sz)
 	}
 	lexer_delete(&l);
 }
+
+START_TEST(lexer_newline)
+{
+	t_token tokens[] = { { T_NEWLINE, NULL }, { T_END, NULL } };
+
+	test_expected_tokens("\n", tokens, sizeof(tokens) / sizeof(t_token));
+}
+END_TEST
 
 START_TEST(lexer_empty_string)
 {
@@ -127,6 +135,7 @@ Suite	*test_suite_lexer_simple()
 
 	s = suite_create("Lexer");
 	tc_core = tcase_create("Core");
+	tcase_add_test(tc_core, lexer_newline);
 	tcase_add_test(tc_core, lexer_empty_string);
 	tcase_add_test(tc_core, lexer_single_argument);
 	tcase_add_test(tc_core, lexer_two_argument);

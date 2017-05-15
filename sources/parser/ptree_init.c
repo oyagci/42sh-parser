@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_lexer_simple_input.c                          :+:      :+:    :+:   */
+/*   ptree_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 16:02:03 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/12 16:23:13 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/15 13:14:01 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/15 13:20:22 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer/lexer.h>
-#include <check.h>
+#include <parser/parser.h>
+#include <stdlib.h>
 
-struct s_lexer_test
+t_ptree			*ptree_init(void)
 {
-	t_token	*expected_tokens;
-};
+	t_ptree	*tree;
 
-START_TEST(lexer_empty_input)
-{
+	if ((tree = ft_memalloc(sizeof(t_ptree))))
+	{
+		tree->type = NT_ROOT;
+		if ((tree->content.root = ft_memalloc(sizeof(t_root))) == NULL)
+		{
+			free(tree);
+			return (NULL);
+		}
+	}
+	return (tree);
 }
