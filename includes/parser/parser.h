@@ -6,17 +6,17 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/17 13:17:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/17 17:22:17 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+# include <lexer/lexer.h>
 # include <libft.h>
 
 typedef struct s_root				t_root;
-typedef struct s_scommand			t_scommand;
 typedef struct s_cmd_name			t_cmd_name;
 typedef struct s_io_redirect		t_io_redirect;
 typedef struct s_io_file			t_io_file;
@@ -28,6 +28,7 @@ typedef struct s_complete_command	t_complete_command;
 typedef struct s_nlist				t_nlist;
 typedef struct s_and_or				t_and_or;
 typedef struct s_pipeline			t_pipeline;
+typedef struct s_spcommand			t_spcommand;
 
 struct						s_parser
 {
@@ -46,6 +47,7 @@ enum						e_io_type
 
 enum						e_ntype
 {
+	NT_ROOT,
 	NT_COMPLETE_COMMAND,
 	NT_LIST,
 	NT_AND_OR,
@@ -64,8 +66,7 @@ union						u_node
 	t_and_or			*and_or;
 	t_pipeline			*pipeline;
 
-	t_scommand			*s_command;
-	t_cmd_name			*cmd_name;
+	t_spcommand			*sp_command; t_cmd_name			*cmd_name;
 	t_filename			*filename;
 	t_io_file			*io_file;
 	t_io_redirect		*io_redirect;
@@ -82,11 +83,13 @@ struct						s_root
 	t_list	*nodes;
 };
 
-typedef struct				s_scommand
+struct						s_spcommand
 {
+	t_list	*prefix;
+	t_list	*suffix;
 	t_list	*io;
 	t_list	*av;
-}							t_scommand;
+};
 
 struct						s_cmd_name
 {
@@ -138,7 +141,7 @@ struct						s_and_or
 {
 	enum e_and_or	type;
 	t_pipeline		*pipeline;
-	t_and_or		*and_or;
+	t_list			*and_or;
 };
 
 /*
@@ -147,6 +150,8 @@ struct						s_and_or
 
 t_ptree			*ptree_init(void);
 t_ptree			*ptree_new(enum e_ntype type);
+
+int				parser_expect(t_parser *p, enum e_token type);
 
 t_ptree			*complete_command(t_parser *p);
 t_ptree			*list(t_parser *p);

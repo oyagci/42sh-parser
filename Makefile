@@ -136,6 +136,7 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/del_filename.c \
 				   parser/del_io_file.c \
 				   parser/del_io_redirect.c \
+				   parser/complete_command_del.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

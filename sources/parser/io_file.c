@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:05:07 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 15:40:14 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/17 17:21:26 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,30 @@ enum e_io_type		is_redir_token(enum e_token type)
 
 t_ptree				*io_file(t_parser *p)
 {
-	t_ptree			*node;
-	t_list			*head;
+	t_ptree		*node;
+	t_ptree		*fname;
 	enum e_io_type	type;
 
-	head = p->tlst;
-	node = NULL;
-	if ((node = io_file_new()) &&
-			(type = is_redir_token(((t_token *)head->content)->type)) != IT_NONE)
+	if ((node = ft_memalloc(sizeof(t_ptree))))
 	{
-		p->tlst = p->tlst->next;
-		if (!(node->content.io_file->filename = filename(p)))
+		if ((type = is_redir_token(((t_token *)p->tlst->content)->type)) !=
+				IT_NONE)
+		{
+			p->tlst = p->tlst->next;
+			if ((fname = filename(p)))
+				node->content.io_file->filename = fname;
+			else
+			{
+				del_node(node);
+				return (NULL);
+			}
+			p->tlst = p->tlst->next;
+		}
+		else
+		{
 			del_node(node);
+			return (NULL);
+		}
 	}
 	return (node);
 }
