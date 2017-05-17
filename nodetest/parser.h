@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/17 13:17:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/17 13:33:27 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_ptree				t_ptree;
 typedef struct s_complete_command	t_complete_command;
 typedef struct s_nlist				t_nlist;
 typedef struct s_and_or				t_and_or;
-typedef struct s_pipeline			t_pipeline;
 
 struct						s_parser
 {
@@ -62,8 +61,6 @@ union						u_node
 	t_complete_command	*cpcmd;
 	t_nlist				*list;
 	t_and_or			*and_or;
-	t_pipeline			*pipeline;
-
 	t_scommand			*s_command;
 	t_cmd_name			*cmd_name;
 	t_filename			*filename;
@@ -121,29 +118,6 @@ struct						s_nlist
 	t_ptree	*list;
 	t_ptree	*and_or;
 };
-
-/*
-** and_or
-** content should be put in another file and_or.h
-*/
-
-enum						e_and_or
-{
-	AO_UNDEFINED,
-	AO_IF,
-	AO_AND
-};
-
-struct						s_and_or
-{
-	enum e_and_or	type;
-	t_pipeline		*pipeline;
-	t_and_or		*and_or;
-};
-
-/*
-** and_or END
-*/
 
 t_ptree			*ptree_init(void);
 t_ptree			*ptree_new(enum e_ntype type);
