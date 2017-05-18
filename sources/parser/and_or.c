@@ -6,12 +6,13 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 12:50:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 13:25:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 13:49:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
 t_ptree				*and_or_new(void)
 {
@@ -39,21 +40,31 @@ enum e_and_or		get_and_or_type(t_parser *p)
 	return (AO_UNDEFINED);
 }
 
-int					and_or_add_branch(t_parser *p, t_ptree *node, enum e_and_or typw)
+int					and_or_add_branch(t_parser *p, t_ptree *node, enum e_and_or type)
 {
-	t_list	*elem;
-	t_ptree	*pline;
+	t_list		*elem;
+	t_ptree		*pline;
+	t_ao_branch	*branch;
 
-	if ((pline = pipeline(p)))
+	if ((branch = ft_memalloc(sizeof(t_ao_branch))))
 	{
-		if ((elem = ft_lstnew(NULL, 0)))
+		branch->type = (type == AO_UNDEFINED ? AO_FIRST : type);
+		if ((pline = pipeline(p)))
 		{
-			elem->content = pline;
-			ft_lstpush(&node->content.and_or->branches, elem);
-			return (1);
+			if ((elem = ft_lstnew(NULL, 0)))
+			{
+				elem->content = pline;
+				ft_lstpush(&node->content.and_or->branches, elem);
+				return (1);
+			}
+			else
+			{
+				del_node(pline);
+				free(branch);
+			}
 		}
 		else
-			del_node(pline);
+			free(branch);
 	}
 	return (0);
 }

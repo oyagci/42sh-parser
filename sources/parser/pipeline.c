@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_name.c                                         :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/15 13:43:31 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:28:24 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/18 13:53:10 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/18 14:00:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <lexer/lexer.h>
 
-t_ptree			*cmd_name(t_parser *p)
+t_ptree			*pipeline_new()
 {
-	t_list	*head;
 	t_ptree	*node;
 
-	head = p->tlst;
-	node = NULL;
-	if (((t_token *)head->content)->type == T_WORD)
+	if ((node = ft_memalloc(sizeof(t_ptree))))
 	{
-		if (!(node = ptree_new(NT_CMD_NAME)))
+		node->type = NT_PIPELINE;
+		if ((node->content = ft_memalloc(sizeof(union u_node))))
+		{
+			del_node(node);
 			return (NULL);
-		node->content->cmd_name.data =
-			ft_strdup(((t_token *)head->content)->data);
-		p->tlst = head->next;
+		}
 	}
-	return (node);
+}
+
+t_ptree			*pipeline(t_parser *p)
+{
+	(void)p;
+	return (NULL);
 }

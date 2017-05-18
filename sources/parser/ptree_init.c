@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 13:14:01 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 13:20:22 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 14:26:13 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@ t_ptree			*ptree_init(void)
 {
 	t_ptree	*tree;
 
-	if ((tree = ft_memalloc(sizeof(t_ptree))))
-	{
-		tree->type = NT_ROOT;
-		if ((tree->content.root = ft_memalloc(sizeof(t_root))) == NULL)
-		{
-			free(tree);
-			return (NULL);
-		}
-	}
+	tree = ptree_new(NT_ROOT);
 	return (tree);
 }

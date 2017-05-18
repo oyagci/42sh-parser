@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 13:17:23 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 14:24:09 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_ptree				t_ptree;
 typedef struct s_complete_command	t_complete_command;
 typedef struct s_nlist				t_nlist;
 typedef struct s_and_or				t_and_or;
+typedef struct s_ao_branch			t_ao_branch;
 typedef struct s_pipeline			t_pipeline;
 typedef struct s_spcommand			t_spcommand;
 
@@ -56,26 +57,13 @@ enum						e_ntype
 	NT_IO_REDIRECT,
 	NT_IO_FILE,
 	NT_FILENAME,
-};
-
-union						u_node
-{
-	t_root				*root;
-	t_complete_command	*cpcmd;
-	t_nlist				*list;
-	t_and_or			*and_or;
-	t_pipeline			*pipeline;
-
-	t_spcommand			*sp_command; t_cmd_name			*cmd_name;
-	t_filename			*filename;
-	t_io_file			*io_file;
-	t_io_redirect		*io_redirect;
+	NT_PIPELINE
 };
 
 struct						s_ptree
 {
 	enum e_ntype	type;
-	union u_node	content;
+	union u_node	*content;
 };
 
 struct						s_root
@@ -142,7 +130,7 @@ struct						s_ao_branch
 {
 	enum e_and_or	type;
 	t_ptree			*pipeline;
-}
+};
 
 struct						s_and_or
 {
@@ -152,6 +140,26 @@ struct						s_and_or
 /*
 ** and_or END
 */
+
+struct						s_pipeline
+{
+	t_ptree	*pipe_sequence;
+};
+
+union						u_node
+{
+	t_root				root;
+	t_complete_command	cpcmd;
+	t_nlist				list;
+	t_and_or			and_or;
+	t_pipeline			pipeline;
+
+	t_spcommand			sp_command;
+	t_cmd_name			cmd_name;
+	t_filename			filename;
+	t_io_file			io_file;
+	t_io_redirect		io_redirect;
+};
 
 t_ptree			*ptree_init(void);
 t_ptree			*ptree_new(enum e_ntype type);
