@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/17 17:22:17 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 13:17:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,15 +133,20 @@ struct						s_nlist
 enum						e_and_or
 {
 	AO_UNDEFINED,
-	AO_IF,
+	AO_FIRST,
+	AO_OR,
 	AO_AND
 };
 
-struct						s_and_or
+struct						s_ao_branch
 {
 	enum e_and_or	type;
-	t_pipeline		*pipeline;
-	t_list			*and_or;
+	t_ptree			*pipeline;
+}
+
+struct						s_and_or
+{
+	t_list			*branches;
 };
 
 /*
@@ -156,6 +161,7 @@ int				parser_expect(t_parser *p, enum e_token type);
 t_ptree			*complete_command(t_parser *p);
 t_ptree			*list(t_parser *p);
 t_ptree			*and_or(t_parser *p);
+t_ptree			*pipeline(t_parser *p);
 
 t_ptree			*cmd_name(t_parser *p);
 t_ptree			*filename(t_parser *p);
