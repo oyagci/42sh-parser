@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/18 14:35:20 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/18 15:21:00 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,11 +135,17 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/del_io_file.c \
 				   parser/del_io_redirect.c \
 				   parser/complete_command_del.c \
-				   parser/ptree_new.c
+				   parser/ptree_new.c \
+				   parser/here_end.c \
+				   parser/parser_peek.c
+
+###
 
 _TEST_FILES_	= get_tlst.c
 
-_TEST_FILES_	+= parse_tree/filename/test_filename.c
+_TEST_FILES_	+= parse_tree/here_end/test_here_end.c
+# parse_tree/filename/test_filename.c \
+###
 
 TEST_FILES		= $(addprefix sources/,$(_TEST_FILES_))
 

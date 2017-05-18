@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:24:09 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 15:05:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef struct s_cmd_name			t_cmd_name;
 typedef struct s_io_redirect		t_io_redirect;
 typedef struct s_io_file			t_io_file;
 typedef struct s_filename			t_filename;
+typedef struct s_io_here			t_io_here;
+typedef struct s_here_end			t_here_end;
 
 typedef struct s_parser				t_parser;
 typedef struct s_ptree				t_ptree;
@@ -56,8 +58,10 @@ enum						e_ntype
 	NT_CMD_NAME,
 	NT_IO_REDIRECT,
 	NT_IO_FILE,
+	NT_IO_HERE,
 	NT_FILENAME,
-	NT_PIPELINE
+	NT_PIPELINE,
+	NT_HERE_END
 };
 
 struct						s_ptree
@@ -146,6 +150,16 @@ struct						s_pipeline
 	t_ptree	*pipe_sequence;
 };
 
+struct						s_io_here
+{
+	t_ptree	*here_end;
+};
+
+struct						s_here_end
+{
+	char	*data;
+};
+
 union						u_node
 {
 	t_root				root;
@@ -153,6 +167,8 @@ union						u_node
 	t_nlist				list;
 	t_and_or			and_or;
 	t_pipeline			pipeline;
+	t_io_here			io_here;
+	t_here_end			here_end;
 
 	t_spcommand			sp_command;
 	t_cmd_name			cmd_name;
@@ -165,6 +181,7 @@ t_ptree			*ptree_init(void);
 t_ptree			*ptree_new(enum e_ntype type);
 
 int				parser_expect(t_parser *p, enum e_token type);
+int				parser_peek(t_parser *p, enum e_token type);
 
 t_ptree			*complete_command(t_parser *p);
 t_ptree			*list(t_parser *p);
@@ -175,6 +192,7 @@ t_ptree			*cmd_name(t_parser *p);
 t_ptree			*filename(t_parser *p);
 t_ptree			*io_file(t_parser *p);
 t_ptree			*io_here(t_parser *p);
+t_ptree			*here_end(t_parser *p);
 
 void			del_node(t_ptree *node);
 void			del_root(t_root *root);
