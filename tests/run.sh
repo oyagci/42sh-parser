@@ -1,4 +1,4 @@
 #!/bin/sh
 
 make
-./tests.out
+./tests.out && rm tests.out

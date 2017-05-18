@@ -6,9 +6,11 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/18 09:45:41 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/18 11:22:27 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+DIRPATH				= /Users/oyagci/Projects/42/42sh/
 
 NAME				= tests.out
 CC					= clang
@@ -134,11 +136,17 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/del_io_redirect.c \
 				   parser/complete_command_del.c
 
+_TEST_FILES_	= get_tlst.c
+
+_TEST_FILES_	+= parse_tree/filename/test_filename.c
+
+TEST_FILES		= $(addprefix sources/,$(_TEST_FILES_))
+
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
-SOURCES			+= test_filename.c
+SOURCES			+= $(TEST_FILES)
 
-INCLUDES			= -I ../includes/ -I ../libft/includes -L ../libft -lft
+INCLUDES			= -I $(DIRPATH)/includes/ -I $(DIRPATH)/libft/includes -L $(DIRPATH)/libft -lft -I ./includes
 
 all:
-	$(CC) $(SOURCES) -o $(NAME) -lcheck -ltermcap -I /Users/oyagci/.brew/include -L /Users/oyagci/.brew/lib $(INCLUDES)
+	@$(CC) $(SOURCES) -o $(NAME) -lcheck -ltermcap -I /Users/oyagci/.brew/include -L /Users/oyagci/.brew/lib $(INCLUDES)

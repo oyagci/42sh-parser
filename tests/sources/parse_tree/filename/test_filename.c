@@ -6,29 +6,14 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:13:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/17 17:15:23 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 11:01:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <tests.h>
 #include <parser/parser.h>
 #include <lexer/lexer.h>
 #include <check.h>
-
-t_list		*get_tlst(t_token *tarr, size_t sz)
-{
-	t_list	*lst = NULL;
-	t_list	*elem = NULL;
-	size_t	i = 0;
-
-	while (i < sz)
-	{
-		elem = ft_lstnew(NULL, 0);
-		elem->content = tarr + i;
-		ft_lstpush(&lst, elem);
-		i += 1;
-	}
-	return (lst);
-}
 
 START_TEST(test_filename)
 {
