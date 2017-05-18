@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/17 16:57:08 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/18 09:45:41 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,7 +136,7 @@ _FILES_			+= parser/ptree_init.c \
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
-SOURCES			+= test_cmd_prefix.c
+SOURCES			+= test_filename.c
 
 INCLUDES			= -I ../includes/ -I ../libft/includes -L ../libft -lft
 
