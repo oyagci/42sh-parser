@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/18 11:22:27 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/18 14:35:20 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,7 +134,8 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/del_filename.c \
 				   parser/del_io_file.c \
 				   parser/del_io_redirect.c \
-				   parser/complete_command_del.c
+				   parser/complete_command_del.c \
+				   parser/ptree_new.c
 
 _TEST_FILES_	= get_tlst.c
 
