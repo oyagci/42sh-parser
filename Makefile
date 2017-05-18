@@ -13,9 +13,9 @@ CCYELLOW		= \033[0;33m
 CCEND			= \033[0m
 
 CC				= clang
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror
 
-NAME			= 21sh
+NAME			= 42sh
 
 _BASEFOLDER		= ./
 _SOURCES		= sources/
