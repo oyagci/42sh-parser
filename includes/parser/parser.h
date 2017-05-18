@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 15:05:02 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 16:05:33 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ union						u_node
 
 t_ptree			*ptree_init(void);
 t_ptree			*ptree_new(enum e_ntype type);
+void			ptree_free(t_ptree **tree);
 
 int				parser_expect(t_parser *p, enum e_token type);
 int				parser_peek(t_parser *p, enum e_token type);

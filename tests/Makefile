@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/18 15:21:00 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/18 17:11:58 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,14 +137,19 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/complete_command_del.c \
 				   parser/ptree_new.c \
 				   parser/here_end.c \
-				   parser/parser_peek.c
+				   parser/parser_peek.c \
+				   parser/parser_expect.c \
+				   parser/ptree_free.c
 
 ###
 
-_TEST_FILES_	= get_tlst.c
+_TEST_FILES_	= get_tlst.c main.c
 
-_TEST_FILES_	+= parse_tree/here_end/test_here_end.c
+_TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
+				   parse_tree/filename/test_filename.c \
+				   parse_tree/io_here/test_io_here.c
 # parse_tree/filename/test_filename.c \
+
 ###
 
 TEST_FILES		= $(addprefix sources/,$(_TEST_FILES_))
@@ -156,4 +161,4 @@ SOURCES			+= $(TEST_FILES)
 INCLUDES			= -I $(DIRPATH)/includes/ -I $(DIRPATH)/libft/includes -L $(DIRPATH)/libft -lft -I ./includes
 
 all:
-	@$(CC) $(SOURCES) -o $(NAME) -lcheck -ltermcap -I /Users/oyagci/.brew/include -L /Users/oyagci/.brew/lib $(INCLUDES)
+	@$(CC) $(CFLAGS) $(SOURCES) -o $(NAME) -lcheck -ltermcap -I /Users/oyagci/.brew/include -L /Users/oyagci/.brew/lib $(INCLUDES)

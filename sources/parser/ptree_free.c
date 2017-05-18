@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.h                                            :+:      :+:    :+:   */
+/*   ptree_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 11:15:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 16:27:16 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/18 15:58:52 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/18 16:28:55 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TESTS_H
-# define TESTS_H
+#include <parser/parser.h>
+#include <stdlib.h>
 
-# include <lexer/lexer.h>
-# include <libft.h>
-# include <check.h>
-
-t_list			*get_tlst(t_token *tarr, size_t sz);
-
-/* Test suites */
-Suite	*test_suite_here_end();
-Suite	*test_suite_filename();
-Suite	*test_suite_io_here();
-
-#endif
+void			ptree_free(t_ptree **tree)
+{
+	/* TODO: Free content */
+	free(*tree);
+	*tree = NULL;
+}

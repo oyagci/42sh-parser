@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:13:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:48:39 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/18 15:52:10 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,11 @@ Suite	*test_suite_filename()
 	TCase	*tc;
 
 	s = suite_create("filename");
-	tc = tcase_create("core");
+	tc = tcase_create("parse_tree");
 	tcase_add_test(tc, test_filename);
 	tcase_add_test(tc, test_filename_two);
 	tcase_add_test(tc, test_filename_syntax_error);
 	tcase_add_test(tc, test_filename_tilde_expansion);
 	suite_add_tcase(s, tc);
 	return (s);
-}
-
-int		main(void)
-{
-	Suite	*fname;
-	SRunner	*sr;
-
-	fname = test_suite_filename();
-	sr = srunner_create(fname);
-	srunner_run_all(sr, CK_VERBOSE);
-	srunner_free(sr);
-	return (0);
 }

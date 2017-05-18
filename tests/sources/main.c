@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 11:15:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 16:27:16 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/18 15:33:28 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/18 17:12:34 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TESTS_H
-# define TESTS_H
+#include <tests.h>
+#include <check.h>
 
-# include <lexer/lexer.h>
-# include <libft.h>
-# include <check.h>
+int			do_test(Suite *(*current)())
+{
+	Suite	*suite;
+	SRunner	*sr;
 
-t_list			*get_tlst(t_token *tarr, size_t sz);
+	suite = current();
+	sr = srunner_create(suite);
+	srunner_run_all(sr, CK_VERBOSE);
+	srunner_free(sr);
+	return (0);
+}
 
-/* Test suites */
-Suite	*test_suite_here_end();
-Suite	*test_suite_filename();
-Suite	*test_suite_io_here();
+int			main(void)
+{
+	Suite *(*tests[])() = {
+		test_suite_filename,
+		test_suite_here_end,
+		test_suite_io_here,
+	};
 
-#endif
+	for (int i = 0; i < 3; i++)
+		do_test(tests[i]);
+	return (0);
+}

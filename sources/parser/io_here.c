@@ -5,17 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/15 16:07:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:30:29 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/18 14:53:18 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/18 17:36:52 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <lexer/lexer.h>
 #include <parser/parser.h>
-#include <stdlib.h>
 
 t_ptree			*io_here(t_parser *p)
 {
-	(void)p;
-	ft_putendl("io_here not implemented");
-	abort();
+	t_ptree	*node;
+
+	if ((node = ptree_new(NT_IO_HERE)))
+	{
+		if (!parser_expect(p, T_DLESS) ||
+			!(node->content->io_here.here_end = here_end(p)))
+				ptree_free(&node);
+		else
+			ptree_free(&node);
+	}
+	return (node);
 }
