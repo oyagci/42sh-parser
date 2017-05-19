@@ -68,7 +68,7 @@ cmd_prefix          : io_redirect | ASSIGNEMENT_WORD { io_redirect | ASSIGNEMENT
 cmd_suffix          : io_redirect | WORD { io_redirect | WORD }
                     ;
 
-redirect_list       : io_redirect { io_redirect }
+- redirect_list       : io_redirect { io_redirect }
                     ;
 
 - io_redirect         : [ IO_NUMBER ] io_file | io_here

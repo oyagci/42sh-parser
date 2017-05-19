@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 12:48:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 13:03:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_io_file			t_io_file;
 typedef struct s_io_here			t_io_here;
 typedef struct s_here_end			t_here_end;
 typedef struct s_filename			t_filename;
+typedef struct s_separator_op		t_separator_op;
 
 typedef struct s_complete_command	t_complete_command;
 typedef struct s_nlist				t_nlist;
@@ -54,7 +55,8 @@ enum						e_ntype
 	NT_FILENAME,
 	NT_PIPELINE,
 	NT_HERE_END,
-	NT_REDIRECT_LIST
+	NT_REDIRECT_LIST,
+	NT_SEPARATOR_OP
 };
 
 struct						s_ptree
@@ -64,8 +66,7 @@ struct						s_ptree
 };
 
 struct						s_root
-{
-	t_list	*nodes;
+{ t_list	*nodes;
 };
 
 struct						s_spcommand
@@ -177,6 +178,16 @@ struct						s_redirect_list
 	t_list	*list;
 };
 
+enum						e_separator
+{
+	SP_AND,
+	SP_SEMICOL
+};
+struct						s_separator_op
+{
+	enum e_separator	op;
+};
+
 union						u_node
 {
 	t_root				root;
@@ -187,6 +198,8 @@ union						u_node
 	t_io_here			io_here;
 	t_here_end			here_end;
 	t_redirect_list		redirect_list;
+	t_separator_op		separator_op;
+
 	t_spcommand			sp_command;
 	t_cmd_name			cmd_name;
 	t_filename			filename;
