@@ -1,0 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect_list.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/05/19 12:17:23 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/19 12:26:29 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <lexer/lexer.h>
+#include <parser/parser.h>
+
+int				add_redir(t_ptree *node, t_ptree *redir)
+{
+	t_list	*elem;
+
+	if ((elem = ft_lstnew(NULL, 0)))
+	{
+		elem->content = redir;
+		ft_lstpush(&node->content->redirect_list.list, elem);
+		return (1);
+	}
+	return (0);
+}
+
+t_ptree			*redirect_list(t_parser *p)
+{
+	t_ptree	*redir;
+	t_ptree	*node;
+	t_list	*head;
+
+	if ((node = ptree_new(NT_REDIRECT_LIST)))
+	{
+		head = p->tlst;
+		if ((redir = io_redirect(p)))
+		{
+			add_redir(node, redir);
+			while ((redir = io_redirect(p)))
+				add_redir(node, redir);
+		}
+		else
+			ptree_free(&node);
+	}
+	return (node);
+}

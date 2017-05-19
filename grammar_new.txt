@@ -71,19 +71,19 @@ cmd_suffix          : io_redirect | WORD { io_redirect | WORD }
 redirect_list       : io_redirect { io_redirect }
                     ;
 
-io_redirect         : [ IO_NUMBER ] io_file | io_here
+- io_redirect         : [ IO_NUMBER ] io_file | io_here
                     ;
 
-io_file             : LESS | LESSAND | GREAT | GREATAND | DGREAT | LESSGREAT filename
+- io_file             : LESS | LESSAND | GREAT | GREATAND | DGREAT | LESSGREAT filename
                     ;
 
-filename            : WORD                      /* Apply rule 2 */
+- filename            : WORD                      /* Apply rule 2 */
                     ;
 
-io_here             : DLESS here_end
+- io_here             : DLESS here_end
                     ;
 
-here_end            : WORD                      /* Apply rule 3 */
+- here_end            : WORD                      /* Apply rule 3 */
                     ;
 
 newline_list        : NEWLINE { NEWLINE }
