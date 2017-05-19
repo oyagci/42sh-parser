@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 13:10:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 15:40:07 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 15:54:45 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ t_ptree			*cmd_suffix(t_parser *p)
 	{
 		head = p->tlst;
 		if (add_word(p, node) || add_redirection(p, node))
-		{
 			while (add_word(p, node) || add_redirection(p, node))
 				;
-		}
 		else
 		{
 			p->tlst = head;

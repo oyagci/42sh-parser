@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 09:57:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 13:29:16 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 15:58:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ enum					e_token
 {
 	T_TOKEN,
 	T_WORD,
+	T_ASSIGNEMENT_WORD,
 
 	T_LESS,
 	T_LESSAND,

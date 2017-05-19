@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 14:15:29 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 15:57:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 typedef struct s_parser				t_parser;
 typedef struct s_ptree				t_ptree;
 typedef struct s_root				t_root;
+typedef struct s_cmd_prefix			t_cmd_prefix;
 typedef struct s_cmd_name			t_cmd_name;
+typedef struct s_cmd_suffix			t_cmd_suffix;
 typedef struct s_redirect_list		t_redirect_list;
 typedef struct s_io_redirect		t_io_redirect;
 typedef struct s_io_file			t_io_file;
@@ -27,7 +29,6 @@ typedef struct s_io_here			t_io_here;
 typedef struct s_here_end			t_here_end;
 typedef struct s_filename			t_filename;
 typedef struct s_separator_op		t_separator_op;
-typedef struct s_cmd_suffix			t_cmd_suffix;
 
 typedef struct s_complete_command	t_complete_command;
 typedef struct s_nlist				t_nlist;
@@ -58,6 +59,7 @@ enum						e_ntype
 	NT_HERE_END,
 	NT_REDIRECT_LIST,
 	NT_SEPARATOR_OP,
+	NT_CMD_PREFIX,
 	NT_CMD_SUFFIX
 };
 
@@ -68,7 +70,8 @@ struct						s_ptree
 };
 
 struct						s_root
-{ t_list	*nodes;
+{
+	t_list	*nodes;
 };
 
 struct						s_spcommand
@@ -77,6 +80,12 @@ struct						s_spcommand
 	t_list	*suffix;
 	t_list	*io;
 	t_list	*av;
+};
+
+struct						s_cmd_prefix
+{
+	t_list	*redirections;
+	t_list	*assignements;
 };
 
 struct						s_cmd_name
@@ -243,5 +252,10 @@ void			del_filename(t_filename *fname);
 void			del_io_file(t_io_file*iofile);
 void			del_io_redirect(t_io_redirect *node);
 void			complete_command_del(t_complete_command *cpcmd);
+
+/*
+** cmd_suffix.c
+*/
+int				add_redirection(t_parser *p, t_ptree *node);
 
 #endif
