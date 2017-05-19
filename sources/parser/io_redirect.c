@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:51:34 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 12:16:12 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 15:02:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int				get_io_number(t_parser *p, t_ptree *node)
 		node->content->io_redirect.io_number =
 			ft_atoi(((t_token *)p->tlst->content)->data);
 		node->content->io_redirect.is_default = 0;
+		p->tlst = p->tlst->next;
 	}
 	else
 		node->content->io_redirect.is_default = 1;

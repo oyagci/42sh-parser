@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:02:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:48:13 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 13:09:56 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,13 @@ t_ptree			*filename(t_parser *p)
 			quote_removal(t);
 			if ((node->content->filename.data = ft_strdup(t->data)) == NULL)
 			{
-				del_node(node);
+				ptree_free(&node);
 				return (NULL);
 			}
 			p->tlst = p->tlst->next;
 		}
 		else
-		{
-			/* TODO: Free memory */
-			return (NULL);
-		}
+			ptree_free(&node);
 	}
 	return (node);
 }

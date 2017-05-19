@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 10:06:24 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 11:08:31 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 15:27:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,10 @@ void		check_io_file_type(enum e_io_type iotype, enum e_token ttype)
 	ck_assert(((t_token *)p.tlst->content)->type == T_END);
 }
 
-START_TEST(test_io_file)
-{
-	check_io_file_type(IT_LESS, T_LESS);
-	check_io_file_type(IT_LESSAND, T_LESSAND);
-	check_io_file_type(IT_GREAT, T_GREAT);
-	check_io_file_type(IT_GREATAND, T_GREATAND);
-	check_io_file_type(IT_DGREAT, T_DGREAT);
-}
-END_TEST
-
-START_TEST(test_io_file_syntax)
+void		check_io_file_error(enum e_token ttype)
 {
 	t_token	tarr[] = {
-		{ T_DLESS, ft_strdup("dummy") },
+		{ ttype, ft_strdup("dummy") },
 		{ T_WORD, ft_strdup("file.txt") },
 		{ T_END, NULL },
 	};
@@ -82,28 +72,25 @@ START_TEST(test_io_file_syntax)
 
 	ck_assert(io == NULL);
 	ck_assert(p.tlst != NULL);
-	ck_assert(((t_token *)p.tlst->content)->type == T_DLESS);
+}
+
+START_TEST(test_io_file)
+{
+	check_io_file_type(IT_LESS, T_LESS);
+	check_io_file_type(IT_LESSAND, T_LESSAND);
+	check_io_file_type(IT_GREAT, T_GREAT);
+	check_io_file_type(IT_GREATAND, T_GREATAND);
+	check_io_file_type(IT_DGREAT, T_DGREAT);
 }
 END_TEST
 
-START_TEST(test_io_file_syntax2)
+START_TEST(test_io_file_syntax_error)
 {
-	t_token	tarr[] = {
-		{ T_LESS, ft_strdup("dummy") },
-		{ T_PIPE, ft_strdup("|") },
-		{ T_END, NULL },
-	};
-	t_list	*lst = get_tlst(tarr, 3);
-	t_parser p = {
-		lst,
-		NULL,
-	};
-
-	t_ptree	*io = io_file(&p);
-
-	ck_assert(io == NULL);
-	ck_assert(p.tlst != NULL);
-	ck_assert(((t_token *)p.tlst->content)->type == T_LESS);
+	check_io_file_error(T_PIPE);
+	check_io_file_error(T_DLESS);
+	check_io_file_error(T_OR);
+	check_io_file_error(T_AND);
+	check_io_file_error(T_SEMICOL);
 }
 END_TEST
 
@@ -115,8 +102,7 @@ Suite	*test_suite_io_file()
 	s = suite_create("io_file");
 	tc = tcase_create("parse_tree");
 	tcase_add_test(tc, test_io_file);
-	tcase_add_test(tc, test_io_file_syntax);
-	tcase_add_test(tc, test_io_file_syntax2);
+	tcase_add_test(tc, test_io_file_syntax_error);
 	suite_add_tcase(s, tc);
 	return (s);
 }

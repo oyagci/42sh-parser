@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:13:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 15:52:10 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 15:23:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <lexer/lexer.h>
 #include <check.h>
 
-START_TEST(test_filename)
+START_TEST(test_filename_simple)
 {
 	t_token	tarr[] = {
 		{ T_WORD, ft_strdup("hello") },
-		{ T_END, NULL },
+		{ T_END, NULL }
 	};
 	t_list	*lst = get_tlst(tarr, 2);
 	t_parser p = {
@@ -27,11 +27,33 @@ START_TEST(test_filename)
 		NULL,
 	};
 
-	t_ptree	*fname = filename(&p);
-	ck_assert(fname != NULL);
+	t_ptree	*f = filename(&p);
+	ck_assert(f != NULL);
 
-	ck_assert_str_eq(fname->content->filename.data, "hello");
+	ck_assert_str_eq(f->content->filename.data, "hello");
 	ck_assert(((t_token *)p.tlst->content)->type == T_END);
+}
+END_TEST
+
+START_TEST(test_filename_double)
+{
+	t_token	tarr[] = {
+		{ T_WORD, ft_strdup("hello") },
+		{ T_WORD, ft_strdup("world") },
+		{ T_END, NULL }
+	};
+	t_list	*lst = get_tlst(tarr, 2);
+	t_parser p = {
+		lst,
+		NULL,
+	};
+
+	t_ptree	*f = filename(&p);
+	ck_assert(f != NULL);
+
+	ck_assert_str_eq(f->content->filename.data, "hello");
+	ck_assert(((t_token *)p.tlst->content)->type == T_WORD);
+	ck_assert_str_eq(((t_token *)p.tlst->content)->data, "world");
 }
 END_TEST
 
@@ -53,25 +75,6 @@ START_TEST(test_filename_two)
 
 	ck_assert_str_eq(fname->content->filename.data, "hello");
 	ck_assert(((t_token *)p.tlst->content)->type == T_WORD);
-}
-END_TEST
-
-START_TEST(test_filename_tilde_expansion)
-{
-	t_token	tarr[] = {
-		{ T_WORD, ft_strdup("~") },
-		{ T_END, NULL },
-	};
-	t_list	*lst = get_tlst(tarr, 2);
-	t_parser p = {
-		lst,
-		NULL,
-	};
-
-	t_ptree	*fname = filename(&p);
-	ck_assert(fname != NULL);
-
-	ck_assert_str_eq(fname->content->filename.data, "/Users/oyagci");
 }
 END_TEST
 
@@ -100,10 +103,10 @@ Suite	*test_suite_filename()
 
 	s = suite_create("filename");
 	tc = tcase_create("parse_tree");
-	tcase_add_test(tc, test_filename);
+	tcase_add_test(tc, test_filename_simple);
+	tcase_add_test(tc, test_filename_double);
 	tcase_add_test(tc, test_filename_two);
 	tcase_add_test(tc, test_filename_syntax_error);
-	tcase_add_test(tc, test_filename_tilde_expansion);
 	suite_add_tcase(s, tc);
 	return (s);
 }

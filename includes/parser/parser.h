@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 13:03:54 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 14:15:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_io_here			t_io_here;
 typedef struct s_here_end			t_here_end;
 typedef struct s_filename			t_filename;
 typedef struct s_separator_op		t_separator_op;
+typedef struct s_cmd_suffix			t_cmd_suffix;
 
 typedef struct s_complete_command	t_complete_command;
 typedef struct s_nlist				t_nlist;
@@ -56,7 +57,8 @@ enum						e_ntype
 	NT_PIPELINE,
 	NT_HERE_END,
 	NT_REDIRECT_LIST,
-	NT_SEPARATOR_OP
+	NT_SEPARATOR_OP,
+	NT_CMD_SUFFIX
 };
 
 struct						s_ptree
@@ -163,6 +165,12 @@ struct						s_pipeline
 	t_ptree	*pipe_sequence;
 };
 
+struct						s_cmd_suffix
+{
+	t_list	*redirections;
+	t_list	*words;
+};
+
 struct						s_io_here
 {
 	t_ptree	*here_end;
@@ -199,6 +207,7 @@ union						u_node
 	t_here_end			here_end;
 	t_redirect_list		redirect_list;
 	t_separator_op		separator_op;
+	t_cmd_suffix		cmd_suffix;
 
 	t_spcommand			sp_command;
 	t_cmd_name			cmd_name;
@@ -220,6 +229,7 @@ t_ptree			*and_or(t_parser *p);
 t_ptree			*pipeline(t_parser *p);
 
 t_ptree			*cmd_name(t_parser *p);
+t_ptree			*cmd_suffix(t_parser *p);
 t_ptree			*io_file(t_parser *p);
 t_ptree			*redirect_list(t_parser *p);
 t_ptree			*io_here(t_parser *p);

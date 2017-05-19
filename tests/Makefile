@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/19 12:42:02 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/19 14:39:10 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,7 +140,8 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/parser_peek.c \
 				   parser/parser_expect.c \
 				   parser/ptree_free.c \
-				   parser/redirect_list.c
+				   parser/redirect_list.c \
+				   parser/cmd_suffix.c
 
 ###
 
@@ -150,7 +151,9 @@ _TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
 				   parse_tree/filename/test_filename.c \
 				   parse_tree/io_here/test_io_here.c \
 				   parse_tree/io_file/test_io_file.c \
-				   parse_tree/redirect_list/test_redirect_list.c
+				   parse_tree/redirect_list/test_redirect_list.c \
+				   parse_tree/cmd_suffix/test_cmd_suffix.c \
+				   parse_tree/io_redirect/test_io_redirect.c
 
 ###
 
