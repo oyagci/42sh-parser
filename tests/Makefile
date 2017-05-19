@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/18 17:11:58 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/19 10:19:06 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -147,8 +147,8 @@ _TEST_FILES_	= get_tlst.c main.c
 
 _TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
 				   parse_tree/filename/test_filename.c \
-				   parse_tree/io_here/test_io_here.c
-# parse_tree/filename/test_filename.c \
+				   parse_tree/io_here/test_io_here.c \
+				   parse_tree/io_file/test_io_file.c
 
 ###
 

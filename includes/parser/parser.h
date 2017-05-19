@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 16:05:33 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 11:02:04 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,6 @@ struct						s_parser
 {
 	t_list		*tlst;
 	t_ptree		*ptree;
-};
-
-enum						e_io_type
-{
-	IT_NONE,
-	IT_LESS,
-	IT_GREAT,
-	IT_GREATAND,
-	IT_LESSAND
 };
 
 enum						e_ntype
@@ -100,11 +91,29 @@ struct						s_io_redirect
 	t_ptree		*io_here;
 };
 
+/*
+** TODO: Put in another file
+*/
+
+enum						e_io_type
+{
+	IT_NONE,
+	IT_LESS,
+	IT_GREAT,
+	IT_GREATAND,
+	IT_LESSAND,
+	IT_DGREAT
+};
+
 struct						s_io_file
 {
 	enum e_io_type	type;
 	t_ptree			*filename;
 };
+
+/*
+** ====
+*/
 
 struct						s_complete_command
 {

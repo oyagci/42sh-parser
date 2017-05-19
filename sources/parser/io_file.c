@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:05:07 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:30:19 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 11:12:33 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ enum e_io_type		is_redir_token(enum e_token type)
 		return (IT_GREATAND);
 	else if (type == T_LESSAND)
 		return (IT_LESSAND);
+	else if (type == T_DGREAT)
+		return (IT_DGREAT);
 	return (IT_NONE);
 }
 
 t_ptree				*io_file(t_parser *p)
 {
-	t_ptree		*node;
-	t_ptree		*fname;
+	t_ptree			*node;
+	t_list			*head;
 	enum e_io_type	type;
 
 	if ((node = ptree_new(NT_IO_FILE)))
@@ -38,21 +40,18 @@ t_ptree				*io_file(t_parser *p)
 		if ((type = is_redir_token(((t_token *)p->tlst->content)->type)) !=
 				IT_NONE)
 		{
+			head = p->tlst;
 			p->tlst = p->tlst->next;
-			if ((fname = filename(p)))
-				node->content->io_file.filename = fname;
-			else
+			node->content->io_file.type = type;
+			if (!(node->content->io_file.filename = filename(p)))
 			{
-				del_node(node);
+				ptree_free(&node);
+				p->tlst = head;
 				return (NULL);
 			}
-			p->tlst = p->tlst->next;
 		}
 		else
-		{
-			del_node(node);
-			return (NULL);
-		}
+			ptree_free(&node);
 	}
 	return (node);
 }
