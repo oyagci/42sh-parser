@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 15:57:35 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 16:34:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ enum						e_ntype
 	NT_REDIRECT_LIST,
 	NT_SEPARATOR_OP,
 	NT_CMD_PREFIX,
-	NT_CMD_SUFFIX
+	NT_CMD_SUFFIX,
+	NT_CMD_WORD
 };
 
 struct						s_ptree
@@ -76,10 +77,14 @@ struct						s_root
 
 struct						s_spcommand
 {
-	t_list	*prefix;
-	t_list	*suffix;
-	t_list	*io;
-	t_list	*av;
+	t_ptree	*prefix;
+	t_ptree	*suffix;
+	t_ptree	*name;
+	t_ptree	*word;
+
+	t_list	*names;
+	t_list	*words;
+	t_list	*suffixes;
 };
 
 struct						s_cmd_prefix
@@ -217,6 +222,8 @@ union						u_node
 	t_redirect_list		redirect_list;
 	t_separator_op		separator_op;
 	t_cmd_suffix		cmd_suffix;
+	t_cmd_word			cmd_word;
+	t_cmd_prefix		cmd_prefix;
 
 	t_spcommand			sp_command;
 	t_cmd_name			cmd_name;
@@ -238,6 +245,8 @@ t_ptree			*and_or(t_parser *p);
 t_ptree			*pipeline(t_parser *p);
 
 t_ptree			*cmd_name(t_parser *p);
+t_ptree			*cmd_word(t_parser *p);
+t_ptree			*cmd_prefix(t_parser *p);
 t_ptree			*cmd_suffix(t_parser *p);
 t_ptree			*io_file(t_parser *p);
 t_ptree			*redirect_list(t_parser *p);

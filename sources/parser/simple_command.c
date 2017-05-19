@@ -6,58 +6,48 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 15:51:26 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/17 16:11:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/19 16:36:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
 
-t_ptree			*simple_command_new(void)
+int				add_name(t_parser *p, t_ptree *current)
 {
 	t_ptree	*node;
-
-	if ((node = ft_memalloc(sizeof(t_ptree))))
-	{
-		node->type = NT_SIMPLE_COMMAND;
-		if (!(node->content.sp_command = ft_memalloc(sizeof(t_spcommand))))
-		{
-			del_node(node);
-			return (NULL);
-		}
-	}
-	return (node);
-}
-
-int				simple_command_add_cmdprefix(t_parser *p, t_ptree *node)
-{
 	t_list	*elem;
-	t_ptree	*cmdprefix;
 
-	if ((cmdprefix = cmd_prefix(p)))
+	if ((node = cmd_name(p)))
 	{
-		elem = ft_lstnew(NULL, 0);
-		elem->content = cmdprefix;
-		ft_lstpush(&node->content.sp_command->prefix, elem);
+		if ((elem = ft_lstnew(NULL, 0)))
+		{
+			elem->content = node;
+			ft_lstpush(&current->content->sp_command.names, elem);
+			return (1);
+		}
+		else
+			ptree_free(&node);
 	}
-	return (1);
-}
-
-int				simple_command_add_cmdsuffix(t_parser *p, t_ptree *node)
-{
-	(void)p; (void)node;
 	return (0);
 }
 
-int				simple_command_add_cmdword(t_parser *p, t_ptree *node)
+int				add_word(t_parser *p, t_ptree *current)
 {
-	(void)p; (void)node;
-	return (0);
-}
+	t_ptree	*node;
+	t_list	*elem;
 
-int				simple_command_add_cmdname(t_parser *p, t_ptree *node)
-{
-	(void)p; (void)node;
+	if ((node = cmd_word(p)))
+	{
+		if ((elem = ft_lstnew(NULL, 0)))
+		{
+			elem->content = node;
+			ft_lstpush(&current->content->sp_command.words, elem);
+			return (1);
+		}
+		else
+			ptree_free(&node);
+	}
 	return (0);
 }
 
@@ -65,25 +55,15 @@ t_ptree			*simple_command(t_parser *p)
 {
 	t_ptree	*node;
 
-	if ((node = simple_command_new()))
+	if ((node = ptree_new(NT_SIMPLE_COMMAND)))
 	{
-		if (simple_command_add_cmdprefix(p, node))
-		{
-			while (simple_command_add_cmdword(p, node))
+		if (!(node->content->sp_command.prefix = cmd_prefix(p)))
+			while (add_name(p, node))
 				;
-			while (simple_command_add_cmdsuffix(p, node))
+		else /* Mark: TODO */
+			while (add_word(p, node))
 				;
-		}
-		else if (simple_command_add_cmdname(p, node))
-		{
-			while (simple_command_add_cmdsuffix(p, node))
-				;
-		}
-		else
-		{
-			del_node(node);
-			return (NULL);
-		}
+		node->content->sp_command.suffix = cmd_suffix(p);
 	}
 	return (node);
 }
