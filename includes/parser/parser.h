@@ -81,7 +81,7 @@ struct						s_spcommand
 	t_ptree	*prefix;
 	t_ptree	*suffix;
 	t_ptree	*name;
-	t_list	*words;
+	t_ptree	*word;
 };
 
 struct						s_cmd_prefix
@@ -93,6 +93,17 @@ struct						s_cmd_prefix
 struct						s_cmd_name
 {
 	char	*data;
+};
+
+struct						s_cmd_word
+{
+	char	*data;
+};
+
+struct						s_cmd_suffix
+{
+	t_list	*redirections;
+	t_list	*words;
 };
 
 struct						s_filename
@@ -176,12 +187,6 @@ struct						s_pipeline
 	t_ptree	*pipe_sequence;
 };
 
-struct						s_cmd_suffix
-{
-	t_list	*redirections;
-	t_list	*words;
-};
-
 struct						s_io_here
 {
 	t_ptree	*here_end;
@@ -202,14 +207,10 @@ enum						e_separator
 	SP_AND,
 	SP_SEMICOL
 };
+
 struct						s_separator_op
 {
 	enum e_separator	op;
-};
-
-struct						s_cmd_word
-{
-	char	*data;
 };
 
 union						u_node
@@ -269,5 +270,7 @@ void			complete_command_del(t_complete_command *cpcmd);
 ** cmd_suffix.c
 */
 int				add_redirection(t_parser *p, t_ptree *node);
+
+void			print_simple_command(t_ptree *node, int indent);
 
 #endif

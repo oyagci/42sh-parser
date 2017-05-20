@@ -29,7 +29,8 @@ int				process_line(char *input)
 		return (ERR);
 	p = ft_memalloc(sizeof(t_parser));
 	p->tlst = lex->tlst;
-	p->ptree = simple_command(p);
+	if ((p->ptree = simple_command(p)))
+		print_simple_command(p->ptree, 0);
 	lexer_delete(&lex);
 	return (OK);
 }

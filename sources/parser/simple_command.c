@@ -13,25 +13,6 @@
 #include <lexer/lexer.h>
 #include <parser/parser.h>
 
-int				add_word(t_parser *p, t_ptree *current)
-{
-	t_ptree	*node;
-	t_list	*elem;
-
-	if ((node = cmd_word(p)))
-	{
-		if ((elem = ft_lstnew(NULL, 0)))
-		{
-			elem->content = node;
-			ft_lstpush(&current->content->sp_command.words, elem);
-			return (1);
-		}
-		else
-			ptree_free(&node);
-	}
-	return (0);
-}
-
 t_ptree			*simple_command(t_parser *p)
 {
 	t_ptree	*node;
@@ -39,13 +20,10 @@ t_ptree			*simple_command(t_parser *p)
 	if ((node = ptree_new(NT_SIMPLE_COMMAND)))
 	{
 		if (!(node->content->sp_command.prefix = cmd_prefix(p)))
-		{
 			node->content->sp_command.name = cmd_name(p);
-			node->content->sp_command.suffix = cmd_suffix(p);
-		}
-		else
-			while (add_word(p, node))
-				;
+		else if (!(node->content->sp_command.word = cmd_word(p)))
+			ptree_free(&node);
+		node->content->sp_command.suffix = cmd_suffix(p);
 	}
 	return (node);
 }

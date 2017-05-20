@@ -1,8 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    # #                                                     +:+ +:+         +:+      #
-#    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
+#    Makefile                                           :+:      :+:    :+:    # #                                                     +:+ +:+         +:+      # #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 10:19:19 by oyagci            #+#    #+#              #
 #    Updated: 2017/05/12 10:58:19 by oyagci           ###   ########.fr        #
@@ -146,6 +145,7 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/del_filename.c \
 				   parser/del_io_file.c \
 				   parser/del_io_redirect.c \
+				   parser/print/ptree_print.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
