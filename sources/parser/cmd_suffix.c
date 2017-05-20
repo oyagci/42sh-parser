@@ -14,7 +14,7 @@
 #include <lexer/lexer.h>
 #include <stdlib.h>
 
-int				add_word(t_parser *p, t_ptree *node)
+int				suffix_add_word(t_parser *p, t_ptree *node)
 {
 	t_list	*elem;
 
@@ -67,8 +67,8 @@ t_ptree			*cmd_suffix(t_parser *p)
 	if ((node = ptree_new(NT_CMD_SUFFIX)))
 	{
 		head = p->tlst;
-		if (add_word(p, node) || add_redirection(p, node))
-			while (add_word(p, node) || add_redirection(p, node))
+		if (suffix_add_word(p, node) || add_redirection(p, node))
+			while (suffix_add_word(p, node) || add_redirection(p, node))
 				;
 		else
 		{

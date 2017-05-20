@@ -21,6 +21,7 @@ typedef struct s_ptree				t_ptree;
 typedef struct s_root				t_root;
 typedef struct s_cmd_prefix			t_cmd_prefix;
 typedef struct s_cmd_name			t_cmd_name;
+typedef struct s_cmd_word			t_cmd_word;
 typedef struct s_cmd_suffix			t_cmd_suffix;
 typedef struct s_redirect_list		t_redirect_list;
 typedef struct s_io_redirect		t_io_redirect;
@@ -80,11 +81,7 @@ struct						s_spcommand
 	t_ptree	*prefix;
 	t_ptree	*suffix;
 	t_ptree	*name;
-	t_ptree	*word;
-
-	t_list	*names;
 	t_list	*words;
-	t_list	*suffixes;
 };
 
 struct						s_cmd_prefix
@@ -210,6 +207,11 @@ struct						s_separator_op
 	enum e_separator	op;
 };
 
+struct						s_cmd_word
+{
+	char	*data;
+};
+
 union						u_node
 {
 	t_root				root;
@@ -243,6 +245,7 @@ t_ptree			*complete_command(t_parser *p);
 t_ptree			*list(t_parser *p);
 t_ptree			*and_or(t_parser *p);
 t_ptree			*pipeline(t_parser *p);
+t_ptree			*simple_command(t_parser *p);
 
 t_ptree			*cmd_name(t_parser *p);
 t_ptree			*cmd_word(t_parser *p);

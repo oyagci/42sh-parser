@@ -18,13 +18,18 @@
 #include <termcap.h>
 #include <signal.h>
 #include <libft.h>
+#include <parser/parser.h>
 
 int				process_line(char *input)
 {
 	t_lexer	*lex;
+	t_parser *p;
 
 	if ((lex = lexer(input)) == (void *)ERR)
 		return (ERR);
+	p = ft_memalloc(sizeof(t_parser));
+	p->tlst = lex->tlst;
+	p->ptree = simple_command(p);
 	lexer_delete(&lex);
 	return (OK);
 }

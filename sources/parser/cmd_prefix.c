@@ -33,6 +33,32 @@ int				add_assignement(t_parser *p, t_ptree *node)
 	return (0);
 }
 
+int				prefix_add_redirection(t_parser *p, t_ptree *node)
+{
+	t_list	*elem;
+	t_list	*head;
+	t_ptree	*redir_node;
+
+	head = p->tlst;
+	if ((redir_node = io_redirect(p)))
+	{
+		if ((elem = ft_lstnew(NULL, 0)))
+		{
+			elem->content = redir_node;
+			ft_lstpush(&node->content->cmd_prefix.redirections, elem);
+			return (1);
+		}
+		else
+		{
+			ptree_free(&redir_node);
+			p->tlst = head;
+		}
+	}
+	else
+		ptree_free(&redir_node);
+	return (0);
+}
+
 t_ptree			*cmd_prefix(t_parser *p)
 {
 	t_ptree	*node;
@@ -41,8 +67,8 @@ t_ptree			*cmd_prefix(t_parser *p)
 	if ((node = ptree_new(NT_CMD_PREFIX)))
 	{
 		head = p->tlst;
-		if (add_assignement(p, node) || add_redirection(p, node))
-			while (add_assignement(p, node) || add_redirection(p, node))
+		if (add_assignement(p, node) || prefix_add_redirection(p, node))
+			while (add_assignement(p, node) || prefix_add_redirection(p, node))
 				;
 		else
 		{

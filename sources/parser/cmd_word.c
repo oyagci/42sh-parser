@@ -22,7 +22,10 @@ t_ptree			*cmd_word(t_parser *p)
 		if (((t_token *)p->tlst->content)->type == T_WORD)
 		{
 			if ((node->content->cmd_word.data =
-						ft_strdup(((t_token *)p->tlst->content)->data)));
+						ft_strdup(((t_token *)p->tlst->content)->data)))
+				p->tlst = p->tlst->next;
+			else
+				ptree_free(&node);
 		}
 		else
 			ptree_free(&node);
