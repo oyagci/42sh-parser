@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:12:51 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 16:21:07 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 14:16:37 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,39 +42,54 @@ int				prefix_add_redirection(t_parser *p, t_ptree *node)
 	head = p->tlst;
 	if ((redir_node = io_redirect(p)))
 	{
+		if (redir_node == (void *)ERR_SYNTAX)
+			return (ERR_SYNTAX);
 		if ((elem = ft_lstnew(NULL, 0)))
 		{
 			elem->content = redir_node;
 			ft_lstpush(&node->content->cmd_prefix.redirections, elem);
 			return (1);
 		}
-		else
-		{
-			ptree_free(&redir_node);
-			p->tlst = head;
-		}
+		ptree_free(&redir_node);
+		p->tlst = head;
 	}
 	else
 		ptree_free(&redir_node);
 	return (0);
 }
 
+int				prefix_add(t_parser *p, t_ptree *node)
+{
+	int		ret;
+
+	if ((ret = prefix_add_redirection(p, node)) == 0)
+		return (add_assignement(p, node));
+	return (ret);
+}
+
 t_ptree			*cmd_prefix(t_parser *p)
 {
-	t_ptree	*node;
-	t_list	*head;
+	t_ptree			*node;
+	t_list			*head;
+	unsigned int	ret;
 
+	ret = 0;
 	if ((node = ptree_new(NT_CMD_PREFIX)))
 	{
 		head = p->tlst;
-		if (add_assignement(p, node) || prefix_add_redirection(p, node))
-			while (add_assignement(p, node) || prefix_add_redirection(p, node))
+		if ((ret = prefix_add(p, node)) == 1)
+			while ((ret = prefix_add(p, node)) == 1)
 				;
 		else
 		{
 			p->tlst = head;
 			ptree_free(&node);
 		}
+	}
+	if (ret == ERR_SYNTAX)
+	{
+		ptree_free(&node);
+		return ((void *)ERR_SYNTAX);
 	}
 	return (node);
 }
