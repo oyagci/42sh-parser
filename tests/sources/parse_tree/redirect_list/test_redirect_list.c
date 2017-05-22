@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 12:33:13 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 12:55:19 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 13:23:10 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,24 @@ START_TEST(test_redirect_list_syntax)
 }
 END_TEST
 
+START_TEST(test_redirect_list_syntax_incomplete)
+{
+
+	t_token	tarr[] = {
+		{ T_LESS, ft_strdup("<") },
+		{ T_END, NULL },
+	};
+	t_list	*lst = get_tlst(tarr, 2);
+	t_parser p = {
+		lst,
+		NULL,
+	};
+
+	t_ptree	*redirect = redirect_list(&p);
+	ck_assert(redirect == (void *)ERR_SYNTAX);
+}
+END_TEST
+
 Suite	*test_suite_redirect_list()
 {
 	Suite	*s;
@@ -85,6 +103,7 @@ Suite	*test_suite_redirect_list()
 	tc = tcase_create("parse_tree");
 	tcase_add_test(tc, test_redirect_list);
 	tcase_add_test(tc, test_redirect_list_syntax);
+	tcase_add_test(tc, test_redirect_list_syntax_incomplete);
 	suite_add_tcase(s, tc);
 	return (s);
 }

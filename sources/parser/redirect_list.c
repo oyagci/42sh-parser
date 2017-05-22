@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 12:17:23 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 12:26:29 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 13:21:46 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ t_ptree			*redirect_list(t_parser *p)
 	t_ptree	*node;
 	t_list	*head;
 
+	redir = NULL;
 	if ((node = ptree_new(NT_REDIRECT_LIST)))
 	{
 		head = p->tlst;
-		if ((redir = io_redirect(p)))
+		if ((redir = io_redirect(p)) && redir != (void *)ERR_SYNTAX)
 		{
 			add_redir(node, redir);
 			while ((redir = io_redirect(p)))
@@ -44,5 +45,5 @@ t_ptree			*redirect_list(t_parser *p)
 		else
 			ptree_free(&node);
 	}
-	return (node);
+	return (redir == (void *)ERR_SYNTAX ? (void *)ERR_SYNTAX : node);
 }
