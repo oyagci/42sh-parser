@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_prefix_free.c                                  :+:      :+:    :+:   */
+/*   cmd_suffix_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/22 16:21:55 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 17:01:27 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/22 17:05:15 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/22 17:26:42 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <stdlib.h>
 
-void			cmd_prefix_free_redirections(t_list *redirections)
+void			cmd_suffix_free_words(t_list *lst)
+{
+	t_list	*next;
+
+	while (lst)
+	{
+		next = lst->next;
+		free(lst->content);
+		free(lst);
+		lst = next;
+	}
+}
+
+void			cmd_suffix_free_redirections(t_list *redirections)
 {
 	t_ptree			*ptree;
 	t_list			*next;
@@ -30,21 +43,8 @@ void			cmd_prefix_free_redirections(t_list *redirections)
 	}
 }
 
-void			cmd_prefix_free_assignements(t_list *assign)
+void			cmd_suffix_free(t_cmd_suffix *suffix)
 {
-	t_list			*next;
-
-	while (assign)
-	{
-		next = assign->next; 
-		free(assign->content);
-		free(assign);
-		assign = next;
-	}
-}
-
-void			cmd_prefix_free(t_cmd_prefix *prefix)
-{
-	cmd_prefix_free_redirections(prefix->redirections);
-	cmd_prefix_free_assignements(prefix->assignements);
+	cmd_suffix_free_words(suffix->words);
+	cmd_suffix_free_redirections(suffix->redirections);
 }

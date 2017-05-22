@@ -91,7 +91,8 @@ void	print_io_redirect(t_ptree *node, int indent)
 
 void	print_prefix(t_ptree *node, int indent)
 {
-	t_cmd_prefix *prefix;
+	t_cmd_prefix	*prefix;
+	t_list			*head;
 
 	if (!node)
 		return ;
@@ -104,21 +105,26 @@ void	print_prefix(t_ptree *node, int indent)
 	putendl_indent("[cmd_prefix]", indent);
 	indent += 4;
 	prefix = &node->content->cmd_prefix;
+	head = prefix->redirections;
 	while (prefix->redirections)
 	{
 		print_io_redirect(((t_ptree *)prefix->redirections->content), indent);
 		prefix->redirections = prefix->redirections->next;
 	}
+	prefix->redirections = head;
+	head = prefix->assignements;
 	while (prefix->assignements)
 	{	
 		putendl_indent((char *)prefix->assignements->content, indent);
 		prefix->assignements = prefix->assignements->next;
 	}
+	prefix->assignements = head;
 }
 
 void	print_suffix(t_ptree *node, int indent)
 {
 	t_cmd_suffix	*suffix;
+	t_list			*head;
 
 	if (!node)
 		return ;
@@ -130,17 +136,21 @@ void	print_suffix(t_ptree *node, int indent)
 	putendl_indent("[cmd_suffix]", indent);
 
 	suffix = &node->content->cmd_suffix;
+	head = suffix->words;
 	while (suffix->words)
 	{
 		putendl_indent(suffix->words->content, indent + 2);
 		suffix->words = suffix->words->next;
 	}
+	suffix->words = head;
 	indent += 4;
+	head = suffix->redirections;
 	while (suffix->redirections)
 	{
 		print_io_redirect(suffix->redirections->content, indent);
 		suffix->redirections = suffix->redirections->next;
 	}
+	suffix->redirections = head;
 }
 
 void	print_cmd_name(t_ptree *node, int indent)

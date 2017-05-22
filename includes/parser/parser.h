@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 16:23:36 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 17:07:49 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,7 @@ void			io_file_free(t_io_file *f);
 void			io_redirect_free(t_io_redirect *redirect);
 void			redirect_list_free(t_redirect_list *redirect);
 void			cmd_prefix_free(t_cmd_prefix *prefix);
+void			cmd_suffix_free(t_cmd_suffix *suffix);
 
 /*
 ** cmd_suffix.c

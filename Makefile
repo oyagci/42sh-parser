@@ -1,10 +1,13 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    # #                                                     +:+ +:+         +:+      # #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/03/13 10:19:19 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/12 10:58:19 by oyagci           ###   ########.fr        #
+#    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
+#    Updated: 2017/05/22 17:24:23 by oyagci           ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
 CCRED			= \033[0;31m
@@ -150,7 +153,8 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/filename_free.c \
 				   parser/cmd_name_free.c \
 				   parser/cmd_word_free.c \
-				   parser/cmd_prefix_free.c
+				   parser/cmd_prefix_free.c \
+				   parser/cmd_suffix_free.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

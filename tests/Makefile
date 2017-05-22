@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/22 14:01:27 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/22 17:25:12 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,23 +126,32 @@ _FILES_			+= lexer/lexer.c \
 
 _FILES_			+= parser/ptree_init.c \
 				   parser/cmd_name.c \
-				   parser/io_file.c \
+				   parser/cmd_prefix.c \
+				   parser/cmd_suffix.c \
 				   parser/filename.c \
+				   parser/io_file.c \
 				   parser/io_redirect.c \
 				   parser/io_here.c \
-				   parser/del_node.c \
-				   parser/del_filename.c \
-				   parser/del_io_file.c \
-				   parser/del_io_redirect.c \
-				   parser/complete_command_del.c \
-				   parser/ptree_new.c \
 				   parser/here_end.c \
-				   parser/parser_peek.c \
 				   parser/parser_expect.c \
+				   parser/parser_peek.c \
 				   parser/ptree_free.c \
-				   parser/redirect_list.c \
-				   parser/cmd_suffix.c \
-				   parser/cmd_prefix.c
+				   parser/ptree_new.c \
+				   parser/cmd_word.c \
+				   parser/simple_command.c \
+				   parser/print/ptree_print.c \
+				   parser/simple_command_free.c \
+				   parser/io_here_free.c \
+				   parser/here_end_free.c \
+				   parser/redirect_list_free.c \
+				   parser/io_redirect_free.c \
+				   parser/io_file_free.c \
+				   parser/filename_free.c \
+				   parser/cmd_name_free.c \
+				   parser/cmd_word_free.c \
+				   parser/cmd_prefix_free.c \
+				   parser/cmd_suffix_free.c \
+				   parser/redirect_list.c
 
 ###
 
@@ -155,7 +164,7 @@ _TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
 				   parse_tree/redirect_list/test_redirect_list.c \
 				   parse_tree/cmd_suffix/test_cmd_suffix.c \
 				   parse_tree/io_redirect/test_io_redirect.c \
-				   parse_tree/cmd_prefix/test_cmd_prefix.c
+				   parse_tree/cmd_prefix/test_cmd_prefix.c \
 
 ###
 

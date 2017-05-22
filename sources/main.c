@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 16:10:35 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 17:17:30 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <signal.h>
 #include <libft.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
 int				process_line(char *input)
 {
@@ -32,7 +33,8 @@ int				process_line(char *input)
 	if ((p->ptree = simple_command(p)))
 		print_simple_command(p->ptree, 0);
 	lexer_delete(&lex);
-	// ptree_free(&p->ptree);
+	ptree_free(&p->ptree);
+	free(p);
 	return (OK);
 }
 

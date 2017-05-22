@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 15:58:52 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 16:23:21 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 17:21:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ void			ptree_free(t_ptree **tree)
 {
 	if ((*tree))
 	{
-		if ((*tree)->type == NT_SIMPLE_COMMAND && 0)
+		if ((*tree)->type == NT_SIMPLE_COMMAND)
 			simple_command_free(&(*tree)->content->sp_command);
-		if ((*tree)->type == NT_CMD_NAME && 0)
+		if ((*tree)->type == NT_CMD_NAME)
 			cmd_name_free(&(*tree)->content->cmd_name);
-		if ((*tree)->type == NT_CMD_WORD && 0)
+		if ((*tree)->type == NT_CMD_WORD)
 			cmd_word_free(&(*tree)->content->cmd_word);
-		if ((*tree)->type == NT_IO_HERE && 0)
+		if ((*tree)->type == NT_IO_HERE)
 			io_here_free(&(*tree)->content->io_here);
-		if ((*tree)->type == NT_HERE_END && 0)
+		if ((*tree)->type == NT_HERE_END)
 			here_end_free(&(*tree)->content->here_end);
-		if ((*tree)->type == NT_FILENAME && 0)
+		if ((*tree)->type == NT_FILENAME)
 			filename_free(&(*tree)->content->filename);
 		if ((*tree)->type == NT_IO_FILE)
 			io_file_free(&(*tree)->content->io_file);
@@ -37,6 +37,8 @@ void			ptree_free(t_ptree **tree)
 			here_end_free(&(*tree)->content->here_end);
 		if ((*tree)->type == NT_CMD_PREFIX)
 			cmd_prefix_free(&(*tree)->content->cmd_prefix);
+		if ((*tree)->type == NT_CMD_SUFFIX)
+			cmd_suffix_free(&(*tree)->content->cmd_suffix);
 		free((*tree)->content);
 		free(*tree);
 		*tree = NULL;
