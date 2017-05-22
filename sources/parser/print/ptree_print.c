@@ -125,7 +125,7 @@ void	print_simple_command(t_ptree *node, int indent)
 {
 	t_spcommand	*spcmd;
 
-	if (!node)
+	if (!node || node == (void *)ERR_SYNTAX)
 		return ;
 	if (node->type != NT_SIMPLE_COMMAND)
 	{

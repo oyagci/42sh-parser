@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 11:15:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 14:39:52 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 13:29:27 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ Suite	*test_suite_filename();
 Suite	*test_suite_io_here();
 Suite	*test_suite_io_file();
 Suite	*test_suite_redirect_list();
+Suite	*test_suite_cmd_prefix();
 Suite	*test_suite_cmd_suffix();
 Suite	*test_suite_io_redirect();
 

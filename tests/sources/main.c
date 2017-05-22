@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 15:33:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 14:57:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 13:28:55 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ int			main(void)
 		test_suite_io_here,
 		test_suite_io_file,
 		test_suite_redirect_list,
+		test_suite_cmd_prefix,
 		test_suite_cmd_suffix,
 		test_suite_io_redirect
 	};
-	size_t	nb = 7;
+	size_t	nb = 8;
 
 	for (size_t i = 0; i < nb; i++)
 	{
