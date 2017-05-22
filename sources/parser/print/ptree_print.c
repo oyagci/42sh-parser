@@ -19,6 +19,54 @@ void	putstr_indent(char *s, int indent)
 	ft_putstr(s);
 }
 
+void	print_filename(t_ptree *node, int indent)
+{
+	t_filename	*f;
+
+	f = &node->content->filename;
+	putendl_indent("[filename]", indent);
+	putendl_indent(f->data, indent + 2);
+}
+
+void	print_io_type(enum e_io_type type, int indent)
+{
+	if (type == IT_LESS)
+		putendl_indent("IT_LESS", indent);
+	else if (type == IT_GREAT)
+		putendl_indent("IT_GREAT", indent);
+	else if (type == IT_DGREAT)
+		putendl_indent("IT_DGREAT", indent);
+	else if (type == IT_GREATAND)
+		putendl_indent("IT_GREATAND", indent);
+	else if (type == IT_LESSAND)
+		putendl_indent("IT_LESSAND", indent);
+}
+
+void	print_io_file(t_ptree *node, int indent)
+{
+	t_io_file	*file;
+
+	file = &node->content->io_file;
+	putendl_indent("[io_file]", indent);
+	print_io_type(file->type, indent + 2);
+	print_filename(file->filename, indent + 4);
+}
+
+void	print_here_end(t_ptree *node, int indent)
+{
+	putendl_indent("[here_end]", indent);
+	putendl_indent(node->content->here_end.data, indent + 2);
+}
+
+void	print_io_here(t_ptree *node, int indent)
+{
+	t_io_here	*file;
+
+	file = &node->content->io_here;
+	putendl_indent("[io_here]", indent);
+	print_here_end(file->here_end, indent + 4);
+}
+
 void	print_io_redirect(t_ptree *node, int indent)
 {
 	t_io_redirect *redirect;
@@ -29,13 +77,16 @@ void	print_io_redirect(t_ptree *node, int indent)
 	redirect = &node->content->io_redirect;
 
 	putendl_indent("[io_redirect]", indent);
-	putstr_indent("is_default: ", indent);
+	putstr_indent("is_default: ", indent + 2);
 	ft_putnbr(redirect->is_default);
 	ft_putchar('\n');
 
-	putstr_indent("io_number: ", indent);
+	putstr_indent("io_number: ", indent + 2);
 	ft_putnbr(redirect->io_number);
 	ft_putchar('\n');
+
+	redirect->io_file ? print_io_file(redirect->io_file, indent + 4) : 0;
+	redirect->io_here ? print_io_here(redirect->io_here, indent + 4) : 0;
 }
 
 void	print_prefix(t_ptree *node, int indent)
