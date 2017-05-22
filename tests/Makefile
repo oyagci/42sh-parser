@@ -1,27 +1,26 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    # #                                                     +:+ +:+         +:+      # #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/03/13 10:19:19 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/12 10:58:19 by oyagci           ###   ########.fr        #
+#    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
+#    Updated: 2017/05/22 14:01:27 by oyagci           ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
-CCRED			= \033[0;31m
-CCYELLOW		= \033[0;33m
-CCEND			= \033[0m
+DIRPATH				= /Users/oyagci/Projects/42/42sh/
 
-CC				= clang
-CFLAGS			= -Wall -Wextra -Werror
+NAME				= tests.out
+CC					= clang
+CFLAGS				= -Wall -Wextra -Werror
 
-NAME			= 42sh
-
-_BASEFOLDER		= ./
+_BASEFOLDER		= ../
 _SOURCES		= sources/
 _INCLUDES		= includes/
 
-_FILES_			= main.c \
-				  environ/environ_setvalue.c \
+_FILES_			= environ/environ_setvalue.c \
 				  environ/environ_getvalue.c \
 				  environ/environ_get_str.c \
 				  environ/environ_add_var.c \
@@ -127,58 +126,46 @@ _FILES_			+= lexer/lexer.c \
 
 _FILES_			+= parser/ptree_init.c \
 				   parser/cmd_name.c \
-				   parser/cmd_prefix.c \
-				   parser/cmd_suffix.c \
-				   parser/filename.c \
 				   parser/io_file.c \
+				   parser/filename.c \
 				   parser/io_redirect.c \
 				   parser/io_here.c \
-				   parser/complete_command_del.c \
-				   parser/here_end.c \
-				   parser/parser_expect.c \
-				   parser/parser_peek.c \
-				   parser/ptree_free.c \
-				   parser/ptree_new.c \
-				   parser/cmd_word.c \
-				   parser/simple_command.c \
 				   parser/del_node.c \
 				   parser/del_filename.c \
 				   parser/del_io_file.c \
 				   parser/del_io_redirect.c \
-				   parser/print/ptree_print.c
+				   parser/complete_command_del.c \
+				   parser/ptree_new.c \
+				   parser/here_end.c \
+				   parser/parser_peek.c \
+				   parser/parser_expect.c \
+				   parser/ptree_free.c \
+				   parser/redirect_list.c \
+				   parser/cmd_suffix.c \
+				   parser/cmd_prefix.c
+
+###
+
+_TEST_FILES_	= get_tlst.c main.c
+
+_TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
+				   parse_tree/filename/test_filename.c \
+				   parse_tree/io_here/test_io_here.c \
+				   parse_tree/io_file/test_io_file.c \
+				   parse_tree/redirect_list/test_redirect_list.c \
+				   parse_tree/cmd_suffix/test_cmd_suffix.c \
+				   parse_tree/io_redirect/test_io_redirect.c \
+				   parse_tree/cmd_prefix/test_cmd_prefix.c
+
+###
+
+TEST_FILES		= $(addprefix sources/,$(_TEST_FILES_))
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
+SOURCES			+= $(TEST_FILES)
 
-OBJECTS			= $(SOURCES:.c=.o)
-INCLUDES		= $(addprefix $(_BASEFOLDER),$(_INCLUDES))
+INCLUDES			= -I $(DIRPATH)/includes/ -I $(DIRPATH)/libft/includes -L $(DIRPATH)/libft -lft -I ./includes
 
-FILES			= $(addprefix $(SOURCES),$(_FILES_))
-DEPENDENCIES	= 
-
-LIBS			= -L libft -lft -ltermcap
-INCLUDES		= -I libft/includes -I includes
-
-all: lib $(NAME)
-
-$(NAME): $(OBJECTS)
-	@echo "$(CCRED)Linking$(CCEND) $(NAME)"
-	@$(CC) -o $(NAME) $(OBJECTS) $(LIBS) $(INCLUDES)
-
-%.o : %.c
-	@echo "$(CCYELLOW)Building$(CCEND) $(notdir $@)"
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
-
-clean:
-	@echo "$(CCRED)Removing$(CCEND) $(CCYELLOW)$(OBJECTS)$(CCEND)"
-	@rm -f $(OBJECTS)
-	@rm -Rf objects/
-
-fclean: clean
-	@echo "$(CCRED)Removing$(CCEND) $(CCYELLOW)$(NAME)$(CCEND)"
-	@rm -f $(NAME)
-
-re: fclean all
-
-lib:
-	@make -C libft/
+all:
+	@$(CC) $(CFLAGS) $(SOURCES) -o $(NAME) -lcheck -ltermcap -I /Users/oyagci/.brew/include -L /Users/oyagci/.brew/lib $(INCLUDES)

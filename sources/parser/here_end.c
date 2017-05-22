@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   here_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/18 14:59:44 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/18 17:35:24 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
-#include <libft.h>
-#include <stdlib.h>
+#include <lexer/lexer.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+t_ptree			*here_end(t_parser *p)
 {
 	t_ptree	*node;
 
-	if ((node = ft_memalloc(sizeof(t_ptree))))
+	if ((node = ptree_new(NT_HERE_END)))
 	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
-		{
-			free(node);
-			return (NULL);
-		}
+		if (parser_peek(p, T_WORD) && (node->content->here_end.data =
+				ft_strdup(((t_token *)p->tlst->content)->data)))
+			p->tlst = p->tlst->next;
+		else
+			ptree_free(&node);
 	}
 	return (node);
 }

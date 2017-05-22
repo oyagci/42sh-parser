@@ -1,0 +1,121 @@
+/* 42sh Grammar */
+
+%token	WORD /* String */
+%token	NAME /* String */
+%token	NEWLINE /* '\n' */
+%token	IO_NUMBER /* Integer */
+
+%token	AND_IF /* '&&' */
+%token	OR_IF /* '||' */
+%token	LESS /* '<' */
+%token	GREAT /* '>' */
+%token	DLESS /* '<<' */
+%token	DGREAT /* '>>' */
+%token	LESSAND /* '<&' */
+%token	GREATAND /* '>&' */
+%token	PIPE /* '|' */
+%token	LBRACE /* '(' */
+%token	RBRACE /* ')' */
+%token	SEMICOL /* ';' */
+
+%start complete_command
+%%
+complete_command	: list SEMICOL
+					| list
+					;
+
+list				: list SEMICOL and_or
+					| and_or
+					;
+
+and_or				: pipeline
+					| and_or AND_IF linebreak pipeline
+					| and_or OR_IF linebreak pipeline
+					;
+
+pipeline			: pipe_sequence
+					;
+
+pipe_sequence		: command
+					| pipe_sequence PIPE linebreak command
+					;
+
+command				: simple_command
+					| compound_command
+					| compound_command redirect_list
+					;
+
+compound_command	: subshell
+					;
+
+subshell			: LBRACE compound_list RBRACE
+					;
+
+compound_list		: linebreak term
+					| linebreak term separator
+					;
+
+term				: term SEMICOL and_or
+					| and_or
+					;
+
+simple_command		: cmd_prefix cmd_word cmd_suffix
+					| cmd_prefix cmd_word
+					| cmd_prefix
+					| cmd_name cmd_suffix
+					| cmd_name
+					;
+
+cmd_name			: WORD
+					;
+
+cmd_word			: WORD
+					;
+
+cmd_prefix			: io_redirect
+					| cmd_prefix io_redirect
+					;
+
+cmd_suffix			: io_redirect
+					| cmd_suffix io_redirect
+					| WORD
+					| cmd_suffix WORD
+					;
+
+redirect_list		: io_redirect
+					| redirect_list io_redirect
+					;
+
+io_redirect			: io_file
+					| IO_NUMBER io_file
+					| io_here
+					| IO_NUMBER io_here
+					;
+
+io_file				: LESS filename
+					| LESSAND filename
+					| GREAT filename
+					| GREATAND filename
+					| DGREAT filename
+					;
+
+filename			: WORD
+					;
+
+io_here				: DLESS here_end
+					;
+
+here_end			: WORD
+					;
+
+newline_list		: newline_list NEWLINE
+					| NEWLINE
+					;
+
+linebreak			: newline_list
+					|
+					;
+
+separator			: SEMICOL linebreak
+					| newline_list
+					;

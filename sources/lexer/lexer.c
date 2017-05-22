@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/12 10:06:30 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/12 12:16:03 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser/parser.h>
-#include <libft.h>
-#include <stdlib.h>
+#include <lexer/lexer.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+t_lexer			*lexer(char *input)
 {
-	t_ptree	*node;
+	t_lexer	*lex;
+	int		ret;
 
-	if ((node = ft_memalloc(sizeof(t_ptree))))
+	if ((lex = lexer_init(input)) == (void *)ERR)
+		return ((void *)ERR);
+	while (1)
 	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
+		ret = lexer_get_next_token(lex);
+		if (ret == ERR)
 		{
-			free(node);
-			return (NULL);
+			lexer_delete(&lex);
+			return ((void *)ERR);
 		}
+		else if (ret == 1)
+			break ;
 	}
-	return (node);
+	return (lex);
 }

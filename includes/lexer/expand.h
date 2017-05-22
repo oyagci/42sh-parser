@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/15 11:08:10 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/15 11:13:48 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser/parser.h>
-#include <libft.h>
-#include <stdlib.h>
+#ifndef EXPAND_H
+# define EXPAND_H
 
-t_ptree			*ptree_new(enum e_ntype type)
+enum	e_quote
 {
-	t_ptree	*node;
+	Q_NONE,
+	Q_SINGLE,
+	Q_DOUBLE,
+	Q_BACKSLASH	
+};
 
-	if ((node = ft_memalloc(sizeof(t_ptree))))
-	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
-		{
-			free(node);
-			return (NULL);
-		}
-	}
-	return (node);
-}
+#endif

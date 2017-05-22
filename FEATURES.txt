@@ -1,0 +1,9 @@
+Operators: > >> < |
+Separators: ; & && ||
+
+Quoting
+Heredoc
+Globing
+Subshells
+Line edition
+Dynamique Completion

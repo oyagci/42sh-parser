@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/18 13:53:10 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/18 14:00:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
-#include <libft.h>
-#include <stdlib.h>
+#include <lexer/lexer.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+t_ptree			*pipeline_new()
 {
 	t_ptree	*node;
 
 	if ((node = ft_memalloc(sizeof(t_ptree))))
 	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
+		node->type = NT_PIPELINE;
+		if ((node->content = ft_memalloc(sizeof(union u_node))))
 		{
-			free(node);
+			del_node(node);
 			return (NULL);
 		}
 	}
-	return (node);
+}
+
+t_ptree			*pipeline(t_parser *p)
+{
+	(void)p;
+	return (NULL);
 }

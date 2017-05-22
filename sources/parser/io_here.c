@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   io_here.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/18 14:53:18 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/22 12:50:09 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <lexer/lexer.h>
 #include <parser/parser.h>
-#include <libft.h>
-#include <stdlib.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+t_ptree			*io_here(t_parser *p)
 {
+	t_list	*head;
 	t_ptree	*node;
 
-	if ((node = ft_memalloc(sizeof(t_ptree))))
+	if ((node = ptree_new(NT_IO_HERE)))
 	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
+		head = p->tlst;
+		if (parser_expect(p, T_DLESS))
 		{
-			free(node);
-			return (NULL);
+			if (!(node->content->io_here.here_end = here_end(p)))
+			{
+				ptree_free(&node);
+				p->tlst = head;
+				return ((void *)ERR_SYNTAX);
+			}
+		}
+		else
+		{
+			ptree_free(&node);
+			p->tlst = head;
 		}
 	}
 	return (node);

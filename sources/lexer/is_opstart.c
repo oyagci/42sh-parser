@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   is_opstart.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/15 10:52:02 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/15 10:52:18 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser/parser.h>
-#include <libft.h>
-#include <stdlib.h>
+#include <lexer/lexer.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+int				is_opstart(t_lexer *lex)
 {
-	t_ptree	*node;
+	char const		opstarts[] = { '<', '>', '|', '&', ';' };
+	size_t const	sz = sizeof(opstarts) / sizeof(char);
+	size_t			i;
 
-	if ((node = ft_memalloc(sizeof(t_ptree))))
+	i = 0;
+	while (i < sz)
 	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
-		{
-			free(node);
-			return (NULL);
-		}
+		if (*lex->input_p == opstarts[i])
+			return (1);
+		i += 1;
 	}
-	return (node);
+	return (0);
 }

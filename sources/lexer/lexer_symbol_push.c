@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   lexer_symbol_push.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/12 13:08:03 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/12 13:10:40 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser/parser.h>
-#include <libft.h>
+#include <lexer/lexer.h>
 #include <stdlib.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+int				lexer_symbol_push(t_lexer *lex, enum e_symbol sym)
 {
-	t_ptree	*node;
+	t_list	*elem;
 
-	if ((node = ft_memalloc(sizeof(t_ptree))))
+	if ((elem = ft_memalloc(sizeof(t_list))) == NULL)
+		return (ERR);
+	if ((elem->content = ft_memalloc(sizeof(enum e_symbol))) == NULL)
 	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
-		{
-			free(node);
-			return (NULL);
-		}
+		free(elem);
+		return (ERR);
 	}
-	return (node);
+	*(enum e_symbol *)elem->content = sym;
+	elem->next = lex->slst;
+	lex->slst = elem;
+	return (OK);
 }

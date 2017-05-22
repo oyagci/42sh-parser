@@ -1,0 +1,102 @@
+/* -------------------------------------------------------
+   The grammar symbols
+   ------------------------------------------------------- */
+%token  WORD
+%token  ASSIGNMENT_WORD
+%token  NAME
+%token  NEWLINE
+%token  IO_NUMBER
+
+%token  AND_IF    OR_IF
+%token  DLESS  DGREAT  LESSAND  GREATAND
+
+/* -------------------------------------------------------
+   The Grammar
+   ------------------------------------------------------- */
+%start program
+%%
+program				: linebreak { complete_commands linebreak }
+                	;
+
+complete_commands	: complete_command { newline_list complete_command }
+				 	;
+
+complete_command	: list { separator_op list }
+                 	;
+
+list				: and_or { separator_op and_or }
+					;
+
+and_or              : pipeline { AND_IF | OR_IF linebreak pipeline }
+                    ;
+
+pipeline            : pipe_sequence
+                    ;
+
+pipe_sequence       : command { PIPE linebreak command }
+                    ;
+
+command             : simple_command
+                    | compound_command
+                    | compound_command redirect_list
+                    ;
+
+compound_command    : subshell
+                    ;
+
+subshell            : LBRACKET compound_list RBRACKET
+                    ;
+
+compound_list       : linebreak term [ separator ]
+                    ;
+
+term                : and_or { separator and_or }
+                    ;
+
+simple_command      : cmd_prefix [ cmd_word ] [ cmd_suffix ]
+					| cmd_name [ cmd_suffix ]
+                    ;
+
+cmd_name            : WORD                   /* Apply rule 7a */
+                    ;
+
+cmd_word            : WORD                   /* Apply rule 7b */
+                    ;
+
+cmd_prefix          : io_redirect | ASSIGNEMENT_WORD { io_redirect | ASSIGNEMENT_WORD }
+
+cmd_suffix          : io_redirect | WORD { io_redirect | WORD }
+                    ;
+
+- redirect_list     : io_redirect { io_redirect }
+                    ;
+
+- io_redirect       : [ IO_NUMBER ] io_file | io_here
+                    ;
+
+- io_file           : LESS | LESSAND | GREAT | GREATAND | DGREAT | LESSGREAT filename
+                    ;
+
+- filename          : WORD                      /* Apply rule 2 */
+                    ;
+
+- io_here           : DLESS here_end
+                    ;
+
+- here_end          : WORD                      /* Apply rule 3 */
+                    ;
+
+newline_list        : NEWLINE { NEWLINE }
+                    ;
+
+linebreak           : newline_list
+                    | /* empty */
+                    ;
+
+- separator_op      : AND
+                    | SEMICOL
+                    ;
+
+separator           : separator_op linebreak
+                    | newline_list
+                    ;

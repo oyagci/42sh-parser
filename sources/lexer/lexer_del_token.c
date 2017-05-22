@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   lexer_del_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/12 12:29:10 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/12 12:30:53 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser/parser.h>
-#include <libft.h>
+#include <lexer/lexer.h>
 #include <stdlib.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+void			lexer_del_token(void *content, size_t content_size)
 {
-	t_ptree	*node;
-
-	if ((node = ft_memalloc(sizeof(t_ptree))))
-	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
-		{
-			free(node);
-			return (NULL);
-		}
-	}
-	return (node);
+	(void)content_size;
+	free(((t_token *)content)->data);
+	free(content);
 }

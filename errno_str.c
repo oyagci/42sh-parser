@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   errno_str.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/11 17:17:08 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/11 17:18:41 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser/parser.h>
-#include <libft.h>
-#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+int			main(void)
 {
-	t_ptree	*node;
-
-	if ((node = ft_memalloc(sizeof(t_ptree))))
+	for (int i = 1; i <= 31; i++)
 	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
-		{
-			free(node);
-			return (NULL);
-		}
+		printf("%s\n", strerror(i));
 	}
-	return (node);
+	return (0);
 }

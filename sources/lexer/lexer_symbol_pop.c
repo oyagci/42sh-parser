@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptree_new.c                                        :+:      :+:    :+:   */
+/*   lexer_symbol_pop.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 17:28:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:35:49 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/12 13:40:30 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/12 13:42:16 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser/parser.h>
-#include <libft.h>
+#include <lexer/lexer.h>
 #include <stdlib.h>
 
-t_ptree			*ptree_new(enum e_ntype type)
+enum e_symbol	lexer_symbol_pop(t_lexer *lex)
 {
-	t_ptree	*node;
+	t_list			*elem;
+	enum e_symbol	sym;
 
-	if ((node = ft_memalloc(sizeof(t_ptree))))
-	{
-		node->type = type;
-		if (!(node->content = ft_memalloc(sizeof(union u_node))))
-		{
-			free(node);
-			return (NULL);
-		}
-	}
-	return (node);
+	elem = lex->slst;
+	sym = *(enum e_symbol *)elem->content;
+	lex->slst = lex->slst->next;
+	free(elem->content);
+	free(elem);
+	return (sym);
 }
