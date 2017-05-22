@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 16:18:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 15:31:34 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 12:49:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ START_TEST(test_io_here_syntax)
 }
 END_TEST
 
+START_TEST(test_io_here_syntax_uncomplete)
+{
+	t_token	tarr[] = {
+		{ T_DLESS, ft_strdup("<<") },
+		{ T_END, NULL },
+	};
+	t_list	*lst = get_tlst(tarr, 2);
+	t_parser p = {
+		lst,
+		NULL,
+	};
+
+	t_ptree	*fname = io_here(&p);
+	ck_assert(fname == (void *)ERR_SYNTAX);
+}
+END_TEST
+
 Suite	*test_suite_io_here()
 {
 	Suite	*s;
@@ -74,6 +91,7 @@ Suite	*test_suite_io_here()
 	tc = tcase_create("parse_tree");
 	tcase_add_test(tc, test_io_here);
 	tcase_add_test(tc, test_io_here_syntax);
+	tcase_add_test(tc, test_io_here_syntax_uncomplete);
 	suite_add_tcase(s, tc);
 	return (s);
 }
