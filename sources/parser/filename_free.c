@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_filename.c                                     :+:      :+:    :+:   */
+/*   filename_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/15 15:17:40 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 15:18:32 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/22 15:44:05 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/22 15:44:34 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <stdlib.h>
 
-void			del_filename(t_filename *fname)
+void			filename_free(t_filename *f)
 {
-	free(fname->data);
-	free(fname);
+	free(f->data);
 }

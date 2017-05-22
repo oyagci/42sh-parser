@@ -133,7 +133,6 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/io_file.c \
 				   parser/io_redirect.c \
 				   parser/io_here.c \
-				   parser/complete_command_del.c \
 				   parser/here_end.c \
 				   parser/parser_expect.c \
 				   parser/parser_peek.c \
@@ -141,11 +140,17 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/ptree_new.c \
 				   parser/cmd_word.c \
 				   parser/simple_command.c \
-				   parser/del_node.c \
-				   parser/del_filename.c \
-				   parser/del_io_file.c \
-				   parser/del_io_redirect.c \
-				   parser/print/ptree_print.c
+				   parser/print/ptree_print.c \
+				   parser/simple_command_free.c \
+				   parser/io_here_free.c \
+				   parser/here_end_free.c \
+				   parser/redirect_list_free.c \
+				   parser/io_redirect_free.c \
+				   parser/io_file_free.c \
+				   parser/filename_free.c \
+				   parser/cmd_name_free.c \
+				   parser/cmd_word_free.c \
+				   parser/cmd_prefix_free.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

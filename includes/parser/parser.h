@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 12:37:49 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 16:23:36 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,12 +244,12 @@ void			ptree_free(t_ptree **tree);
 int				parser_expect(t_parser *p, enum e_token type);
 int				parser_peek(t_parser *p, enum e_token type);
 
+t_ptree			*and_or(t_parser *p);
 t_ptree			*complete_command(t_parser *p);
 t_ptree			*list(t_parser *p);
-t_ptree			*and_or(t_parser *p);
 t_ptree			*pipeline(t_parser *p);
-t_ptree			*simple_command(t_parser *p);
 
+t_ptree			*simple_command(t_parser *p);
 t_ptree			*cmd_name(t_parser *p);
 t_ptree			*cmd_word(t_parser *p);
 t_ptree			*cmd_prefix(t_parser *p);
@@ -261,12 +261,16 @@ t_ptree			*here_end(t_parser *p);
 t_ptree			*io_redirect(t_parser *p);
 t_ptree			*filename(t_parser *p);
 
-void			del_node(t_ptree *node);
-void			del_root(t_root *root);
-void			del_filename(t_filename *fname);
-void			del_io_file(t_io_file*iofile);
-void			del_io_redirect(t_io_redirect *node);
-void			complete_command_del(t_complete_command *cpcmd);
+void			simple_command_free(t_spcommand *sp);
+void			cmd_name_free(t_cmd_name *name);
+void			cmd_word_free(t_cmd_word *word);
+void			io_here_free(t_io_here *here);
+void			here_end_free(t_here_end *hend);
+void			filename_free(t_filename *f);
+void			io_file_free(t_io_file *f);
+void			io_redirect_free(t_io_redirect *redirect);
+void			redirect_list_free(t_redirect_list *redirect);
+void			cmd_prefix_free(t_cmd_prefix *prefix);
 
 /*
 ** cmd_suffix.c

@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   complete_command_del.c                             :+:      :+:    :+:   */
+/*   here_end_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/17 16:51:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/17 16:52:18 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/22 15:10:04 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/22 15:47:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
+#include <stdlib.h>
 
-void			complete_command_del(t_complete_command *cpcommand)
+void			here_end_free(t_here_end *hend)
 {
-	(void)cpcommand;
+	free(hend->data);
 }

@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_io_file.c                                      :+:      :+:    :+:   */
+/*   io_file_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/15 15:32:14 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 15:33:06 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/22 15:42:52 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/22 16:17:32 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-void				del_io_file(t_io_file *iofile)
+void			io_file_free(t_io_file *f)
 {
-	del_node(iofile->filename);
-	free(iofile);
+	if (f->filename)
+	{
+		filename_free(&f->filename->content->filename);
+		free(f->filename->content);
+		free(f->filename);
+	}
 }

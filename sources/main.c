@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 10:41:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 16:10:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int				process_line(char *input)
 	if ((p->ptree = simple_command(p)))
 		print_simple_command(p->ptree, 0);
 	lexer_delete(&lex);
+	// ptree_free(&p->ptree);
 	return (OK);
 }
 

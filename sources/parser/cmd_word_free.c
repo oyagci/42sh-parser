@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_node.c                                         :+:      :+:    :+:   */
+/*   cmd_word_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/15 15:19:38 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 17:13:03 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/22 16:04:35 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/22 16:05:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <stdlib.h>
 
-void			del_node(t_ptree *node)
+void			cmd_word_free(t_cmd_word *word)
 {
-	/* TODO */
-	(void)node;
+	free(word->data);
 }
