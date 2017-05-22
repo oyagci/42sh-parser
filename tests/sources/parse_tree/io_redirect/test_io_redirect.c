@@ -6,8 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 14:35:05 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 15:34:09 by oyagci           ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2017/05/22 13:06:57 by oyagci           ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <check.h>
@@ -104,6 +103,25 @@ START_TEST(test_io_redirect_default)
 }
 END_TEST
 
+START_TEST(test_io_redirect_syntax)
+{
+	t_token	tarr[] = {
+		{ T_GREAT, ">" },
+		{ T_END, NULL },
+	};
+	t_list	*lst = get_tlst(tarr, 2);
+	t_parser p = {
+		lst,
+		NULL,
+	};
+
+	t_ptree	*io;
+	io = io_redirect(&p);
+
+	ck_assert(io == (void *)ERR_SYNTAX);
+}
+END_TEST
+
 Suite	*test_suite_io_redirect()
 {
 	Suite	*s;
@@ -114,6 +132,7 @@ Suite	*test_suite_io_redirect()
 	tcase_add_test(tc, test_io_redirect);
 	tcase_add_test(tc, test_io_redirect_default);
 	tcase_add_test(tc, test_io_redirect_syntax_error);
+	tcase_add_test(tc, test_io_redirect_syntax);
 	suite_add_tcase(s, tc);
 	return (s);
 }

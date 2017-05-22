@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:51:34 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 15:02:47 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 13:16:15 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,30 @@ int				get_io_number(t_parser *p, t_ptree *node)
 	return (0);
 }
 
+#include <stdio.h>
 t_ptree			*io_redirect(t_parser *p)
 {
+	t_ptree	*io;
 	t_ptree	*node;
 	t_list	*head;
 	int		ionumber;
 
 	ionumber = 0;
+	io = NULL;
 	if ((node = ptree_new(NT_IO_REDIRECT)))
 	{
 		head = p->tlst;
 		get_io_number(p, node);
-		if (!(node->content->io_redirect.io_file = io_file(p)) &&
-				!(node->content->io_redirect.io_here = io_here(p)))
+		!(io = io_file(p)) ? (io = io_here(p)) : 0;
+		if (io && io != (void *)ERR_SYNTAX)
 		{
-			ptree_free(&node);
-			p->tlst = head;
+			if (io->type == NT_IO_HERE)
+				node->content->io_redirect.io_here = io;
+			else if (io->type == NT_IO_FILE)
+				node->content->io_redirect.io_file = io;
 		}
+		else
+			ptree_free(&node);
 	}
-	return (node);
+	return ((io == (void *)ERR_SYNTAX) ? (void *)ERR_SYNTAX : node);
 }
