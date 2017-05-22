@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 16:34:54 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/22 12:37:49 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <lexer/lexer.h>
 # include <libft.h>
+
+# define ERR_SYNTAX	0xDEADBEEF
 
 typedef struct s_parser				t_parser;
 typedef struct s_ptree				t_ptree;
