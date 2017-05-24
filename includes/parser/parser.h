@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 14:08:48 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 17:19:18 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <lexer/lexer.h>
 # include <libft.h>
 
-# define ERR_SYNTAX	0xDEADBEEF
+# define ERR_SYNTAX	0x0000DEAD
 
 typedef struct s_parser				t_parser;
 typedef struct s_ptree				t_ptree;
@@ -41,6 +41,15 @@ typedef struct s_pipeline			t_pipeline;
 typedef struct s_spcommand			t_spcommand;
 typedef struct s_pipe_sequence		t_pipe_sequence;
 typedef struct s_compound_command	t_compound_command;
+typedef struct s_subshell			t_subshell;
+typedef struct s_term				t_term;
+typedef struct s_compound_list		t_compound_list;
+typedef struct s_separator			t_separator;
+
+struct								s_separator
+{
+	t_ptree	*separator_op;
+};
 
 struct								s_parser
 {
@@ -72,7 +81,15 @@ enum								e_ntype
 	NT_PIPE_SEQUENCE,
 	NT_COMMAND,
 	NT_COMPOUND_COMMAND,
-	NT_SUBSHELL
+	NT_SUBSHELL,
+	NT_TERM,
+	NT_COMPOUND_LIST,
+	NT_SEPARATOR
+};
+
+struct								s_term
+{
+	t_list	*andlst;
 };
 
 struct								s_ptree
@@ -170,37 +187,22 @@ struct								s_nlist
 	t_ptree	*and_or;
 };
 
-/*
-** and_or
-** content should be put in another file and_or.h
-*/
-
-enum								e_and_or
-{
-	AO_UNDEFINED,
-	AO_FIRST,
-	AO_OR,
-	AO_AND
-};
-
-struct								s_ao_branch
-{
-	enum e_and_or	type;
-	t_ptree			*pipeline;
-};
-
 struct								s_and_or
 {
-	t_list			*branches;
+	t_list	*pipelines;
 };
 
-/*
-** and_or END
-*/
+enum								e_pipeline
+{
+	PL_DEFAULT,
+	PL_AND_IF,
+	PL_OR_IF
+};
 
 struct								s_pipeline
 {
-	t_ptree	*pipe_sequence;
+	enum e_pipeline	type;
+	t_ptree			*pipe_sequence;
 };
 
 struct								s_io_here
@@ -240,6 +242,16 @@ struct								s_compound_command
 	t_ptree	*subshell;
 };
 
+struct								s_compound_list
+{
+	t_ptree	*term;
+};
+
+struct								s_subshell
+{
+
+};
+
 union								u_node
 {
 	t_root				root;
@@ -263,6 +275,9 @@ union								u_node
 	t_command			command;
 	t_compound_command	compound_command;
 	t_subshell			subshell;
+	t_term				term;
+	t_compound_list		compound_list;
+	t_separator			separator;
 };
 
 t_ptree								*ptree_init(void);
@@ -278,7 +293,6 @@ t_ptree								*and_or(t_parser *p);
 t_ptree								*complete_command(t_parser *p);
 t_ptree								*list(t_parser *p);
 t_ptree								*pipeline(t_parser *p);
-
 t_ptree								*simple_command(t_parser *p);
 t_ptree								*cmd_name(t_parser *p);
 t_ptree								*cmd_word(t_parser *p);
@@ -294,6 +308,12 @@ t_ptree								*linebreak(t_parser *p);
 t_ptree								*newline_list(t_parser *p);
 t_ptree								*command(t_parser *p);
 t_ptree								*subshell(t_parser *p);
+t_ptree								*pipeline(t_parser *p);
+t_ptree								*compound_command(t_parser *p);
+t_ptree								*term(t_parser *p);
+t_ptree								*compound_list(t_parser *p);
+t_ptree								*separator(t_parser	*p);
+t_ptree								*separator_op(t_parser *p);
 
 void								simple_command_free(t_spcommand *sp);
 void								cmd_name_free(t_cmd_name *name);

@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.c                                         :+:      :+:    :+:   */
+/*   separator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 13:53:10 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 14:55:39 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/24 16:47:35 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/24 17:18:19 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
 
-t_ptree			*pipeline(t_parser *p)
+t_ptree			*separator(t_parser	*p)
 {
-	(void)p;
-	return (NULL);
+	t_ptree	*node;
+
+	if ((node = ptree_new(NT_SEPARATOR)))
+	{
+		if ((node->content->separator.separator_op = separator_op(p)))
+			linebreak(p);
+		else
+			newline_list(p);
+	}
+	return (node);
 }

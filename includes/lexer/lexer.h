@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 09:57:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 14:09:58 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 15:25:44 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ enum					e_token
 	T_PIPE,
 	T_OR,
 	T_AND,
+	T_AND_IF,
+	T_OR_IF,
 	T_SEMICOL,
 	T_IO_NUMBER,
 	T_LBRACKET,
