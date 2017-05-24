@@ -203,3 +203,24 @@ void	print_simple_command(t_ptree *node, int indent)
 	print_cmd_word(spcmd->word, indent);
 	print_suffix(spcmd->suffix, indent);
 }
+
+#include <stdio.h>
+
+void	print_command(t_ptree *node, int indent)
+{
+	t_command *cmd;
+
+	if (!node || node == (void *)ERR_SYNTAX)
+	{
+		putendl_indent("NULL!", indent);
+		return ;
+	}
+
+	cmd = &node->content->command;
+
+	putendl_indent("[command]", indent);
+	if (cmd->cmd->type == NT_SIMPLE_COMMAND)
+		print_simple_command(cmd->cmd, indent + 4);
+	else if (cmd->cmd->type == NT_COMPOUND_COMMAND)
+		ft_putendl("compound_command");
+}

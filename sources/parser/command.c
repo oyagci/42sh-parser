@@ -6,12 +6,14 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 16:38:39 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 17:40:48 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+
+#include <stdio.h>
 
 t_ptree			*command(t_parser *p)
 {
@@ -29,11 +31,8 @@ t_ptree			*command(t_parser *p)
 			return ((void *)ERR_SYNTAX);
 		}
 		else if (cmd == NULL)
-		{
 			ptree_free(&node);
-			return (NULL);
-		}
-		if (cmd->type == NT_COMPOUND_COMMAND)
+		if (cmd && cmd->type == NT_COMPOUND_COMMAND)
 		{
 			redir = redirect_list(p);
 			if (redir != (void *)ERR_SYNTAX)
@@ -44,6 +43,7 @@ t_ptree			*command(t_parser *p)
 				return ((void *)ERR_SYNTAX);
 			}
 		}
+		node->content->command.cmd = cmd;
 	}
 	return (node);
 }

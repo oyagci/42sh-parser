@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 12:31:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 17:34:24 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int				process_line(char *input)
 		return (ERR);
 	p = ft_memalloc(sizeof(t_parser));
 	p->tlst = lex->tlst;
-	if ((p->ptree = simple_command(p)))
-		print_simple_command(p->ptree, 0);
+	if ((p->ptree = command(p)))
+		print_command(p->ptree, 0);
 	lexer_delete(&lex);
 	ptree_free(&p->ptree);
 	free(p);

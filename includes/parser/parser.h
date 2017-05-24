@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 17:19:18 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 17:27:57 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,7 @@ void								cmd_suffix_free(t_cmd_suffix *suffix);
 */
 int									add_redirection(t_parser *p, t_ptree *node);
 
+void	print_command(t_ptree *node, int indent);
 void								print_simple_command(t_ptree *node,
 		int indent);
 
