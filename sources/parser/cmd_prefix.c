@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:12:51 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 14:16:37 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 12:33:21 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ int				add_assignement(t_parser *p, t_ptree *node)
 
 	if (((t_token *)p->tlst->content)->type == T_ASSIGNEMENT_WORD)
 	{
-		if ((elem = ft_lstnew(NULL, 0)) && (elem->content =
-						ft_strdup(((t_token *)p->tlst->content)->data)))
+		if ((elem = ft_lstnew(NULL, 0)))
 		{
-			p->tlst = p->tlst->next;
-			ft_lstpush(&node->content->cmd_prefix.assignements, elem);
-			return (1);
+			if ((elem->content = ft_strdup(((t_token *)p->tlst->content)->
+							data)))
+			{
+				p->tlst = p->tlst->next;
+				ft_lstpush(&node->content->cmd_prefix.assignements, elem);
+				return (1);
+			}
 		}
-		else
-			free(elem);
+		free(elem);
 	}
 	return (0);
 }

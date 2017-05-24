@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 17:17:30 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 12:31:53 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 int				process_line(char *input)
 {
-	t_lexer	*lex;
-	t_parser *p;
+	t_lexer		*lex;
+	t_parser	*p;
 
 	if ((lex = lexer(input)) == (void *)ERR)
 		return (ERR);

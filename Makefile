@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/22 17:24:23 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/24 13:37:18 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,7 +154,11 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/cmd_name_free.c \
 				   parser/cmd_word_free.c \
 				   parser/cmd_prefix_free.c \
-				   parser/cmd_suffix_free.c
+				   parser/cmd_suffix_free.c \
+				   parser/linebreak.c \
+				   parser/newline_list.c \
+				   parser/command.c \
+				   parser/pipe_sequence.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

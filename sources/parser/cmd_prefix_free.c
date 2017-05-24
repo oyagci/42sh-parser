@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 16:21:55 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 17:01:27 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 12:34:40 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			cmd_prefix_free_redirections(t_list *redirections)
 
 	while (redirections)
 	{
-		next = redirections->next; 
+		next = redirections->next;
 		ptree = redirections->content;
 		io_redirect_free(&ptree->content->io_redirect);
 		free(ptree->content);
@@ -36,7 +36,7 @@ void			cmd_prefix_free_assignements(t_list *assign)
 
 	while (assign)
 	{
-		next = assign->next; 
+		next = assign->next;
 		free(assign->content);
 		free(assign);
 		assign = next;

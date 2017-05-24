@@ -37,8 +37,7 @@ pipe_sequence       : command { PIPE linebreak command }
                     ;
 
 command             : simple_command
-                    | compound_command
-                    | compound_command redirect_list
+                    | compound_command [ redirect_list ]
                     ;
 
 compound_command    : subshell

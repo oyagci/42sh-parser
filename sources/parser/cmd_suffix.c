@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 13:10:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 12:22:09 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 12:35:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ int				suffix_add_word(t_parser *p, t_ptree *node)
 
 	if (((t_token *)p->tlst->content)->type == T_WORD)
 	{
-		if ((elem = ft_lstnew(NULL, 0)) && (elem->content =
-						ft_strdup(((t_token *)p->tlst->content)->data)))
+		if ((elem = ft_lstnew(NULL, 0)))
 		{
-			p->tlst = p->tlst->next;
-			ft_lstpush(&node->content->cmd_suffix.words, elem);
-			return (1);
+			if ((elem->content = ft_strdup(((t_token *)p->tlst->content)->
+							data)))
+			{
+				p->tlst = p->tlst->next;
+				ft_lstpush(&node->content->cmd_suffix.words, elem);
+				return (1);
+			}
 		}
-		else
-			free(elem);
+		free(elem);
 	}
 	return (0);
 }

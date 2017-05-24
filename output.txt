@@ -1,0 +1,94 @@
+Norme: ./errno_str.c
+Error (line 17): declarations must be followed by one empty line in main
+Error (line 19): 2 instructions
+Error (line 19): for detected
+Error (line 19, col 10): i is instanciated during declaration
+--
+Norme: ./includes/parser/parser.h
+Error: global scope bad aligned
+--
+Norme: ./sources/errors/ft_strerror.c
+Error (line 13): declarations must be followed by one empty line in ft_strerror
+--
+Norme: ./sources/lexer/lexer_delimite_current_token.c
+Error (line 55): bad spacing before lexer_add_current
+--
+Norme: ./sources/lexer/lexer_get_next_token.c
+Error (line 20): comment not well formatted
+Error (line 20): comment not well placed
+--
+Norme: ./sources/parser/and_or.c
+Error (line 43): line has 86 characters
+Error (line 72): line has 82 characters
+--
+Norme: ./sources/parser/filename.c
+Error (line 21): comment not well formatted
+Error (line 21): comment not well placed
+Error (line 28): comment not well formatted
+Error (line 28): comment not well placed
+Error (line 35): comment not well formatted
+Error (line 35): comment not well placed
+--
+Norme: ./sources/parser/io_redirect.c
+Error (line 30): #include <stdio.h> should be before line 16
+Error (line 31): bad spacing before io_redirect
+Error (line 44): 2 assignations
+--
+Norme: ./sources/parser/list.c
+Error (line 20): comment not well formatted
+Error (line 20): comment not well placed
+--
+Norme: ./sources/parser/pipeline.c
+Error (line 16): missing void in function pipeline_new
+--
+Norme: ./sources/parser/print/ptree_print.c
+Error: 14 functions in the file
+Error: 42 header not at top of the file
+Error (line 4): declarations must be followed by one empty line in putindent
+Error (line 6): 2 instructions
+Error (line 6): for detected
+Error (line 6, col 10): i is instanciated during declaration
+Error (line 7): bad indentation
+Error (line 76): Empty line
+Error (line 78): Empty line
+Error (line 83): Empty line
+Error (line 87): Empty line
+Error (line 92): function print_prefix has 28 lines
+Error (line 104): Empty line
+Error (line 117): spaces at the end of line
+Error (line 117, col 1): no newline after block
+Error (line 124): function print_suffix has 28 lines
+Error (line 137): Empty line
+Error (line 167): Empty line
+Error (line 169): Empty line
+Error (line 196): Empty line
+Error (line 198): Empty line
+--
+Norme: ./sources/parser/ptree_free.c
+Error (line 16): function ptree_free has 28 lines
+--
+Norme: ./sources/parser/simple_command.c
+Error (line 16): function simple_command has 33 lines
+--
+Norme: ./sources/shell/builtins/builtin_env_cmd.c
+Error (line 47): comment not well formatted
+Error (line 47): comment not well placed
+--
+Norme: ./tests/includes/tests.h
+Error: global scope bad aligned
+--
+Norme: ./tests/sources/get_tlst.c
+Error: file must end with a single empty line
+Error (line 22, col 9): lst is instanciated during declaration
+Error (line 23, col 9): elem is instanciated during declaration
+Error (line 24, col 8): i is instanciated during declaration
+--
+Norme: ./tests/sources/main.c
+Error (line 28): declarations in main are bad aligned
+Error (line 28): declarations in main must be at the top of the function
+Error (line 28): declarations must be followed by one empty line in main
+Error (line 30, col 10): tests is instanciated during declaration
+Error (line 42, col 8): nb is instanciated during declaration
+Error (line 44): 2 instructions
+Error (line 44): for detected
+Error (line 44, col 13): i is instanciated during declaration
