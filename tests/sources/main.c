@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 15:33:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 13:28:55 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 12:12:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int			do_test(Suite *(*current)())
 int			main(void)
 {
 	Suite *(*tests[])() = {
+		test_suite_lexer,
+		test_suite_lexer_simple_command,
 		test_suite_filename,
 		test_suite_here_end,
 		test_suite_io_here,
@@ -37,7 +39,7 @@ int			main(void)
 		test_suite_cmd_suffix,
 		test_suite_io_redirect
 	};
-	size_t	nb = 8;
+	size_t	nb = 10;
 
 	for (size_t i = 0; i < nb; i++)
 	{

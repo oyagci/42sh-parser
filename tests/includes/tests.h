@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 11:15:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 13:29:27 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 12:12:48 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 t_list			*get_tlst(t_token *tarr, size_t sz);
 void			check_io_file(t_ptree *io, enum e_io_type type, char *expected);
 
-/* Test suites */
+Suite	*test_suite_lexer();
+Suite	*test_suite_lexer_simple_command();
+
 Suite	*test_suite_here_end();
 Suite	*test_suite_filename();
 Suite	*test_suite_io_here();

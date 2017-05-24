@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/22 17:25:12 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/24 12:13:06 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -165,6 +165,9 @@ _TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
 				   parse_tree/cmd_suffix/test_cmd_suffix.c \
 				   parse_tree/io_redirect/test_io_redirect.c \
 				   parse_tree/cmd_prefix/test_cmd_prefix.c \
+
+_TEST_FILES_	+= lexer/test_lexer.c \
+				   lexer/test_lexer_simple_command.c
 
 ###
 

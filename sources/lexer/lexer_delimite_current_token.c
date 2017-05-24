@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:58:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 13:30:54 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 10:38:38 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				is_io_number(t_token *t, char *input)
 {
 	size_t	i;
 
-	if (*input && (*(input + 1) == '>' || *(input + 1) == '<'))
+	if (*input && (*input == '>' || *input == '<'))
 	{
 		i = 0;
 		while (t->data[i] != 0)

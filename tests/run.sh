@@ -1,4 +1,3 @@
 #!/bin/sh
 
-make
-./tests.out && rm tests.out
+make && ./tests.out && rm tests.out
