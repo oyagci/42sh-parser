@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 17:07:49 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 14:08:48 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,23 @@ typedef struct s_io_here			t_io_here;
 typedef struct s_here_end			t_here_end;
 typedef struct s_filename			t_filename;
 typedef struct s_separator_op		t_separator_op;
-
+typedef struct s_command			t_command;
 typedef struct s_complete_command	t_complete_command;
 typedef struct s_nlist				t_nlist;
 typedef struct s_and_or				t_and_or;
 typedef struct s_ao_branch			t_ao_branch;
 typedef struct s_pipeline			t_pipeline;
 typedef struct s_spcommand			t_spcommand;
+typedef struct s_pipe_sequence		t_pipe_sequence;
+typedef struct s_compound_command	t_compound_command;
 
-struct						s_parser
+struct								s_parser
 {
 	t_list		*tlst;
 	t_ptree		*ptree;
 };
 
-enum						e_ntype
+enum								e_ntype
 {
 	NT_ROOT,
 	NT_COMPLETE_COMMAND,
@@ -64,21 +66,33 @@ enum						e_ntype
 	NT_SEPARATOR_OP,
 	NT_CMD_PREFIX,
 	NT_CMD_SUFFIX,
-	NT_CMD_WORD
+	NT_CMD_WORD,
+	NT_LINEBREAK,
+	NT_NEWLINE_LIST,
+	NT_PIPE_SEQUENCE,
+	NT_COMMAND,
+	NT_COMPOUND_COMMAND,
+	NT_SUBSHELL
 };
 
-struct						s_ptree
+struct								s_ptree
 {
 	enum e_ntype	type;
 	union u_node	*content;
 };
 
-struct						s_root
+struct								s_root
 {
 	t_list	*nodes;
 };
 
-struct						s_spcommand
+struct								s_pipe_sequence
+{
+	size_t	nb;
+	t_list	*commands;
+};
+
+struct								s_spcommand
 {
 	t_ptree	*prefix;
 	t_ptree	*suffix;
@@ -86,34 +100,34 @@ struct						s_spcommand
 	t_ptree	*word;
 };
 
-struct						s_cmd_prefix
+struct								s_cmd_prefix
 {
 	t_list	*redirections;
 	t_list	*assignements;
 };
 
-struct						s_cmd_name
+struct								s_cmd_name
 {
 	char	*data;
 };
 
-struct						s_cmd_word
+struct								s_cmd_word
 {
 	char	*data;
 };
 
-struct						s_cmd_suffix
+struct								s_cmd_suffix
 {
 	t_list	*redirections;
 	t_list	*words;
 };
 
-struct						s_filename
+struct								s_filename
 {
 	char	*data;
 };
 
-struct						s_io_redirect
+struct								s_io_redirect
 {
 	int			is_default;
 	int			io_number;
@@ -125,7 +139,7 @@ struct						s_io_redirect
 ** TODO: Put in another file
 */
 
-enum						e_io_type
+enum								e_io_type
 {
 	IT_NONE,
 	IT_LESS,
@@ -135,7 +149,7 @@ enum						e_io_type
 	IT_DGREAT
 };
 
-struct						s_io_file
+struct								s_io_file
 {
 	enum e_io_type	type;
 	t_ptree			*filename;
@@ -145,12 +159,12 @@ struct						s_io_file
 ** ====
 */
 
-struct						s_complete_command
+struct								s_complete_command
 {
 	t_ptree	*list;
 };
 
-struct						s_nlist
+struct								s_nlist
 {
 	t_ptree	*list;
 	t_ptree	*and_or;
@@ -161,7 +175,7 @@ struct						s_nlist
 ** content should be put in another file and_or.h
 */
 
-enum						e_and_or
+enum								e_and_or
 {
 	AO_UNDEFINED,
 	AO_FIRST,
@@ -169,13 +183,13 @@ enum						e_and_or
 	AO_AND
 };
 
-struct						s_ao_branch
+struct								s_ao_branch
 {
 	enum e_and_or	type;
 	t_ptree			*pipeline;
 };
 
-struct						s_and_or
+struct								s_and_or
 {
 	t_list			*branches;
 };
@@ -184,38 +198,49 @@ struct						s_and_or
 ** and_or END
 */
 
-struct						s_pipeline
+struct								s_pipeline
 {
 	t_ptree	*pipe_sequence;
 };
 
-struct						s_io_here
+struct								s_io_here
 {
 	t_ptree	*here_end;
 };
 
-struct						s_here_end
+struct								s_here_end
 {
 	char	*data;
 };
 
-struct						s_redirect_list
+struct								s_redirect_list
 {
 	t_list	*list;
 };
 
-enum						e_separator
+enum								e_separator
 {
 	SP_AND,
 	SP_SEMICOL
 };
 
-struct						s_separator_op
+struct								s_separator_op
 {
 	enum e_separator	op;
 };
 
-union						u_node
+struct								s_command
+{
+	t_ptree	*cmd;
+	t_ptree	*redirect;
+};
+
+struct								s_compound_command
+{
+	t_ptree	*subshell;
+};
+
+union								u_node
 {
 	t_root				root;
 	t_complete_command	cpcmd;
@@ -229,55 +254,66 @@ union						u_node
 	t_cmd_suffix		cmd_suffix;
 	t_cmd_word			cmd_word;
 	t_cmd_prefix		cmd_prefix;
-
 	t_spcommand			sp_command;
 	t_cmd_name			cmd_name;
 	t_filename			filename;
 	t_io_file			io_file;
 	t_io_redirect		io_redirect;
+	t_pipe_sequence		pipe_sequence;
+	t_command			command;
+	t_compound_command	compound_command;
+	t_subshell			subshell;
 };
 
-t_ptree			*ptree_init(void);
-t_ptree			*ptree_new(enum e_ntype type);
-void			ptree_free(t_ptree **tree);
+t_ptree								*ptree_init(void);
+t_ptree								*ptree_new(enum e_ntype type);
+void								ptree_free(t_ptree **tree);
 
-int				parser_expect(t_parser *p, enum e_token type);
-int				parser_peek(t_parser *p, enum e_token type);
+int									parser_expect(t_parser *p,
+		enum e_token type);
+int									parser_peek(t_parser *p,
+		enum e_token type);
 
-t_ptree			*and_or(t_parser *p);
-t_ptree			*complete_command(t_parser *p);
-t_ptree			*list(t_parser *p);
-t_ptree			*pipeline(t_parser *p);
+t_ptree								*and_or(t_parser *p);
+t_ptree								*complete_command(t_parser *p);
+t_ptree								*list(t_parser *p);
+t_ptree								*pipeline(t_parser *p);
 
-t_ptree			*simple_command(t_parser *p);
-t_ptree			*cmd_name(t_parser *p);
-t_ptree			*cmd_word(t_parser *p);
-t_ptree			*cmd_prefix(t_parser *p);
-t_ptree			*cmd_suffix(t_parser *p);
-t_ptree			*io_file(t_parser *p);
-t_ptree			*redirect_list(t_parser *p);
-t_ptree			*io_here(t_parser *p);
-t_ptree			*here_end(t_parser *p);
-t_ptree			*io_redirect(t_parser *p);
-t_ptree			*filename(t_parser *p);
+t_ptree								*simple_command(t_parser *p);
+t_ptree								*cmd_name(t_parser *p);
+t_ptree								*cmd_word(t_parser *p);
+t_ptree								*cmd_prefix(t_parser *p);
+t_ptree								*cmd_suffix(t_parser *p);
+t_ptree								*io_file(t_parser *p);
+t_ptree								*redirect_list(t_parser *p);
+t_ptree								*io_here(t_parser *p);
+t_ptree								*here_end(t_parser *p);
+t_ptree								*io_redirect(t_parser *p);
+t_ptree								*filename(t_parser *p);
+t_ptree								*linebreak(t_parser *p);
+t_ptree								*newline_list(t_parser *p);
+t_ptree								*command(t_parser *p);
+t_ptree								*subshell(t_parser *p);
 
-void			simple_command_free(t_spcommand *sp);
-void			cmd_name_free(t_cmd_name *name);
-void			cmd_word_free(t_cmd_word *word);
-void			io_here_free(t_io_here *here);
-void			here_end_free(t_here_end *hend);
-void			filename_free(t_filename *f);
-void			io_file_free(t_io_file *f);
-void			io_redirect_free(t_io_redirect *redirect);
-void			redirect_list_free(t_redirect_list *redirect);
-void			cmd_prefix_free(t_cmd_prefix *prefix);
-void			cmd_suffix_free(t_cmd_suffix *suffix);
+void								simple_command_free(t_spcommand *sp);
+void								cmd_name_free(t_cmd_name *name);
+void								cmd_word_free(t_cmd_word *word);
+void								io_here_free(t_io_here *here);
+void								here_end_free(t_here_end *hend);
+void								filename_free(t_filename *f);
+void								io_file_free(t_io_file *f);
+void								io_redirect_free(t_io_redirect *redirect);
+void								redirect_list_free(
+		t_redirect_list *redirect);
+void								cmd_prefix_free(t_cmd_prefix *prefix);
+void								cmd_suffix_free(t_cmd_suffix *suffix);
 
 /*
 ** cmd_suffix.c
 */
-int				add_redirection(t_parser *p, t_ptree *node);
+int									add_redirection(t_parser *p, t_ptree *node);
 
-void			print_simple_command(t_ptree *node, int indent);
+void								print_simple_command(t_ptree *node,
+		int indent);
 
 #endif

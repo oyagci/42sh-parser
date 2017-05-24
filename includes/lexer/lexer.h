@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/07 09:57:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 15:58:29 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 14:09:58 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ enum					e_token
 	T_AND,
 	T_SEMICOL,
 	T_IO_NUMBER,
+	T_LBRACKET,
+	T_RBRACKET,
 
 	T_NEWLINE,
 	T_END,

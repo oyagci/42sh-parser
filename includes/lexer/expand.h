@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 11:08:10 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/15 11:13:48 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/24 12:27:03 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ enum	e_quote
 	Q_NONE,
 	Q_SINGLE,
 	Q_DOUBLE,
-	Q_BACKSLASH	
+	Q_BACKSLASH
 };
 
 #endif
