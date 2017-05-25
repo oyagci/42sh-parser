@@ -84,7 +84,7 @@ enum								e_ntype
 	NT_SUBSHELL,
 	NT_TERM,
 	NT_COMPOUND_LIST,
-	NT_SEPARATOR
+	NT_SEPARATOR,
 };
 
 struct								s_term
@@ -183,8 +183,7 @@ struct								s_complete_command
 
 struct								s_nlist
 {
-	t_ptree	*list;
-	t_ptree	*and_or;
+	t_list	*andlst;
 };
 
 struct								s_and_or
@@ -249,7 +248,7 @@ struct								s_compound_list
 
 struct								s_subshell
 {
-
+	t_ptree	*compound_list;
 };
 
 union								u_node
@@ -314,6 +313,7 @@ t_ptree								*term(t_parser *p);
 t_ptree								*compound_list(t_parser *p);
 t_ptree								*separator(t_parser	*p);
 t_ptree								*separator_op(t_parser *p);
+t_ptree								*pipe_sequence(t_parser *p);
 
 void								simple_command_free(t_spcommand *sp);
 void								cmd_name_free(t_cmd_name *name);

@@ -14,9 +14,46 @@
 #include <parser/parser.h>
 #include <stdlib.h>
 
+int				add_to_list(t_parser *p, t_ptree *node)
+{
+	t_list	*elem;
+	t_ptree	*andor;
+
+	if ((elem = ft_lstnew(NULL, 0)))
+	{
+		if ((andor = and_or(p)) && andor != (void *)ERR_SYNTAX)
+		{
+			elem->content = andor;
+			ft_lstpush(&node->content->list.andlst, elem);
+			return (1);
+		}
+		free(elem);
+		if (andor == (void *)ERR_SYNTAX)
+			return (ERR_SYNTAX);
+	}
+	return (0);
+}
+
 t_ptree			*list(t_parser *p)
 {
-	(void)p;
-	/* TODO */
-	return (NULL);
+	int		ret;
+	t_ptree	*node;
+
+	if ((node = ptree_new(NT_LIST)))
+	{
+		if ((ret = add_to_list(p, node)) == 1)
+		{
+			if (parser_expect(p, T_SEMICOL))
+				while ((ret = add_to_list(p, node)) == 1)
+					if (!(parser_expect(p, T_SEMICOL)))
+						break ;
+		}
+		if (ret == ERR_SYNTAX)
+		{
+			ptree_free(&node);
+			free(&node);
+			return ((void *)ERR_SYNTAX);
+		}
+	}
+	return (node);
 }

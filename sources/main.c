@@ -30,10 +30,10 @@ int				process_line(char *input)
 		return (ERR);
 	p = ft_memalloc(sizeof(t_parser));
 	p->tlst = lex->tlst;
-	if ((p->ptree = command(p)))
-		print_command(p->ptree, 0);
+	if ((p->ptree = list(p)))
+		print_list(p->ptree, 0);
 	lexer_delete(&lex);
-	ptree_free(&p->ptree);
+	p->ptree != (void *)ERR_SYNTAX ? ptree_free(&p->ptree) : ft_putendl("syntax error");
 	free(p);
 	return (OK);
 }

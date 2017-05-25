@@ -15,6 +15,13 @@
 
 t_ptree			*pipeline(t_parser *p)
 {
+	t_ptree	*node;
+
+	node = NULL;
 	(void)p;
-	return (NULL);
+	if ((node = ptree_new(NT_PIPELINE)))
+	{
+		node->content->pipeline.pipe_sequence = pipe_sequence(p);
+	}
+	return (node);
 }

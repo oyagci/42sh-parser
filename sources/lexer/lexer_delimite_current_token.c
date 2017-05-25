@@ -15,9 +15,10 @@
 enum e_token	get_token_type(t_token *t)
 {
 	char *const			ops[] = { "<<", "<&", ">>", ">&", "||", "&&", "<", ">",
-		";", "|", "\n" };
+		";", "|", "\n", "(", ")" };
 	const enum e_token	types[] = { T_DLESS, T_LESSAND, T_DGREAT, T_GREATAND,
-		T_OR, T_AND, T_LESS, T_GREAT, T_SEMICOL, T_PIPE, T_NEWLINE };
+		T_OR, T_AND, T_LESS, T_GREAT, T_SEMICOL, T_PIPE, T_NEWLINE,
+		T_LBRACKET, T_RBRACKET };
 	size_t const		sz = sizeof(ops) / sizeof(char *);
 	size_t				i;
 

@@ -5,8 +5,7 @@ void	putindent(int n)
 {
 	for (int i = 0; i < n; i++)
 		ft_putchar(' ');
-}
-
+} 
 void	putendl_indent(char *s, int indent)
 {
 	putindent(indent);
@@ -204,7 +203,86 @@ void	print_simple_command(t_ptree *node, int indent)
 	print_suffix(spcmd->suffix, indent);
 }
 
-#include <stdio.h>
+void	print_pipe_sequence(t_ptree *node, int indent)
+{
+	t_list	*head;
+
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+
+	putendl_indent("[pipe_sequence]", indent);
+	head = node->content->pipe_sequence.commands;
+	while (head)
+	{
+		print_command(head->content, indent + 4);
+		head = head->next;
+	}
+}
+
+void	print_pipeline(t_ptree *node, int indent)
+{
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+	putendl_indent("[pipeline]", indent);
+	print_pipe_sequence(node->content->pipeline.pipe_sequence, indent + 4);
+}
+
+void	print_and_or(t_ptree *node, int indent)
+{
+	t_list	*head;
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+
+	head = node->content->and_or.pipelines;
+	putendl_indent("[and_or]", indent);
+	while (node->content->and_or.pipelines)
+	{
+		print_pipeline(node->content->and_or.pipelines->content, indent + 4);
+		node->content->and_or.pipelines = node->content->and_or.pipelines->next;
+	}
+	node->content->and_or.pipelines = head;
+}
+
+void	print_term(t_ptree *node, int indent)
+{
+	t_list	*head;
+
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+	putendl_indent("[term]", indent);
+	head = node->content->term.andlst;
+	while (node->content->term.andlst)
+	{
+		print_and_or(node->content->term.andlst->content, indent + 4);
+		node->content->term.andlst = node->content->term.andlst->next;
+	}
+	node->content->term.andlst = head;
+}
+
+void	print_compound_list(t_ptree *node, int indent)
+{
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+	putendl_indent("[compound_list]", indent);
+	print_term(node->content->compound_list.term, indent + 4);
+}
+
+void	print_subshell(t_ptree *node, int indent)
+{
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+	putendl_indent("[subshell]", indent);
+	print_compound_list(node->content->subshell.compound_list, indent + 4);
+}
+
+void	print_compound_command(t_ptree *node, int indent)
+{
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+
+	putendl_indent("[compound_command]", indent);
+	print_subshell(node->content->compound_command.subshell, indent + 4);
+}
 
 void	print_command(t_ptree *node, int indent)
 {
@@ -222,5 +300,12 @@ void	print_command(t_ptree *node, int indent)
 	if (cmd->cmd->type == NT_SIMPLE_COMMAND)
 		print_simple_command(cmd->cmd, indent + 4);
 	else if (cmd->cmd->type == NT_COMPOUND_COMMAND)
-		ft_putendl("compound_command");
+		print_compound_command(cmd->cmd, indent + 4);
+}
+
+void	print_list(t_ptree *node, int indent)
+{
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+	putendl_indent("[list]", indent);
 }

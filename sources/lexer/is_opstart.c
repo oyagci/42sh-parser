@@ -14,7 +14,7 @@
 
 int				is_opstart(t_lexer *lex)
 {
-	char const		opstarts[] = { '<', '>', '|', '&', ';' };
+	char const		opstarts[] = { '<', '>', '|', '&', ';', '(', ')' };
 	size_t const	sz = sizeof(opstarts) / sizeof(char);
 	size_t			i;
 

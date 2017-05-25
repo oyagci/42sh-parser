@@ -23,8 +23,8 @@ t_ptree			*subshell(t_parser *p)
 		return (NULL);
 	if ((node = ptree_new(NT_SUBSHELL)))
 	{
-		if ((node = compound_list(p)) == (void *)ERR_SYNTAX ||
-				!(parser_expect(p, T_RBRACKET)))
+		if ((node->content->subshell.compound_list = compound_list(p)) ==
+				(void *)ERR_SYNTAX || !(parser_expect(p, T_RBRACKET)))
 		{
 			p->tlst = head;
 			ptree_free(&node);

@@ -18,11 +18,14 @@ int				add_pipeline(t_ptree *pline, t_ptree *node)
 {
 	t_list	*elem;
 
-	if ((elem = ft_lstnew(NULL, 0)))
+	if (pline)
 	{
-		elem->content = pline;
-		ft_lstpush(&node->content->and_or.pipelines, elem);
-		return (1);
+		if ((elem = ft_lstnew(NULL, 0)))
+		{
+			elem->content = pline;
+			ft_lstpush(&node->content->and_or.pipelines, elem);
+			return (1);
+		}
 	}
 	return (0);
 }
@@ -71,9 +74,10 @@ t_ptree			*and_or(t_parser *p)
 			ptree_free(&node);
 			return ((void *)ERR_SYNTAX);
 		}
-		pline->content->pipeline.type = PL_DEFAULT;
 		if (!add_pipeline(pline, node))
 			ptree_free(&node);
+		else
+			pline->content->pipeline.type = PL_DEFAULT;
 		while ((ret = add_next_pipeline(p, node)) == 1)
 			;
 		if (ret == ERR_SYNTAX)

@@ -1,6 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    # #    Makefile                                           :+:      :+:    :+:    #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
@@ -166,7 +167,8 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/separator_op.c \
 				   parser/term.c \
 				   parser/and_or.c \
-				   parser/pipeline.c
+				   parser/pipeline.c \
+				   parser/list.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
