@@ -15,8 +15,10 @@
 
 void			simple_command_free(t_spcommand *sp)
 {
-	ptree_free(&sp->prefix);
-	ptree_free(&sp->suffix);
-	ptree_free(&sp->name);
-	ptree_free(&sp->word);
+	if (sp == (void *)ERR_SYNTAX)
+		return ;
+	sp->prefix != (void *)ERR_SYNTAX ? ptree_free(&sp->prefix) : 0;
+	sp->suffix != (void *)ERR_SYNTAX ? ptree_free(&sp->suffix) : 0;
+	sp->name != (void *)ERR_SYNTAX ? ptree_free(&sp->name) : 0;
+	sp->word != (void *)ERR_SYNTAX ? ptree_free(&sp->word) : 0;
 }

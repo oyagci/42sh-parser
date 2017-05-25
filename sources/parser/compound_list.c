@@ -21,7 +21,10 @@ t_ptree			*compound_list(t_parser *p)
 	{
 		linebreak(p);
 		if ((node->content->compound_list.term = term(p)) == (void *)ERR_SYNTAX)
+		{
+			ptree_free(&node);
 			return ((void *)ERR_SYNTAX);
+		}
 		separator(p);
 	}
 	return (node);

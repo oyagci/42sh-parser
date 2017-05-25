@@ -15,6 +15,24 @@
 #include <lexer/lexer.h>
 #include <parser/parser.h>
 
+START_TEST(test_cmd_suffix_syn)
+{
+	t_token	tarr[] = {
+		{ T_LESS, "<" },
+		{ T_END, NULL },
+	};
+	t_list	*lst = get_tlst(tarr, 2);
+	t_parser p = {
+		lst,
+		NULL,
+	};
+
+	t_ptree	*suffix;
+	suffix = cmd_suffix(&p);
+	ck_assert(cmd_suffix == (void *)ERR_SYNTAX);
+}
+END_TEST
+
 START_TEST(test_cmd_suffix)
 {
 	t_token	tarr[] = {
@@ -68,6 +86,7 @@ Suite	*test_suite_cmd_suffix()
 	tc = tcase_create("parse_tree");
 	tcase_add_test(tc, test_cmd_suffix);
 	tcase_add_test(tc, test_cmd_suffix_syntax);
+	tcase_add_test(tc, test_cmd_suffix_syn);
 	suite_add_tcase(s, tc);
 	return (s);
 }

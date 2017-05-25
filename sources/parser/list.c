@@ -51,7 +51,6 @@ t_ptree			*list(t_parser *p)
 		if (ret == ERR_SYNTAX)
 		{
 			ptree_free(&node);
-			free(&node);
 			return ((void *)ERR_SYNTAX);
 		}
 	}

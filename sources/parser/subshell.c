@@ -18,6 +18,7 @@ t_ptree			*subshell(t_parser *p)
 	t_ptree	*node;
 	t_list	*head;
 
+	ft_putendl("subshell");
 	head = p->tlst;
 	if (!parser_expect(p, T_LBRACKET))
 		return (NULL);
@@ -31,5 +32,6 @@ t_ptree			*subshell(t_parser *p)
 			return ((void *)ERR_SYNTAX);
 		}
 	}
+	ft_putendl("subshell end");
 	return (node);
 }

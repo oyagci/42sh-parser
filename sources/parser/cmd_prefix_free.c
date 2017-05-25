@@ -45,6 +45,8 @@ void			cmd_prefix_free_assignements(t_list *assign)
 
 void			cmd_prefix_free(t_cmd_prefix *prefix)
 {
+	if (prefix == (void *)ERR_SYNTAX)
+		return ;
 	cmd_prefix_free_redirections(prefix->redirections);
 	cmd_prefix_free_assignements(prefix->assignements);
 }

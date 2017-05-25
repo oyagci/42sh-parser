@@ -48,7 +48,7 @@ void	print_io_file(t_ptree *node, int indent)
 	file = &node->content->io_file;
 	putendl_indent("[io_file]", indent);
 	print_io_type(file->type, indent + 2);
-	print_filename(file->filename, indent + 4);
+	print_filename(file->filename, indent + 2);
 }
 
 void	print_here_end(t_ptree *node, int indent)
@@ -63,7 +63,7 @@ void	print_io_here(t_ptree *node, int indent)
 
 	file = &node->content->io_here;
 	putendl_indent("[io_here]", indent);
-	print_here_end(file->here_end, indent + 4);
+	print_here_end(file->here_end, indent + 2);
 }
 
 void	print_io_redirect(t_ptree *node, int indent)
@@ -84,8 +84,8 @@ void	print_io_redirect(t_ptree *node, int indent)
 	ft_putnbr(redirect->io_number);
 	ft_putchar('\n');
 
-	redirect->io_file ? print_io_file(redirect->io_file, indent + 4) : 0;
-	redirect->io_here ? print_io_here(redirect->io_here, indent + 4) : 0;
+	redirect->io_file ? print_io_file(redirect->io_file, indent + 2) : 0;
+	redirect->io_here ? print_io_here(redirect->io_here, indent + 2) : 0;
 }
 
 void	print_prefix(t_ptree *node, int indent)
@@ -102,7 +102,7 @@ void	print_prefix(t_ptree *node, int indent)
 	}
 
 	putendl_indent("[cmd_prefix]", indent);
-	indent += 4;
+	indent += 2;
 	prefix = &node->content->cmd_prefix;
 	head = prefix->redirections;
 	while (prefix->redirections)
@@ -142,7 +142,7 @@ void	print_suffix(t_ptree *node, int indent)
 		suffix->words = suffix->words->next;
 	}
 	suffix->words = head;
-	indent += 4;
+	indent += 2;
 	head = suffix->redirections;
 	while (suffix->redirections)
 	{
@@ -195,7 +195,7 @@ void	print_simple_command(t_ptree *node, int indent)
 
 	putendl_indent("[simple_command]", indent);
 
-	indent += 4;
+	indent += 2;
 	spcmd = &node->content->sp_command;
 	print_prefix(spcmd->prefix, indent);
 	print_cmd_name(spcmd->name, indent);
@@ -214,7 +214,7 @@ void	print_pipe_sequence(t_ptree *node, int indent)
 	head = node->content->pipe_sequence.commands;
 	while (head)
 	{
-		print_command(head->content, indent + 4);
+		print_command(head->content, indent + 2);
 		head = head->next;
 	}
 }
@@ -224,7 +224,7 @@ void	print_pipeline(t_ptree *node, int indent)
 	if (!node || node == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[pipeline]", indent);
-	print_pipe_sequence(node->content->pipeline.pipe_sequence, indent + 4);
+	print_pipe_sequence(node->content->pipeline.pipe_sequence, indent + 2);
 }
 
 void	print_and_or(t_ptree *node, int indent)
@@ -237,7 +237,7 @@ void	print_and_or(t_ptree *node, int indent)
 	putendl_indent("[and_or]", indent);
 	while (node->content->and_or.pipelines)
 	{
-		print_pipeline(node->content->and_or.pipelines->content, indent + 4);
+		print_pipeline(node->content->and_or.pipelines->content, indent + 2);
 		node->content->and_or.pipelines = node->content->and_or.pipelines->next;
 	}
 	node->content->and_or.pipelines = head;
@@ -253,7 +253,7 @@ void	print_term(t_ptree *node, int indent)
 	head = node->content->term.andlst;
 	while (node->content->term.andlst)
 	{
-		print_and_or(node->content->term.andlst->content, indent + 4);
+		print_and_or(node->content->term.andlst->content, indent + 2);
 		node->content->term.andlst = node->content->term.andlst->next;
 	}
 	node->content->term.andlst = head;
@@ -264,7 +264,7 @@ void	print_compound_list(t_ptree *node, int indent)
 	if (!node || node == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[compound_list]", indent);
-	print_term(node->content->compound_list.term, indent + 4);
+	print_term(node->content->compound_list.term, indent + 2);
 }
 
 void	print_subshell(t_ptree *node, int indent)
@@ -272,7 +272,7 @@ void	print_subshell(t_ptree *node, int indent)
 	if (!node || node == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[subshell]", indent);
-	print_compound_list(node->content->subshell.compound_list, indent + 4);
+	print_compound_list(node->content->subshell.compound_list, indent + 2);
 }
 
 void	print_compound_command(t_ptree *node, int indent)
@@ -281,7 +281,22 @@ void	print_compound_command(t_ptree *node, int indent)
 		return ;
 
 	putendl_indent("[compound_command]", indent);
-	print_subshell(node->content->compound_command.subshell, indent + 4);
+	print_subshell(node->content->compound_command.subshell, indent + 2);
+}
+
+void	print_redirect_list(t_ptree *node, int indent)
+{
+	t_list	*head;
+
+	if (!node)
+		return ;
+
+	head = node->content->redirect_list.list;
+	while (head)
+	{
+		print_io_redirect(head->content, indent);
+		head = head->next;
+	}
 }
 
 void	print_command(t_ptree *node, int indent)
@@ -298,9 +313,12 @@ void	print_command(t_ptree *node, int indent)
 
 	putendl_indent("[command]", indent);
 	if (cmd->cmd->type == NT_SIMPLE_COMMAND)
-		print_simple_command(cmd->cmd, indent + 4);
+		print_simple_command(cmd->cmd, indent + 2);
 	else if (cmd->cmd->type == NT_COMPOUND_COMMAND)
-		print_compound_command(cmd->cmd, indent + 4);
+	{
+		print_compound_command(cmd->cmd, indent + 2);
+		print_redirect_list(cmd->redirect, indent + 2);
+	}
 }
 
 void	print_list(t_ptree *node, int indent)
@@ -313,7 +331,7 @@ void	print_list(t_ptree *node, int indent)
 	head = node->content->list.andlst;
 	while (head)
 	{
-		print_and_or(head->content, indent + 4);
+		print_and_or(head->content, indent + 2);
 		head = head->next;
 	}
 }

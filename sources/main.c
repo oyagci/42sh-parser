@@ -33,7 +33,8 @@ int				process_line(char *input)
 	if ((p->ptree = list(p)))
 		print_list(p->ptree, 0);
 	lexer_delete(&lex);
-	p->ptree != (void *)ERR_SYNTAX ? ptree_free(&p->ptree) : ft_putendl("syntax error");
+	p->ptree != (void *)ERR_SYNTAX ? ptree_free(&p->ptree) :
+		ft_putendl("syntax error");
 	free(p);
 	return (OK);
 }

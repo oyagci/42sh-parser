@@ -45,6 +45,8 @@ void			cmd_suffix_free_redirections(t_list *redirections)
 
 void			cmd_suffix_free(t_cmd_suffix *suffix)
 {
+	if (suffix == (void *)ERR_SYNTAX)
+		return ;
 	cmd_suffix_free_words(suffix->words);
 	cmd_suffix_free_redirections(suffix->redirections);
 }

@@ -27,7 +27,6 @@ int				get_io_number(t_parser *p, t_ptree *node)
 	return (0);
 }
 
-#include <stdio.h>
 t_ptree			*io_redirect(t_parser *p)
 {
 	t_ptree	*io;

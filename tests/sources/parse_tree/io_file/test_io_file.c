@@ -74,6 +74,23 @@ void		check_io_file_error(enum e_token ttype)
 	ck_assert(p.tlst != NULL);
 }
 
+START_TEST(test_io_syntax_missing)
+{
+	t_token	tarr[] = {
+		{ T_LESS, ">" },
+		{ T_END, NULL },
+	};
+	t_list	*lst = get_tlst(tarr, 2);
+	t_parser p = {
+		lst,
+		NULL,
+	};
+
+	t_ptree	*io = io_file(&p);
+	ck_assert(io == (void *)ERR_SYNTAX);
+}
+END_TEST
+
 START_TEST(test_io_file)
 {
 	check_io_file_type(IT_LESS, T_LESS);
@@ -121,6 +138,7 @@ Suite	*test_suite_io_file()
 	tcase_add_test(tc, test_io_file);
 	tcase_add_test(tc, test_io_file_syntax_error);
 	tcase_add_test(tc, test_io_syntax);
+	tcase_add_test(tc, test_io_syntax_missing);
 	suite_add_tcase(s, tc);
 	return (s);
 }

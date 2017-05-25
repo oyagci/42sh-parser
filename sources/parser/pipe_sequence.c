@@ -1,5 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe_sequence.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -52,5 +50,7 @@ t_ptree			*pipe_sequence(t_parser *p)
 			}
 		}
 	}
+	if (ret == ERR_SYNTAX)
+		ptree_free(&node);
 	return (ret != ERR_SYNTAX ? node : (void *)ERR_SYNTAX);
 }

@@ -45,5 +45,6 @@ t_ptree			*command(t_parser *p)
 		}
 		node->content->command.cmd = cmd;
 	}
+	ft_putendl("command end 3");
 	return (node);
 }

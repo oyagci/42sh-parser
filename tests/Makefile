@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 DIRPATH				= /Users/oyagci/Projects/42/42sh/
+DIRPATH				= ~/Projects/42sh/
 
 NAME				= tests.out
 CC					= clang

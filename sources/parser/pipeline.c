@@ -16,12 +16,18 @@
 t_ptree			*pipeline(t_parser *p)
 {
 	t_ptree	*node;
+	t_ptree *pseq;
 
 	node = NULL;
-	(void)p;
 	if ((node = ptree_new(NT_PIPELINE)))
 	{
-		node->content->pipeline.pipe_sequence = pipe_sequence(p);
+		pseq = pipe_sequence(p);
+		if (pseq == (void *)ERR_SYNTAX)
+		{
+			ptree_free(&node);
+			return ((void *)ERR_SYNTAX);
+		}
+		node->content->pipeline.pipe_sequence = pseq;
 	}
 	return (node);
 }

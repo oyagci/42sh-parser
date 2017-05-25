@@ -33,6 +33,25 @@ void		check_io_redirect_error(enum e_token ttype)
 	ck_assert(p.tlst != NULL);
 }
 
+START_TEST(test_io_redirect_missing)
+{
+	t_token	tarr[] = {
+		{ T_GREAT, ">" },
+		{ T_END, NULL },
+	};
+	t_list	*lst = get_tlst(tarr, 2);
+	t_parser p = {
+		lst,
+		NULL,
+	};
+
+	t_ptree	*io;
+	io = io_redirect(&p);
+
+	ck_assert(io == (void *)ERR_SYNTAX);
+}
+END_TEST
+
 START_TEST(test_io_redirect_syntax_error)
 {
 	check_io_redirect_error(T_PIPE);
@@ -133,6 +152,7 @@ Suite	*test_suite_io_redirect()
 	tcase_add_test(tc, test_io_redirect_default);
 	tcase_add_test(tc, test_io_redirect_syntax_error);
 	tcase_add_test(tc, test_io_redirect_syntax);
+	tcase_add_test(tc, test_io_redirect_missing);
 	suite_add_tcase(s, tc);
 	return (s);
 }

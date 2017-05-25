@@ -30,6 +30,11 @@ t_ptree			*compound_command(t_parser *p)
 				return ((void *)ERR_SYNTAX);
 			}
 		}
+		else
+		{
+			ptree_free(&node);
+			return((void *)ERR_SYNTAX);
+		}
 	}
 	return (node);
 }
