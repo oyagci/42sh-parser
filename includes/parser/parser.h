@@ -333,6 +333,7 @@ void								cmd_suffix_free(t_cmd_suffix *suffix);
 */
 int									add_redirection(t_parser *p, t_ptree *node);
 
+void	print_list(t_ptree *node, int indent);
 void	print_command(t_ptree *node, int indent);
 void								print_simple_command(t_ptree *node,
 		int indent);

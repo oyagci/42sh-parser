@@ -305,7 +305,15 @@ void	print_command(t_ptree *node, int indent)
 
 void	print_list(t_ptree *node, int indent)
 {
+	t_list	*head;
+
 	if (!node || node == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[list]", indent);
+	head = node->content->list.andlst;
+	while (head)
+	{
+		print_and_or(head->content, indent + 4);
+		head = head->next;
+	}
 }

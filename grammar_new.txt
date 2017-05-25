@@ -21,10 +21,10 @@ program				: linebreak { complete_commands linebreak }
 complete_commands	: complete_command { newline_list complete_command }
 				 	;
 
-complete_command	: list { separator_op list }
+complete_command	: list { SEMICOL list }
                  	;
 
-list				: and_or { separator_op and_or }
+list				: and_or { SEMICOL and_or }
 					;
 
 and_or              : pipeline { AND_IF | OR_IF linebreak pipeline }
