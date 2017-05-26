@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 15:58:52 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 14:04:11 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 14:44:28 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 void			ptree_free(t_ptree **tree)
 {
-	ft_putendl("ptree_free");
 	if ((*tree))
 	{
 		if ((*tree)->del)
