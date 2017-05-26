@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 17:40:48 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 10:37:26 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ t_ptree			*command(t_parser *p)
 			return ((void *)ERR_SYNTAX);
 		}
 		else if (cmd == NULL)
+		{
 			ptree_free(&node);
+			return (NULL);
+		}
 		if (cmd && cmd->type == NT_COMPOUND_COMMAND)
 		{
 			redir = redirect_list(p);
@@ -45,6 +48,5 @@ t_ptree			*command(t_parser *p)
 		}
 		node->content->command.cmd = cmd;
 	}
-	ft_putendl("command end 3");
 	return (node);
 }

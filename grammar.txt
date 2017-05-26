@@ -9,6 +9,7 @@
 
 %token  AND_IF    OR_IF
 %token  DLESS  DGREAT  LESSAND  GREATAND
+%token	SEMICOL
 
 /* -------------------------------------------------------
    The Grammar
