@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/11 17:19:50 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 12:30:26 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 11:50:12 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char			*ft_strerror(int err)
 		"Text file busy", "File too large", "No space left on device",
 		"Illegal seek", "Read-only file system", "Too many links"
 	};
+
 	return (err >= 1 && err <= 31 ? str[err] : str[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:51:34 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 13:16:15 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 12:27:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ t_ptree			*io_redirect(t_parser *p)
 	{
 		head = p->tlst;
 		get_io_number(p, node);
-		!(io = io_file(p)) ? (io = io_here(p)) : 0;
+		io = io_file(p);
+		!io ? io = io_here(p) : 0;
 		if (io && io != (void *)ERR_SYNTAX)
 		{
 			if (io->type == NT_IO_HERE)

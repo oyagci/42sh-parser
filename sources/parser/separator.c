@@ -6,14 +6,14 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 16:47:35 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 17:18:19 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 12:28:56 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
 
-t_ptree			*separator(t_parser	*p)
+t_ptree			*separator(t_parser *p)
 {
 	t_ptree	*node;
 
