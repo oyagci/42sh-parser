@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 12:28:03 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 16:35:01 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_ptree			*command(t_parser *p)
 	{
 		if (!(cmd = simple_command(p)))
 			cmd = compound_command(p);
-		if (cmd == (void *)ERR_SYNTAX)
+		if (!cmd || cmd == (void *)ERR_SYNTAX)
 		{
 			ptree_free(&node);
 			return ((void *)ERR_SYNTAX);

@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/26 15:58:01 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/26 16:56:23 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -176,7 +176,7 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/compound_command_free.c \
 				   parser/term_free.c
 
-_TEST_FILES_	= get_tlst.c main.c
+_TEST_FILES_	= get_tlst.c main.c prepare_parser.c
 
 _TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
 				   parse_tree/filename/test_filename.c \
@@ -186,7 +186,8 @@ _TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
 				   parse_tree/cmd_suffix/test_cmd_suffix.c \
 				   parse_tree/io_redirect/test_io_redirect.c \
 				   parse_tree/cmd_prefix/test_cmd_prefix.c \
-				   parse_tree/command/test_command.c
+				   parse_tree/command/test_command.c \
+				   parse_tree/simple_command/test_simple_command.c
 
 _TEST_FILES_	+= lexer/test_lexer.c \
 				   lexer/test_lexer_simple_command.c
@@ -202,8 +203,20 @@ TEST_OBJ		= $(SOURCES:.c=.o)
 LIBS				= -L $(DIRPATH)/libft -lft -lcheck -ltermcap
 INCLUDES			= -I $(DIRPATH)/includes/ -I $(DIRPATH)/libft/includes -I ./includes -I /Users/oyagci/.brew/include 
 
-all: $(TEST_OBJ) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(TEST_OBJ) -o $(NAME) -L /Users/oyagci/.brew/lib $(LIBS) $(INCLUDES)
+all: $(NAME)
+
+$(NAME): $(TEST_OBJ)
+	@echo 'Linking $(NAME)'
+	@$(CC) $(CFLAGS) $(OBJ) $(TEST_OBJ) -o $(NAME) -L /Users/oyagci/.brew/lib $(LIBS) $(INCLUDES)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@echo 'Building $<'
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+
+clean:
+	rm $(TEST_OBJ)
+
+fclean: clean
+	rm $(NAME)
+
+re: fclean all
