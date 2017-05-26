@@ -6,12 +6,11 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 10:30:00 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/24 12:13:06 by oyagci           ###   ########.fr        #
+#    Updated: 2017/05/26 15:58:01 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 DIRPATH				= /Users/oyagci/Projects/42/42sh/
-DIRPATH				= ~/Projects/42sh/
 
 NAME				= tests.out
 CC					= clang
@@ -152,9 +151,30 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/cmd_word_free.c \
 				   parser/cmd_prefix_free.c \
 				   parser/cmd_suffix_free.c \
-				   parser/redirect_list.c
-
-###
+				   parser/linebreak.c \
+				   parser/newline_list.c \
+				   parser/command.c \
+				   parser/pipe_sequence.c \
+				   parser/compound_command.c \
+				   parser/redirect_list.c \
+				   parser/subshell.c \
+				   parser/separator.c \
+				   parser/compound_list.c \
+				   parser/separator_op.c \
+				   parser/term.c \
+				   parser/and_or.c \
+				   parser/pipeline.c \
+				   parser/list.c \
+				   parser/and_or_free.c \
+				   parser/complete_command_free.c \
+				   parser/list_free.c \
+				   parser/pipeline_free.c \
+				   parser/pipe_sequence_free.c \
+				   parser/command_free.c \
+				   parser/subshell_free.c \
+				   parser/compound_list_free.c \
+				   parser/compound_command_free.c \
+				   parser/term_free.c
 
 _TEST_FILES_	= get_tlst.c main.c
 
@@ -166,11 +186,10 @@ _TEST_FILES_	+= parse_tree/here_end/test_here_end.c \
 				   parse_tree/cmd_suffix/test_cmd_suffix.c \
 				   parse_tree/io_redirect/test_io_redirect.c \
 				   parse_tree/cmd_prefix/test_cmd_prefix.c \
+				   parse_tree/command/test_command.c
 
 _TEST_FILES_	+= lexer/test_lexer.c \
 				   lexer/test_lexer_simple_command.c
-
-###
 
 TEST_FILES		= $(addprefix sources/,$(_TEST_FILES_))
 
@@ -178,7 +197,13 @@ SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
 SOURCES			+= $(TEST_FILES)
 
-INCLUDES			= -I $(DIRPATH)/includes/ -I $(DIRPATH)/libft/includes -L $(DIRPATH)/libft -lft -I ./includes
+TEST_OBJ		= $(SOURCES:.c=.o)
 
-all:
-	@$(CC) $(CFLAGS) $(SOURCES) -o $(NAME) -lcheck -ltermcap -I /Users/oyagci/.brew/include -L /Users/oyagci/.brew/lib $(INCLUDES)
+LIBS				= -L $(DIRPATH)/libft -lft -lcheck -ltermcap
+INCLUDES			= -I $(DIRPATH)/includes/ -I $(DIRPATH)/libft/includes -I ./includes -I /Users/oyagci/.brew/include 
+
+all: $(TEST_OBJ) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(TEST_OBJ) -o $(NAME) -L /Users/oyagci/.brew/lib $(LIBS) $(INCLUDES)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
