@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 17:27:57 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 14:21:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ struct								s_ptree
 {
 	enum e_ntype	type;
 	union u_node	*content;
+	void			(*del)(union u_node *);
 };
 
 struct								s_root
@@ -298,8 +299,8 @@ t_ptree								*cmd_word(t_parser *p);
 t_ptree								*cmd_prefix(t_parser *p);
 t_ptree								*cmd_suffix(t_parser *p);
 t_ptree								*io_file(t_parser *p);
-t_ptree								*redirect_list(t_parser *p);
 t_ptree								*io_here(t_parser *p);
+t_ptree								*redirect_list(t_parser *p);
 t_ptree								*here_end(t_parser *p);
 t_ptree								*io_redirect(t_parser *p);
 t_ptree								*filename(t_parser *p);
@@ -315,18 +316,27 @@ t_ptree								*separator(t_parser	*p);
 t_ptree								*separator_op(t_parser *p);
 t_ptree								*pipe_sequence(t_parser *p);
 
-void								simple_command_free(t_spcommand *sp);
-void								cmd_name_free(t_cmd_name *name);
-void								cmd_word_free(t_cmd_word *word);
-void								io_here_free(t_io_here *here);
-void								here_end_free(t_here_end *hend);
-void								filename_free(t_filename *f);
-void								io_file_free(t_io_file *f);
-void								io_redirect_free(t_io_redirect *redirect);
-void								redirect_list_free(
-		t_redirect_list *redirect);
-void								cmd_prefix_free(t_cmd_prefix *prefix);
-void								cmd_suffix_free(t_cmd_suffix *suffix);
+void								and_or_free(union u_node *and_or);
+void								complete_command_free(union u_node *content);
+void								list_free(union u_node *content);
+void								simple_command_free(union u_node *sp);
+void								cmd_name_free(union u_node *name);
+void								cmd_word_free(union u_node *word);
+void								cmd_prefix_free(union u_node *prefix);
+void								cmd_suffix_free(union u_node *suffix);
+void								io_file_free(union u_node *f);
+void								io_here_free(union u_node *here);
+void								redirect_list_free(union u_node *redirect);
+void								here_end_free(union u_node *hend);
+void								io_redirect_free(union u_node *redirect);
+void								filename_free(union u_node *f);
+void								command_free(union u_node *content);
+void								subshell_free(union u_node *content);
+void								pipeline_free(union u_node *content);
+void								compound_command_free(union u_node *content);
+void								compound_list_free(union u_node *content);
+void								pipe_sequence_free(union u_node *content);
+void								term_free(union u_node *content);
 
 /*
 ** cmd_suffix.c
@@ -335,7 +345,6 @@ int									add_redirection(t_parser *p, t_ptree *node);
 
 void	print_list(t_ptree *node, int indent);
 void	print_command(t_ptree *node, int indent);
-void								print_simple_command(t_ptree *node,
-		int indent);
+void	print_simple_command(t_ptree *node, int indent);
 
 #endif
