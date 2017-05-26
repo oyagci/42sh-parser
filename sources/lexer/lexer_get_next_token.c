@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:43:59 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 12:35:58 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 11:03:56 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int				lexer_get_next_token(t_lexer *lex)
 	if (*lex->input_p == '\0')
 	{
 		if (lexer_symbol_top(lex) != S_END)
-			ft_putendl("Huh... Terminate your quotes dude!"); /* TODO */
+			;
 		lexer_delimite_current_token(lex);
 		return (1);
 	}

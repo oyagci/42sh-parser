@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 10:53:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 10:53:20 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 11:05:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_ptree			*pipe_sequence(t_parser *p)
 		else
 			ptree_free(&node);
 	}
-	if (ret == ERR_SYNTAX)
+	if (ret != 1)
 		ptree_free(&node);
 	return (ret != ERR_SYNTAX ? node : (void *)ERR_SYNTAX);
 }
