@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:43:29 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:33:04 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 10:12:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ t_ptree			*list(t_parser *p)
 	{
 		if ((ret = add_to_list(p, node)) == 1)
 		{
-			if (parser_expect(p, T_SEMICOL))
-				while ((ret = add_to_list(p, node)) == 1)
-					if (!(parser_expect(p, T_SEMICOL)))
-						break ;
+			while (parser_expect(p, T_SEMICOL))
+			{
+				if ((ret = add_to_list(p, node)) == ERR_SYNTAX)
+					break ;
+			}
 		}
 		if (ret == ERR_SYNTAX)
 		{
