@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_end_free.c                                    :+:      :+:    :+:   */
+/*   and_or_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/22 15:10:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 13:16:41 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/26 13:28:19 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/26 13:48:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <stdlib.h>
 
-void			here_end_free(union u_node *hend)
+void			and_or_free(union u_node *content)
 {
-	free(hend->here_end.data);
+	t_and_or	*aor;
+	t_list		*next;
+
+	aor = &content->and_or;
+	while (aor->pipelines)
+	{
+		next = aor->pipelines->next;
+		ptree_free((t_ptree **)&aor->pipelines->content);
+		free(aor->pipelines);
+		aor->pipelines = next;
+	}
 }

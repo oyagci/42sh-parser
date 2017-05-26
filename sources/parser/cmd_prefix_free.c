@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 16:21:55 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 12:34:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 13:20:40 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			cmd_prefix_free_redirections(t_list *redirections)
 	{
 		next = redirections->next;
 		ptree = redirections->content;
-		io_redirect_free(&ptree->content->io_redirect);
+		io_redirect_free(ptree->content);
 		free(ptree->content);
 		free(ptree);
 		free(redirections);
@@ -43,8 +43,11 @@ void			cmd_prefix_free_assignements(t_list *assign)
 	}
 }
 
-void			cmd_prefix_free(t_cmd_prefix *prefix)
+void			cmd_prefix_free(union u_node *content)
 {
+	t_cmd_prefix *prefix;
+
+	prefix = &content->cmd_prefix;
 	if (prefix == (void *)ERR_SYNTAX)
 		return ;
 	cmd_prefix_free_redirections(prefix->redirections);

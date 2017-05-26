@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_end_free.c                                    :+:      :+:    :+:   */
+/*   complete_command_free.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/22 15:10:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 13:16:41 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/26 13:31:58 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/26 13:44:37 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
-#include <stdlib.h>
 
-void			here_end_free(union u_node *hend)
+void			complete_command_free(union u_node *content)
 {
-	free(hend->here_end.data);
+	t_complete_command	*cmd;
+
+	cmd = &content->cpcmd;
+	ptree_free(&cmd->list);
 }

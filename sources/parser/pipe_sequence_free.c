@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_end_free.c                                    :+:      :+:    :+:   */
+/*   pipe_sequence_free.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/22 15:10:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 13:16:41 by oyagci           ###   ########.fr       */
+/*   Created: 2017/05/26 13:54:58 by oyagci            #+#    #+#             */
+/*   Updated: 2017/05/26 14:03:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <stdlib.h>
 
-void			here_end_free(union u_node *hend)
+void			pipe_sequence_free(union u_node *content)
 {
-	free(hend->here_end.data);
+	t_pipe_sequence	*sequence;
+	t_list			*next;
+
+	sequence = &content->pipe_sequence;
+	while (sequence->commands)
+	{
+		next = sequence->commands->next;
+		ptree_free((t_ptree **)&sequence->commands->content);
+		free(sequence->commands);
+		sequence->commands = next;
+	}
 }
