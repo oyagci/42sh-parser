@@ -6,14 +6,12 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 10:37:26 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 11:45:19 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
-
-#include <stdio.h>
 
 t_ptree			*command(t_parser *p)
 {

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/10 16:52:52 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/26 13:46:34 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/26 11:45:41 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <libft.h>
 #include <shell/shell.h>
 #include <string.h>
-#include <stdio.h>
 
 static void		usage(void)
 {
