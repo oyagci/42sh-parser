@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 17:34:24 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/29 14:08:30 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,19 @@ int				process_line(char *input)
 		return (ERR);
 	p = ft_memalloc(sizeof(t_parser));
 	p->tlst = lex->tlst;
-	if ((p->ptree = list(p)))
-		print_list(p->ptree, 0);
-	lexer_delete(&lex);
-	p->ptree != (void *)ERR_SYNTAX ? ptree_free(&p->ptree) :
+	p->ptree = list(p);
+	if (p->ptree == (void *)ERR_SYNTAX || p->tlst->next)
 		ft_putendl("syntax error");
+	else
+	{
+		print_list(p->ptree, 0);
+		ptree_free(&p->ptree);
+		free(p);
+		lexer_delete(&lex);
+		return (OK);
+	}
 	free(p);
+	lexer_delete(&lex);
 	return (OK);
 }
 
