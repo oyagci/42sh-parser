@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 13:18:30 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 17:27:14 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/31 17:31:22 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int				cmds_exec_and_or(t_ptree *andor)
 				ret = cmds_exec_pipeline((t_ptree *)andlst->content);
 			else
 				break ;
-			andlst = andlst->next;
 		}
+		andlst = andlst->next;
 	}
 	return (ret);
 }
