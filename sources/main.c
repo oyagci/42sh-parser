@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/29 14:12:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/31 11:14:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <libft.h>
 #include <parser/parser.h>
 #include <stdlib.h>
+#include <commands/commands.h>
 
 int				process_line(char *input)
 {
@@ -35,7 +36,8 @@ int				process_line(char *input)
 		ft_putendl("syntax error");
 	else
 	{
-		print_list(p->ptree, 0);
+		cmds_exec(p->ptree);
+		//print_list(p->ptree, 0);
 		ptree_free(&p->ptree);
 	}
 	free(p);
