@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 14:42:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 16:58:50 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/31 17:18:45 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int				cmds_exec_pipeline(t_ptree *pline)
 		execve_pipeline(process);
 		ft_putstr_fd("Commmand not found: ", 2);
 		ft_putendl_fd(process->argv[0], 2);
-		exit(0);
+		exit(1);
 	}
 	else
 		waitpid(pid, &ret, WUNTRACED);
