@@ -54,7 +54,8 @@ int			execve_pipeline(t_process *p)
 	while (p->next)
 	{
 		pipe(fd);
-		execve_fd(in, fd[1], p, fd[0]);
+		if (execve_fd(in, fd[1], p, fd[0]) == 127)
+			return (127);
 		close(fd[1]);
 		in = fd[0];
 		p = p->next;
