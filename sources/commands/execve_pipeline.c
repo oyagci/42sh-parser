@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 12:53:05 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 16:40:36 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/01 13:06:05 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <commands/commands.h>
+#include <environ/environ.h>
 
 char		*base64[] = { "base64", "/dev/urandom", NULL };
 char		*head[] = { "head", "-c", "1000", NULL };
@@ -37,7 +38,8 @@ pid_t		execve_fd(int in, int out, t_process *p, int to_close)
 		}
 		if (to_close != 0)
 			close(to_close);
-		return (execve(p->argv[0], p->argv, NULL));
+		execve(p->argv[0], p->argv, environ_get_str());
+		exit(127);
 	}
 	else
 		return (pid);
@@ -62,5 +64,5 @@ int			execve_pipeline(t_process *p)
 		dup2(in, 0);
 		close(in);
 	}
-	return (execve(p->argv[0], p->argv, NULL));
+	return (execve(p->argv[0], p->argv, environ_get_str()));
 }
