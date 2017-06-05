@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 12:53:05 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/01 14:06:08 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 15:01:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ char		*add_pathcomponents(char *a, char *b)
 	}
 	ft_strcat(path, b);
 	return (path);
-}
-
-int			bin_exists(char *path)
-{
-	return (access(path, F_OK | X_OK) == 0);
 }
 
 int			find_path(char **name)

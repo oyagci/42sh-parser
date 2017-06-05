@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
-#    Updated: 2017/06/01 14:19:09 by oyagci           ###   ########.fr        #
+#    Updated: 2017/06/05 15:02:13 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -188,7 +188,8 @@ _FILES_			+= commands/cmds_exec.c \
 				   commands/cmds_exec_command.c \
 				   commands/cmds_exec_compound_command.c \
 				   commands/cmds_simple_command_process.c \
-				   commands/execve_pipeline.c
+				   commands/execve_pipeline.c \
+				   commands/bin_exists.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

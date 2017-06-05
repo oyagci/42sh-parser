@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 12:59:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 16:40:46 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 15:01:57 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int				cmds_exec_compound_command(t_ptree *cpcmd);
 void			launch_process(t_process *p, int in, int out, int err);
 void			perform_job(t_job *j);
 int				execve_pipeline(t_process *p);
+int				bin_exists(char *path);
 
 #endif
