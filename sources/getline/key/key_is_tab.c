@@ -6,17 +6,13 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 16:30:16 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/27 16:34:02 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 11:14:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
-int				key_is_tab(const unsigned char *const buffer)
+int				key_is_tab(unsigned int const  buffer)
 {
-	unsigned char const	key[] = { 9, 0, 0, 0, 0, 0, 0, 0 };
+	unsigned int const	value = 0x9;
 
-	if (ft_memcmp(key, buffer, 8) == 0)
-		return (TRUE);
-	return (FALSE);
+	return (buffer == value);
 }

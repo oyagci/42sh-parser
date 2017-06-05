@@ -6,17 +6,13 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 14:04:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/25 15:19:16 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 11:14:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
-int				key_is_page_up(const unsigned char *const buffer)
+int				key_is_page_up(unsigned int const buffer)
 {
-	unsigned char const	key[] = { 27, 91, 53, 126, 0, 0, 0, 0 };
+	unsigned int const	value = 0x7e355b1b;
 
-	if (ft_memcmp(key, buffer, 8) == 0)
-		return (TRUE);
-	return (FALSE);
+	return (buffer == value);
 }
