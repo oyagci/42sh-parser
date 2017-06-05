@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:42:48 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 15:03:25 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/01 14:09:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ char		**get_spcmd_av(t_spcommand *spcmd)
 		elem->content = ft_strdup(spcmd->name->content->cmd_name.data);
 		ft_lstpush(&avlst, elem);
 	}
+	else if (spcmd->word)
+	{
+		elem = ft_lstnew(NULL, 0);
+		elem->content = ft_strdup(spcmd->word->content->cmd_word.data);
+		ft_lstpush(&avlst, elem);
+	}
+	else
+		return (NULL);
 	if ((elem = get_spcmd_suffixes(spcmd->suffix)))
 		ft_lstpush(&avlst, elem);
 	return (ft_lststr(avlst));

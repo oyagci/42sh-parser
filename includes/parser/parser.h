@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 14:21:47 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:38:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,8 @@ t_ptree								*separator_op(t_parser *p);
 t_ptree								*pipe_sequence(t_parser *p);
 
 void								and_or_free(union u_node *and_or);
-void								complete_command_free(union u_node *content);
+void								complete_command_free(
+		union u_node *content);
 void								list_free(union u_node *content);
 void								simple_command_free(union u_node *sp);
 void								cmd_name_free(union u_node *name);
@@ -333,7 +334,8 @@ void								filename_free(union u_node *f);
 void								command_free(union u_node *content);
 void								subshell_free(union u_node *content);
 void								pipeline_free(union u_node *content);
-void								compound_command_free(union u_node *content);
+void								compound_command_free(
+		union u_node *content);
 void								compound_list_free(union u_node *content);
 void								pipe_sequence_free(union u_node *content);
 void								term_free(union u_node *content);
@@ -343,8 +345,9 @@ void								term_free(union u_node *content);
 */
 int									add_redirection(t_parser *p, t_ptree *node);
 
-void	print_list(t_ptree *node, int indent);
-void	print_command(t_ptree *node, int indent);
-void	print_simple_command(t_ptree *node, int indent);
+void								print_list(t_ptree *node, int indent);
+void								print_command(t_ptree *node, int indent);
+void								print_simple_command(
+		t_ptree *node, int indent);
 
 #endif

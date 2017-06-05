@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:02:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 13:09:56 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:51:11 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,18 @@
 int				tilde_expansion(t_token *t)
 {
 	(void)t;
-	/* TODO */
 	return (OK);
 }
 
 int				parameter_expansion(t_token *t)
 {
 	(void)t;
-	/* TODO */
 	return (OK);
 }
 
 int				quote_removal(t_token *t)
 {
 	(void)t;
-	/* TODO */
 	return (OK);
 }
 

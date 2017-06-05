@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/31 17:16:38 by oyagci           ###   ########.fr        #
+#    Updated: 2017/06/01 14:19:09 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ _FILES_			+= getline/line/line_grow_if_needed.c \
 				   getline/line/line_down.c \
 				   getline/line/line_copy.c \
 				   getline/line/ln_putc.c \
+				   getline/line/ln_putstr.c \
 				   getline/line/line_up.c
 
 _FILES_			+= getline/line/autocomplete/get_current_word.c \

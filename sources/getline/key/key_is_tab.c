@@ -6,11 +6,11 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 16:30:16 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 11:14:50 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:54:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int				key_is_tab(unsigned int const  buffer)
+int				key_is_tab(unsigned int const buffer)
 {
 	unsigned int const	value = 0x9;
 

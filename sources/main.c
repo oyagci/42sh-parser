@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 12:48:14 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:53:55 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int				process_line(char *input)
 	else
 	{
 		cmds_exec(p->ptree);
-		//print_list(p->ptree, 0);
 		ptree_free(&p->ptree);
 	}
 	free(p);

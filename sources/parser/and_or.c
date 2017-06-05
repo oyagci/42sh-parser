@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 12:50:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 16:53:36 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:53:33 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,24 @@ t_ptree			*and_or(t_parser *p)
 	t_ptree			*pline;
 	int				ret;
 
-	if ((node = ptree_new(NT_AND_OR)))
+	if (!(node = ptree_new(NT_AND_OR)))
+		return (NULL);
+	if ((pline = pipeline(p)) == (void *)ERR_SYNTAX)
 	{
-		if ((pline = pipeline(p)) == (void *)ERR_SYNTAX)
+		ptree_free(&node);
+		return ((void *)ERR_SYNTAX);
+	}
+	if (!add_pipeline(pline, node))
+		ptree_free(&node);
+	else
+	{
+		pline->content->pipeline.type = PL_DEFAULT;
+		while ((ret = add_next_pipeline(p, node)) == 1)
+			;
+		if (ret == ERR_SYNTAX)
 		{
 			ptree_free(&node);
 			return ((void *)ERR_SYNTAX);
-		}
-		if (!add_pipeline(pline, node))
-			ptree_free(&node);
-		else
-		{
-			pline->content->pipeline.type = PL_DEFAULT;
-			while ((ret = add_next_pipeline(p, node)) == 1)
-				;
-			if (ret == ERR_SYNTAX)
-			{
-				ptree_free(&node);
-				return ((void *)ERR_SYNTAX);
-			}
 		}
 	}
 	return (node);

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 12:28:20 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 13:07:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:55:05 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int				getline_process_buffer(unsigned int buffer, t_line *l)
 	return (ret);
 }
 
-#include <stdio.h>
 int				ft_getline(char **line)
 {
 	unsigned int	c;

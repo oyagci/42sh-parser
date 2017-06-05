@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 12:53:05 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/01 13:06:05 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/01 14:06:08 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,65 @@
 #include <commands/commands.h>
 #include <environ/environ.h>
 
-char		*base64[] = { "base64", "/dev/urandom", NULL };
-char		*head[] = { "head", "-c", "1000", NULL };
-char		*grep[] = { "grep", "42", NULL };
+char		**get_paths(void)
+{
+	char	*envpath;
+
+	if ((envpath = environ_getvalue("PATH")))
+		return (ft_strsplit(envpath, ':'));
+	else
+		return (ft_memalloc(sizeof(char **)));
+}
+
+char		*add_pathcomponents(char *a, char *b)
+{
+	char	*path;
+	size_t	len;
+
+	len = ft_strlen(a);
+	if (a[len - 1] == '/')
+	{
+		path = ft_strnew(ft_strlen(a) + ft_strlen(b));
+		ft_strcpy(path, a);
+	}
+	else
+	{
+		path = ft_strnew(len + ft_strlen(b));
+		ft_strcpy(path, a);
+		path[len] = '/';
+	}
+	ft_strcat(path, b);
+	return (path);
+}
+
+int			bin_exists(char *path)
+{
+	return (access(path, F_OK | X_OK) == 0);
+}
+
+int			find_path(char **name)
+{
+	char	**paths;
+	char	*path;
+	size_t	i;
+
+	if (ft_strchr(*name, '/'))
+		return (1);
+	paths = get_paths();
+	i = 0;
+	while (paths[i] != 0)
+	{
+		path = add_pathcomponents(paths[i], *name);
+		if (bin_exists(path))
+		{
+			free(*name);
+			*name = path;
+			return (1);
+		}
+		i += 1;
+	}
+	return (0);
+}
 
 pid_t		execve_fd(int in, int out, t_process *p, int to_close)
 {
@@ -54,7 +110,7 @@ int			execve_pipeline(t_process *p)
 	while (p->next)
 	{
 		pipe(fd);
-		if (execve_fd(in, fd[1], p, fd[0]) == 127)
+		if (!find_path(p->argv) || execve_fd(in, fd[1], p, fd[0]) == 127)
 			return (127);
 		close(fd[1]);
 		in = fd[0];
@@ -65,5 +121,7 @@ int			execve_pipeline(t_process *p)
 		dup2(in, 0);
 		close(in);
 	}
+	if (!find_path(p->argv))
+		return (127);
 	return (execve(p->argv[0], p->argv, environ_get_str()));
 }

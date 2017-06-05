@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 16:58:00 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/01 14:36:48 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:33:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			line_print(t_line *line)
 {
 	ln_reset_cursor_position(line);
 	tputs(tgetstr("cd", NULL), 1, &ft_putc);
-	ln_putstr("hello$ ", line);
+	ln_putstr("$ ", line);
 	ln_putstr(line->content, line);
 	ln_putcursor(line);
 }

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 13:18:30 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 17:31:22 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:59:34 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,12 @@ int				cmds_exec_and_or(t_ptree *andor)
 	andlst = andlst->next;
 	while (andlst)
 	{
-		if (((t_ptree *)andlst->content)->content->pipeline.type == PL_AND_IF)
-		{
-			if (ret == 0)
-				ret = cmds_exec_pipeline((t_ptree *)andlst->content);
-			else
-				break ;
-		}
-		else if (((t_ptree *)andlst->content)->content->pipeline.type == PL_OR_IF)
-		{
-			if (ret != 0)
-				ret = cmds_exec_pipeline((t_ptree *)andlst->content);
-			else
-				break ;
-		}
+		if (((t_ptree *)andlst->content)->content->pipeline.type == PL_AND_IF && ret == 0)
+			ret = cmds_exec_pipeline((t_ptree *)andlst->content);
+		else if (((t_ptree *)andlst->content)->content->pipeline.type == PL_OR_IF && ret != 0)
+			ret = cmds_exec_pipeline((t_ptree *)andlst->content);
+		else
+			break ;
 		andlst = andlst->next;
 	}
 	return (ret);
