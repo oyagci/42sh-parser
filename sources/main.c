@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/31 11:14:23 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 12:48:14 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void			shell(void)
 			ft_putendl("ALERT: An error occured!");
 			break ;
 		}
-		if (ft_strequ("exit", line))
-			run = 0;
 		ft_strdel(&line);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 13:56:52 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/28 10:27:42 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 12:21:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <getline/key.h>
 #include <libft.h>
 
-static t_keycode	get_key(unsigned char *buffer)
+static t_keycode	get_key(unsigned int c)
 {
 	const t_key_funcs	funcs[] = { { KEYCODE_UP, key_is_up },
 		{ KEYCODE_END, key_is_end }, { KEYCODE_HOME, key_is_home },
@@ -34,7 +34,7 @@ static t_keycode	get_key(unsigned char *buffer)
 	i = 0;
 	while (funcs[i].keycode != KEYCODE_NONE)
 	{
-		if (funcs[i].f(buffer))
+		if (funcs[i].f(c))
 			return (funcs[i].keycode);
 		i += 1;
 	}
@@ -66,7 +66,7 @@ static int			process_key_regular(t_keycode keycode, t_line *l)
 	return (0);
 }
 
-int					process_key(unsigned char *buffer, t_line *l)
+int					process_key(unsigned int buffer, t_line *l)
 {
 	t_keycode keycode;
 
@@ -79,8 +79,6 @@ int					process_key(unsigned char *buffer, t_line *l)
 			l->index += 1;
 		else if (keycode == KEYCODE_BACKSPACE && l->index > 0)
 			line_delchar(l);
-		else if (keycode == KEYCODE_NONE && ft_isprint(*buffer))
-			line_addchar(buffer, l);
 		else if (keycode == KEYCODE_ENTER)
 		{
 			linehist_reset_index();
@@ -88,6 +86,8 @@ int					process_key(unsigned char *buffer, t_line *l)
 		}
 		else if (keycode == KEYCODE_CTRL_D && l->len == 0)
 			return (-2);
+		else if (keycode == KEYCODE_NONE)
+			line_addchar(buffer, l);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 12:29:05 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/28 13:05:23 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 12:18:44 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,21 @@
 
 typedef struct	s_line
 {
-	size_t		x;
-	size_t		y;
+	size_t			x;
+	size_t			y;
 
-	char		*content;
-	size_t		index;
-	size_t		len;
-	size_t		max_len;
+	char			*content;
+	size_t			index;
+	size_t			len;
+	size_t			max_len;
 }				t_line;
 
 int				ln_putc(char c, t_line *line_info);
+int				ln_putstr(char *s, t_line *line_info);
 int				ft_getline(char **line);
 int				ft_putc(int c);
 
-int				line_addchar(unsigned char *buffer, t_line *l);
+int				line_addchar(unsigned int buffer, t_line *l);
 void			line_autocomplete(t_line *line);
 int				line_grow_if_needed(t_line *l);
 void			line_goto_begin(t_line *line);
@@ -47,7 +48,7 @@ void			line_copy(t_line *line);
 void			line_up(t_line *line);
 size_t			line_size(void);
 
-int				process_key(unsigned char *buffer, t_line *l);
+int				process_key(unsigned int buffer, t_line *l);
 
 void			getline_unsetraw(void);
 void			getline_setraw(void);

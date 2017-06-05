@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 17:02:05 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/27 16:30:04 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 11:15:38 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,29 @@ typedef	struct s_key_funcs	t_key_funcs;
 struct						s_key_funcs
 {
 	t_keycode				keycode;
-	int						(*f)(const unsigned char *const);
+	int						(*f)(unsigned int);
 };
 
-int							key_is_backspace(const unsigned char *const buffer);
-int							key_is_page_down(const unsigned char *const buffer);
-int							key_is_page_up(const unsigned char *const buffer);
-int							key_is_delete(const unsigned char *const buffer);
-int							key_is_ctrl_a(const unsigned char *const buffer);
-int							key_is_ctrl_b(const unsigned char *const buffer);
-int							key_is_ctrl_d(const unsigned char *const buffer);
-int							key_is_ctrl_e(const unsigned char *const buffer);
-int							key_is_ctrl_f(const unsigned char *const buffer);
-int							key_is_ctrl_w(const unsigned char *const buffer);
-int							key_is_alt_w(const unsigned char *const buffer);
-int							key_is_alt_v(const unsigned char *const buffer);
-int							key_is_alt_c(const unsigned char *const buffer);
-int							key_is_enter(const unsigned char *const buffer);
-int							key_is_right(const unsigned char *const buffer);
-int							key_is_left(const unsigned char *const buffer);
-int							key_is_down(const unsigned char *const buffer);
-int							key_is_home(const unsigned char *const buffer);
-int							key_is_end(const unsigned char *const buffer);
-int							key_is_tab(const unsigned char *const buffer);
-int							key_is_up(const unsigned char *const buffer);
+int							key_is_backspace(unsigned int buffer);
+int							key_is_page_down(unsigned int buffer);
+int							key_is_page_up(unsigned int buffer);
+int							key_is_delete(unsigned int buffer);
+int							key_is_ctrl_a(unsigned int buffer);
+int							key_is_ctrl_b(unsigned int buffer);
+int							key_is_ctrl_d(unsigned int buffer);
+int							key_is_ctrl_e(unsigned int buffer);
+int							key_is_ctrl_f(unsigned int buffer);
+int							key_is_ctrl_w(unsigned int buffer);
+int							key_is_alt_w(unsigned int buffer);
+int							key_is_alt_v(unsigned int buffer);
+int							key_is_alt_c(unsigned int buffer);
+int							key_is_enter(unsigned int buffer);
+int							key_is_right(unsigned int buffer);
+int							key_is_left(unsigned int buffer);
+int							key_is_down(unsigned int buffer);
+int							key_is_home(unsigned int buffer);
+int							key_is_end(unsigned int buffer);
+int							key_is_tab(unsigned int buffer);
+int							key_is_up(unsigned int buffer);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 12:28:20 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/26 14:52:41 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 13:07:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_line			g_line_info;
 void			sigint_reset_line(int signal)
 {
 	(void)signal;
-	ft_strclr(g_line_info.content);
+	*g_line_info.content = 0;
 	ft_putchar('\n');
 	print_prompt(&g_line_info);
 }
 
-int				getline_process_buffer(unsigned char *buffer, t_line *l)
+int				getline_process_buffer(unsigned int buffer, t_line *l)
 {
 	int ret;
 
@@ -41,9 +41,10 @@ int				getline_process_buffer(unsigned char *buffer, t_line *l)
 	return (ret);
 }
 
+#include <stdio.h>
 int				ft_getline(char **line)
 {
-	unsigned char	buffer[8];
+	unsigned int	c;
 	int				ret;
 
 	getline_setraw();
@@ -51,21 +52,20 @@ int				ft_getline(char **line)
 	print_prompt(&g_line_info);
 	while (42)
 	{
-		ft_bzero(buffer, sizeof(buffer));
-		if (read(STDIN_FILENO, buffer, 8) <= 0)
+		c = 0;
+		if (read(STDIN_FILENO, &c, sizeof(unsigned int)) <= 0)
 			return (-1);
-		ret = getline_process_buffer(buffer, &g_line_info);
-		if (ret == 0)
+		if ((ret = getline_process_buffer(c, &g_line_info)) == 0)
 			break ;
-		if (ret == -2)
+		else if (ret == -2)
 		{
-			ft_strdel(&g_line_info.content);
+			free(g_line_info.content);
+			g_line_info.content = 0;
 			return (-1);
 		}
 	}
 	getline_unsetraw();
 	ft_putchar('\n');
 	*line = g_line_info.content;
-	linehist_add(g_line_info.content);
 	return (0);
 }
