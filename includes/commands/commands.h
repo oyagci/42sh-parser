@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 12:59:08 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 15:01:57 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/07 16:17:21 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,10 @@ void			launch_process(t_process *p, int in, int out, int err);
 void			perform_job(t_job *j);
 int				execve_pipeline(t_process *p);
 int				bin_exists(char *path);
+int				cmds_exec_single_command(t_process *p);
+int				check_if_signal(int ret);
+int				run_builtin(char **argv);
+int				find_path(char **name);
+int				is_builtin(char *name);
 
 #endif

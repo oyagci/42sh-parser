@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 14:42:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 14:55:43 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/07 15:18:17 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,41 @@ int				check_if_signal(int ret)
 	return (0);
 }
 
-int				cmds_exec_pipeline(t_ptree *pline)
+int				cmds_exec_pipeline_multi(t_process *p)
 {
-	t_process	*proc;
-	pid_t		pid;
-	int			ret;
+	pid_t	pid;
+	int		ret;
 
-	ret = 0;
-	pid = fork();
-	if (pid == 0)
+	if ((pid = fork()) == 0)
 	{
-		proc = cmds_exec_pipe_sequence(pline->content->pipeline.pipe_sequence);
-		execve_pipeline(proc);
+		execve_pipeline(p);
 		ft_putendl_fd("commmand not found", 2);
 		exit(127);
 	}
-	else
+	else if (pid > 0)
 	{
 		waitpid(pid, &ret, WUNTRACED);
 		check_if_signal(ret);
 	}
+	return (0);
+}
+
+int				cmds_exec_pipeline_single(t_process *p)
+{
+	cmds_exec_single_command(p);
+	return (0);
+}
+
+int				cmds_exec_pipeline(t_ptree *pline)
+{
+	t_process	*proc;
+	int			ret;
+
+	ret = 0;
+	proc = cmds_exec_pipe_sequence(pline->content->pipeline.pipe_sequence);
+	if (proc && proc->next)
+		cmds_exec_pipeline_multi(proc);
+	else if (proc)
+		cmds_exec_pipeline_single(proc);;
 	return (ret);
 }

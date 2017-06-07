@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 12:53:05 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 15:01:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/07 17:20:21 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,73 @@ int			find_path(char **name)
 	return (0);
 }
 
+void		dup_fd(int in, int out, int to_close)
+{
+	if (out != STDOUT_FILENO)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+	}
+	if (in != STDIN_FILENO)
+	{
+		dup2(in, STDIN_FILENO);
+		close(in);
+	}
+	if (to_close != 0)
+		close(to_close);
+}
+
 pid_t		execve_fd(int in, int out, t_process *p, int to_close)
 {
 	pid_t	pid;
 
 	if ((pid = fork()) == 0)
 	{
-		if (out != STDOUT_FILENO)
-		{
-			dup2(out, STDOUT_FILENO);
-			close(out);
-		}
-		if (in != STDIN_FILENO)
-		{
-			dup2(in, STDIN_FILENO);
-			close(in);
-		}
-		if (to_close != 0)
-			close(to_close);
+		dup_fd(in, out, to_close);
 		execve(p->argv[0], p->argv, environ_get_str());
 		exit(127);
 	}
 	else
 		return (pid);
+}
+
+int			cmds_pipeline_builtin(int in, int out, t_process *p, int to_close)
+{
+	pid_t	pid;
+	int		ret;
+
+	pid = fork();
+	ret = 0;
+	if (pid > 0)
+	{
+		waitpid(pid, &ret, WUNTRACED);
+		check_if_signal(ret);
+		return (ret);
+	}
+	else if (pid == 0)
+	{
+		if (is_builtin(p->argv[0]))
+		{
+			dup_fd(in, out, to_close);
+			if ((ret = run_builtin(p->argv)))
+				exit(ret);
+		}
+		exit(127);
+	}
+	return (-1);
+}
+
+int			launch_command(int in, int out, t_process *p, int to_close)
+{
+	int	ret;
+
+	ret = 0;
+	if ((ret = cmds_pipeline_builtin(in, out, p, to_close)) == 127)
+	{
+		find_path(p->argv);
+		ret = execve_fd(in, out, p, to_close);
+	}
+	return (ret);
 }
 
 int			execve_pipeline(t_process *p)
@@ -105,7 +149,7 @@ int			execve_pipeline(t_process *p)
 	while (p->next)
 	{
 		pipe(fd);
-		if (!find_path(p->argv) || execve_fd(in, fd[1], p, fd[0]) == 127)
+		if (launch_command(in, fd[1], p, fd[0]) == 127)
 			return (127);
 		close(fd[1]);
 		in = fd[0];
@@ -116,7 +160,5 @@ int			execve_pipeline(t_process *p)
 		dup2(in, 0);
 		close(in);
 	}
-	if (!find_path(p->argv))
-		return (127);
-	return (execve(p->argv[0], p->argv, environ_get_str()));
+	return (launch_command(in, 1, p, 0));
 }
