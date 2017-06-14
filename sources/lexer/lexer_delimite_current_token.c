@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 10:58:28 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 11:50:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/14 13:23:22 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 enum e_token	get_token_type(t_token *t)
 {
 	char *const			ops[] = { "<<", "<&", ">>", ">&", "||", "&&", "<", ">",
-		";", "|", "\n", "(", ")" };
+		";", "|", "\n", "(", ")", "&" };
 	const enum e_token	types[] = { T_DLESS, T_LESSAND, T_DGREAT, T_GREATAND,
 		T_OR_IF, T_AND_IF, T_LESS, T_GREAT, T_SEMICOL, T_PIPE, T_NEWLINE,
-		T_LBRACKET, T_RBRACKET };
+		T_LBRACKET, T_RBRACKET, T_AND };
 	size_t const		sz = sizeof(ops) / sizeof(char *);
 	size_t				i;
 

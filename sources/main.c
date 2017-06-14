@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 14:53:55 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/14 13:34:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 #include <parser/parser.h>
 #include <stdlib.h>
 #include <commands/commands.h>
+#include <unistd.h>
+
+void	print_complete_command(t_ptree *node, int indent);
 
 int				process_line(char *input)
 {
@@ -31,12 +34,16 @@ int				process_line(char *input)
 		return (ERR);
 	p = ft_memalloc(sizeof(t_parser));
 	p->tlst = lex->tlst;
-	p->ptree = list(p);
+	p->ptree = complete_command(p);
 	if (p->ptree == (void *)ERR_SYNTAX || p->tlst->next)
 		ft_putendl("syntax error");
 	else
 	{
-		cmds_exec(p->ptree);
+		/* ----- Print ----- */
+			t_ptree *t = p->ptree;
+			print_complete_command(t, 0);
+		/* -----  End  ----- */
+	//	cmds_exec(p->ptree);
 		ptree_free(&p->ptree);
 	}
 	free(p);
@@ -65,10 +72,22 @@ void			shell(void)
 	}
 }
 
+void			non_interactive(void)
+{
+	char *line;
+
+	get_next_line(0, &line);
+	process_line(line);
+	free(line);
+}
+
 int				main(void)
 {
 	environ_load();
 	tgetent(NULL, environ_getvalue("TERM"));
-	shell();
+	if (isatty(STDIN_FILENO))
+		shell();
+	else
+		non_interactive();
 	return (0);
 }

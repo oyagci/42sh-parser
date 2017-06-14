@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 12:50:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 14:53:33 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/14 14:28:20 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				add_next_pipeline(t_parser *p, t_ptree *node)
 	head = p->tlst;
 	if ((type = get_and_or_type(p)) == PL_DEFAULT)
 		return (0);
-	if ((pline = pipeline(p)) == (void *)ERR_SYNTAX)
+	if ((pline = pipeline(p)) == (void *)ERR_SYNTAX || !pline)
 	{
 		p->tlst = head;
 		return (ERR_SYNTAX);

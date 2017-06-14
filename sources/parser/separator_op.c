@@ -24,6 +24,11 @@ t_ptree				*separator_op(t_parser *p)
 			node->content->separator_op.op = SP_SEMICOL;
 			p->tlst = p->tlst->next;
 		}
+		else if (((t_token *)p->tlst->content)->type == T_AND)
+		{
+			node->content->separator_op.op = SP_AND;
+			p->tlst = p->tlst->next;
+		}
 		else
 			ptree_free(&node);
 	}

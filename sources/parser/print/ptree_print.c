@@ -335,3 +335,37 @@ void	print_list(t_ptree *node, int indent)
 		head = head->next;
 	}
 }
+
+void	print_separator_op(t_ptree *node, int indent)
+{
+	t_separator_op	*sp;
+
+	if (!node)
+		return ;
+	sp = &node->content->separator_op;
+	putendl_indent("[separator_op]", indent);
+	if (sp->op == SP_AND)
+		putendl_indent("AND", indent + 2);
+	else if (sp->op == SP_SEMICOL)
+		putendl_indent("SEMICOL", indent + 2);
+}
+
+void	print_separator(t_ptree *node, int indent)
+{
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+	putendl_indent("[separator]", indent);
+	print_separator_op(node->content->separator.separator_op, indent + 2);
+}
+
+void	print_complete_command(t_ptree *node, int indent)
+{
+	t_ptree	*head;
+
+	if (!node || node == (void *)ERR_SYNTAX)
+		return ;
+	putendl_indent("[complete_command]", indent);
+	head = node->content->cpcmd.list;
+	print_list(head, indent + 2);
+	print_separator_op(node->content->cpcmd.separator_op, indent + 2);
+}
