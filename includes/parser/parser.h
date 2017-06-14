@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 14:38:47 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/14 13:37:41 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,6 @@ struct								s_io_redirect
 	t_ptree		*io_here;
 };
 
-/*
-** TODO: Put in another file
-*/
-
 enum								e_io_type
 {
 	IT_NONE,
@@ -173,13 +169,10 @@ struct								s_io_file
 	t_ptree			*filename;
 };
 
-/*
-** ====
-*/
-
 struct								s_complete_command
 {
 	t_ptree	*list;
+	t_ptree	*separator_op;
 };
 
 struct								s_nlist

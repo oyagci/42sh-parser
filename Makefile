@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
-#    Updated: 2017/06/07 15:21:12 by oyagci           ###   ########.fr        #
+#    Updated: 2017/06/14 13:28:48 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -179,7 +179,8 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/subshell_free.c \
 				   parser/compound_list_free.c \
 				   parser/compound_command_free.c \
-				   parser/term_free.c
+				   parser/term_free.c \
+				   parser/complete_command.c
 
 _FILES_			+= commands/cmds_exec.c \
 				   commands/cmds_exec_and_or.c \

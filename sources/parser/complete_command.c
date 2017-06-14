@@ -6,19 +6,13 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:29:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 14:29:19 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/14 13:57:27 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
 #include <stdlib.h>
-
-void			complete_command_del(t_complete_command *cpcmd)
-{
-	del_node(cpcmd->list);
-	free(cpcmd);
-}
 
 t_ptree			*complete_command(t_parser *p)
 {
@@ -29,11 +23,10 @@ t_ptree			*complete_command(t_parser *p)
 	{
 		if ((node->content->cpcmd.list = list(p)) == NULL)
 		{
-			del_node(node);
+			ptree_free(&node);
 			return (NULL);
 		}
-		if (((t_token *)p->tlst->content)->type == T_SEMICOL)
-			p->tlst = p->tlst->next;
+		node->content->cpcmd.separator_op = separator_op(p);
 	}
 	return (node);
 }
