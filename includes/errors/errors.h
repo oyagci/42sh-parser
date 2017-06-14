@@ -6,11 +6,15 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:32:48 by oyagci            #+#    #+#             */
-/*   Updated: 2017/03/28 15:08:52 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/05/11 17:19:31 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
+
+extern int	g_errno;
+
+char		*ft_strerror(int err);
 
 #endif

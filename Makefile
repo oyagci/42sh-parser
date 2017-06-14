@@ -5,8 +5,9 @@
 #                                                     +:+ +:+         +:+      #
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/03/13 10:19:19 by oyagci            #+#    #+#              #
-#    Updated: 2017/05/11 17:00:29 by oyagci           ###   ########.fr        #
+#    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
+#    Updated: 2017/06/07 15:21:12 by oyagci           ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
 CCRED			= \033[0;31m
@@ -14,9 +15,9 @@ CCYELLOW		= \033[0;33m
 CCEND			= \033[0m
 
 CC				= clang
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror
 
-NAME			= 21sh
+NAME			= 42sh
 
 _BASEFOLDER		= ./
 _SOURCES		= sources/
@@ -80,6 +81,7 @@ _FILES_			+= getline/line/line_grow_if_needed.c \
 				   getline/line/line_down.c \
 				   getline/line/line_copy.c \
 				   getline/line/ln_putc.c \
+				   getline/line/ln_putstr.c \
 				   getline/line/line_up.c
 
 _FILES_			+= getline/line/autocomplete/get_current_word.c \
@@ -105,7 +107,91 @@ _FILES_			+= linehistory/linehist_get_prevline.c \
 				   linehistory/linehist_copy_line.c \
 				   linehistory/linehist_load_prev.c \
 				   linehistory/linehist_load_next.c \
-				   linehistory/linehist_add.c \
+				   linehistory/linehist_add.c
+
+_FILES_			+= lexer/lexer.c \
+				   lexer/lexer_init.c \
+				   lexer/lexer_init_tlst.c \
+				   lexer/lexer_init_slst.c \
+				   lexer/lexer_delete.c \
+				   lexer/lexer_get_next_token.c \
+				   lexer/lexer_delimite_current_token.c \
+				   lexer/lexer_del_token.c \
+				   lexer/lexer_del_symbol.c \
+				   lexer/lexer_symbol_top.c \
+				   lexer/lexer_symbol_push.c \
+				   lexer/lexer_current_add_char.c \
+				   lexer/lexer_symbol_pop.c \
+				   lexer/lexer_token_new.c \
+				   lexer/lexer_check_top.c \
+				   lexer/lexer_check_quote.c \
+				   lexer/lexer_check_delimite.c \
+				   lexer/is_last_op_char.c \
+				   lexer/is_opstart.c \
+
+_FILES_			+= parser/ptree_init.c \
+				   parser/cmd_name.c \
+				   parser/cmd_prefix.c \
+				   parser/cmd_suffix.c \
+				   parser/filename.c \
+				   parser/io_file.c \
+				   parser/io_redirect.c \
+				   parser/io_here.c \
+				   parser/here_end.c \
+				   parser/parser_expect.c \
+				   parser/parser_peek.c \
+				   parser/ptree_free.c \
+				   parser/ptree_new.c \
+				   parser/cmd_word.c \
+				   parser/simple_command.c \
+				   parser/print/ptree_print.c \
+				   parser/simple_command_free.c \
+				   parser/io_here_free.c \
+				   parser/here_end_free.c \
+				   parser/redirect_list_free.c \
+				   parser/io_redirect_free.c \
+				   parser/io_file_free.c \
+				   parser/filename_free.c \
+				   parser/cmd_name_free.c \
+				   parser/cmd_word_free.c \
+				   parser/cmd_prefix_free.c \
+				   parser/cmd_suffix_free.c \
+				   parser/linebreak.c \
+				   parser/newline_list.c \
+				   parser/command.c \
+				   parser/pipe_sequence.c \
+				   parser/compound_command.c \
+				   parser/redirect_list.c \
+				   parser/subshell.c \
+				   parser/separator.c \
+				   parser/compound_list.c \
+				   parser/separator_op.c \
+				   parser/term.c \
+				   parser/and_or.c \
+				   parser/pipeline.c \
+				   parser/list.c \
+				   parser/and_or_free.c \
+				   parser/complete_command_free.c \
+				   parser/list_free.c \
+				   parser/pipeline_free.c \
+				   parser/pipe_sequence_free.c \
+				   parser/command_free.c \
+				   parser/subshell_free.c \
+				   parser/compound_list_free.c \
+				   parser/compound_command_free.c \
+				   parser/term_free.c
+
+_FILES_			+= commands/cmds_exec.c \
+				   commands/cmds_exec_and_or.c \
+				   commands/cmds_exec_pipeline.c \
+				   commands/cmds_exec_pipe_sequence.c \
+				   commands/cmds_exec_command.c \
+				   commands/cmds_exec_compound_command.c \
+				   commands/cmds_simple_command_process.c \
+				   commands/execve_pipeline.c \
+				   commands/bin_exists.c \
+				   commands/cmds_exec_single_command.c \
+				   commands/run_builtin.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))

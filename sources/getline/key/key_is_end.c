@@ -6,17 +6,11 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 10:47:49 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/25 10:56:29 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 11:14:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
-int				key_is_end(const char *const buffer)
+int				key_is_end(unsigned int const buffer)
 {
-	char const	end[] = { 27, 91, 70, 0, 0, 0, 0, 0 };
-
-	if (ft_memcmp(end, buffer, 8) == 0)
-		return (TRUE);
-	return (FALSE);
+	return (buffer == 0x00465b1b);
 }

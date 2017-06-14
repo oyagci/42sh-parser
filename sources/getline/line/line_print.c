@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 16:58:00 by oyagci            #+#    #+#             */
-/*   Updated: 2017/04/07 14:52:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 14:33:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,6 @@ void			ln_reset_cursor_position(t_line *line)
 	tputs(tgetstr("cr", NULL), 1, &ft_putc);
 	line->y = 0;
 	line->x = 0;
-}
-
-void			ln_puts(t_line *line)
-{
-	size_t	i;
-
-	i = 0;
-	while (line->content[i])
-	{
-		ln_putc(line->content[i], line);
-		i += 1;
-	}
 }
 
 void			ln_increment_cursor(t_line *line)
@@ -75,8 +63,7 @@ void			line_print(t_line *line)
 {
 	ln_reset_cursor_position(line);
 	tputs(tgetstr("cd", NULL), 1, &ft_putc);
-	ln_putc('$', line);
-	ln_putc(' ', line);
-	ln_puts(line);
+	ln_putstr("$ ", line);
+	ln_putstr(line->content, line);
 	ln_putcursor(line);
 }

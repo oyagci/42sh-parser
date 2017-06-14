@@ -6,17 +6,13 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 15:04:19 by oyagci            #+#    #+#             */
-/*   Updated: 2017/03/28 15:44:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 11:14:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
-int				key_is_right(const unsigned char *const buffer)
+int				key_is_right(unsigned int const buffer)
 {
-	char const	arrow[] = { 27, 91, 67, 0, 0, 0, 0, 0 };
+	unsigned int const	value = 0x435b1b;
 
-	if (ft_memcmp(arrow, buffer, 8) == 0)
-		return (TRUE);
-	return (FALSE);
+	return (buffer == value);
 }

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 14:57:01 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/11 17:01:13 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/05 15:04:52 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int				env_cmd(t_list *assignments, char *av[], int empty_env)
 
 	env = get_custom_env(empty_env, assignments);
 	env_str = environ_get_str_custom(env);
-	/* cmd_find_path(av); */
+	/*
+	** cmd_find_path(av);
+	*/
 	exec_bin(av, env_str);
 	ft_strsplit_free(env_str);
 	ft_lstdel(&env, del_env);
