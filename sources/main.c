@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 14:53:55 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/06/14 12:43:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ int				process_line(char *input)
 		ft_putendl("syntax error");
 	else
 	{
+		/* ----- Print ----- */
+		t_ptree *t = p->ptree;
+		print_list(t, 0);
+		/* -----  End  ----- */
 		cmds_exec(p->ptree);
 		ptree_free(&p->ptree);
 	}
