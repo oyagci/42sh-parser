@@ -152,22 +152,13 @@ void	print_suffix(t_ptree *node, int indent)
 	suffix->redirections = head;
 }
 
-void	print_cmd_name(t_ptree *node, int indent)
+void	print_cmd_name(t_cmd_name *cmdname, int indent)
 {
-	t_cmd_name	*name;
-
-	if (!node)
+	if (!cmdname)
 		return ;
-	if (node->type != NT_CMD_NAME)
-	{
-		putendl_indent("!NT_CMD_NAME", indent);
-		return ;
-	}
 
 	putendl_indent("[cmd_name]", indent);
-
-	name = &node->content->cmd_name;
-	putendl_indent(name->data, indent + 2);
+	putendl_indent(cmdname->data, indent + 2);
 }
 
 void	print_cmd_word(t_ptree *node, int indent)
@@ -181,26 +172,18 @@ void	print_cmd_word(t_ptree *node, int indent)
 	putendl_indent(word->data, indent + 2);
 }
 
-void	print_simple_command(t_ptree *node, int indent)
+void	print_simple_command(t_simple_command *scmd, int indent)
 {
-	t_spcommand	*spcmd;
-
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!scmd || scmd == (void *)ERR_SYNTAX)
 		return ;
-	if (node->type != NT_SIMPLE_COMMAND)
-	{
-		putendl_indent("!NT_SIMPLE_COMMAND", indent);
-		return ;
-	}
 
 	putendl_indent("[simple_command]", indent);
 
 	indent += 2;
-	spcmd = &node->content->sp_command;
-	print_prefix(spcmd->prefix, indent);
-	print_cmd_name(spcmd->name, indent);
-	print_cmd_word(spcmd->word, indent);
-	print_suffix(spcmd->suffix, indent);
+	print_prefix(scmd->prefix, indent);
+	print_cmd_name(scmd->name, indent);
+	print_cmd_word(scmd->word, indent);
+	print_suffix(scmd->suffix, indent);
 }
 
 void	print_pipe_sequence(t_pipe_sequence *pseq, int indent)

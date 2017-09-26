@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 17:12:54 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 17:24:43 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,6 @@ int									add_redirection(t_parser *p, t_ptree *node);
 
 void								print_list(t_ptree *node, int indent);
 void								print_command(t_ptree *node, int indent);
-void								print_simple_command(
-		t_ptree *node, int indent);
+void	print_simple_command(t_simple_command *scmd, int indent);
 
 #endif
