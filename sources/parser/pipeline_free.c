@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 13:52:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 13:53:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 16:56:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void			pipeline_free(union u_node *content)
 {
-	ptree_free(&content->pipeline.pipe_sequence);
+	(void)content;
 }

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 12:50:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 16:26:57 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 16:43:10 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void			free_and_or(t_and_or **andor)
 {
 	// TODO: free t_list *pipelines
 	free(*andor);
+	*andor = NULL;
 }
 
-int				add_pipeline(t_ptree *pline, t_and_or *andor)
+int				add_pipeline(t_pipeline *pline, t_and_or *andor)
 {
 	t_list	*elem;
 
@@ -48,7 +49,7 @@ enum e_pipeline	get_and_or_type(t_parser *p)
 int				add_next_pipeline(t_parser *p, t_and_or *andor)
 {
 	enum e_pipeline	type;
-	t_ptree			*pline;
+	t_pipeline		*pline;
 	t_list			*head;
 
 	head = p->tlst;
@@ -59,7 +60,7 @@ int				add_next_pipeline(t_parser *p, t_and_or *andor)
 		p->tlst = head;
 		return (ERR_SYNTAX);
 	}
-	pline->content->pipeline.type = type;
+	pline->type = type;
 	if (!add_pipeline(pline, andor))
 	{
 		free_and_or(&andor);
@@ -71,7 +72,7 @@ int				add_next_pipeline(t_parser *p, t_and_or *andor)
 t_and_or		*and_or(t_parser *p)
 {
 	t_and_or		*andor;
-	t_ptree			*pline;
+	t_pipeline		*pline;
 	int				ret;
 
 	if (!(andor = ft_memalloc(sizeof(t_and_or))))
@@ -85,7 +86,7 @@ t_and_or		*and_or(t_parser *p)
 		free_and_or(&andor);
 	else
 	{
-		pline->content->pipeline.type = PL_DEFAULT;
+		pline->type = PL_DEFAULT;
 		while ((ret = add_next_pipeline(p, andor)) == 1)
 			;
 		if (ret == ERR_SYNTAX)

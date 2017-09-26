@@ -203,15 +203,15 @@ void	print_simple_command(t_ptree *node, int indent)
 	print_suffix(spcmd->suffix, indent);
 }
 
-void	print_pipe_sequence(t_ptree *node, int indent)
+void	print_pipe_sequence(t_pipe_sequence *pseq, int indent)
 {
 	t_list	*head;
 
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!pseq || pseq == (void *)ERR_SYNTAX)
 		return ;
 
 	putendl_indent("[pipe_sequence]", indent);
-	head = node->content->pipe_sequence.commands;
+	head = pseq->commands;
 	while (head)
 	{
 		print_command(head->content, indent + 2);
@@ -219,12 +219,12 @@ void	print_pipe_sequence(t_ptree *node, int indent)
 	}
 }
 
-void	print_pipeline(t_ptree *node, int indent)
+void	print_pipeline(t_pipeline *pline, int indent)
 {
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!pline || pline == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[pipeline]", indent);
-	print_pipe_sequence(node->content->pipeline.pipe_sequence, indent + 2);
+	print_pipe_sequence(pline->pseq, indent + 2);
 }
 
 void	print_and_or(t_and_or *and_or, int indent)

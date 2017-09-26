@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:43:29 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/14 14:06:37 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 17:01:16 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int				add_to_list(t_parser *p, t_ptree *node)
 {
-	t_list	*elem;
-	t_ptree	*andor;
+	t_list		*elem;
+	t_and_or	*andor;
 
 	if ((elem = ft_lstnew(NULL, 0)))
 	{

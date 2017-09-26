@@ -6,52 +6,57 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 15:51:26 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 12:35:27 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 17:12:55 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
-int				simple_prefix(t_parser *p, t_ptree *node)
+void			free_simple_command(t_simple_command **scmd)
 {
-	if ((node->content->sp_command.prefix = cmd_prefix(p)))
+	free(*scmd);
+}
+
+int				simple_prefix(t_parser *p, t_simple_command *scmd)
+{
+	if ((scmd->prefix = cmd_prefix(p)))
 	{
-		if (node->content->sp_command.prefix == (void *)ERR_SYNTAX)
+		if (scmd->prefix == (void *)ERR_SYNTAX)
 			return (ERR_SYNTAX);
-		if ((node->content->sp_command.word = cmd_word(p)) ==
-				(void *)ERR_SYNTAX)
+		if ((scmd->word = cmd_word(p)) == (void *)ERR_SYNTAX)
 		{
-			ptree_free(&node);
+			ptree_free(&scmd->prefix);
 			return (ERR_SYNTAX);
 		}
 	}
-	else if ((node->content->sp_command.name = cmd_name(p)))
+	else if ((scmd->name = cmd_name(p)))
 	{
-		if (node->content->sp_command.name == (void *)ERR_SYNTAX)
+		if (scmd->name == (void *)ERR_SYNTAX)
 			return (ERR_SYNTAX);
 	}
 	else
 	{
-		ptree_free(&node);
+		free_simple_command(&scmd);
 		return (0);
 	}
 	return (1);
 }
 
-t_ptree			*simple_command(t_parser *p)
+t_simple_command		*simple_command(t_parser *p)
 {
-	int		ret;
-	t_ptree	*node;
+	int					ret;
+	t_simple_command	*scmd;
 
-	if ((node = ptree_new(NT_SIMPLE_COMMAND)))
+	if ((scmd = ft_memalloc(sizeof(t_simple_command))))
 	{
-		if ((ret = simple_prefix(p, node)) == 1)
+		if ((ret = simple_prefix(p, scmd)) == 1)
 		{
-			if ((node->content->sp_command.suffix = cmd_suffix(p)) ==
+			if ((scmd->suffix = cmd_suffix(p)) ==
 				(void *)ERR_SYNTAX)
 			{
-				ptree_free(&node);
+				free_simple_command(&scmd);
 				return ((void *)ERR_SYNTAX);
 			}
 		}
@@ -60,5 +65,5 @@ t_ptree			*simple_command(t_parser *p)
 		else if (ret == ERR_SYNTAX)
 			return ((void *)ERR_SYNTAX);
 	}
-	return (node);
+	return (scmd);
 }

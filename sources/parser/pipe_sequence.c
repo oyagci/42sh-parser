@@ -6,14 +6,21 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 10:53:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 11:30:15 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 16:50:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
+#include <stdlib.h>
 
-int				add_command(t_parser *p, t_ptree *node)
+void			free_pipe_sequence(t_pipe_sequence **pseq)
+{
+	free(*pseq);
+	pseq = NULL;
+}
+
+int				add_command(t_parser *p, t_pipe_sequence *pseq)
 {
 	t_list	*elem;
 	t_ptree	*cmd;
@@ -25,7 +32,7 @@ int				add_command(t_parser *p, t_ptree *node)
 		if ((elem = ft_lstnew(NULL, 0)))
 		{
 			elem->content = cmd;
-			ft_lstpush(&node->content->pipe_sequence.commands, elem);
+			ft_lstpush(&pseq->commands, elem);
 			return (1);
 		}
 		else
@@ -34,28 +41,28 @@ int				add_command(t_parser *p, t_ptree *node)
 	return (0);
 }
 
-t_ptree			*pipe_sequence(t_parser *p)
+t_pipe_sequence	*pipe_sequence(t_parser *p)
 {
-	t_ptree			*node;
+	t_pipe_sequence	*pseq;
 	unsigned int	ret;
 
 	ret = 0;
-	if ((node = ptree_new(NT_PIPE_SEQUENCE)))
+	if ((pseq = ft_memalloc(sizeof(t_pipe_sequence))))
 	{
-		if ((ret = add_command(p, node)) == 1)
+		if ((ret = add_command(p, pseq)) == 1)
 		{
 			while (parser_expect(p, T_PIPE))
 			{
 				linebreak(p);
-				if ((ret = add_command(p, node)) != 1)
+				if ((ret = add_command(p, pseq)) != 1)
 				{
-					ptree_free(&node);
+					free_pipe_sequence(&pseq);
 					return ((void *)ERR_SYNTAX);
 				}
 			}
 		}
 		else
-			ptree_free(&node);
+			free_pipe_sequence(&pseq);
 	}
-	return (node);
+	return (pseq);
 }

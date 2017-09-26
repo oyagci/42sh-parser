@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 15:49:51 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 17:12:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_nlist				t_nlist;
 typedef struct s_and_or				t_and_or;
 typedef struct s_ao_branch			t_ao_branch;
 typedef struct s_pipeline			t_pipeline;
-typedef struct s_spcommand			t_spcommand;
+typedef struct s_simple_command		t_simple_command;
 typedef struct s_pipe_sequence		t_pipe_sequence;
 typedef struct s_compound_command	t_compound_command;
 typedef struct s_subshell			t_subshell;
@@ -110,11 +110,11 @@ struct								s_pipe_sequence
 	t_list	*commands;
 };
 
-struct								s_spcommand
+struct								s_simple_command
 {
 	t_ptree	*prefix;
 	t_ptree	*suffix;
-	t_ptree	*name;
+	t_cmd_name	*name;
 	t_ptree	*word;
 };
 
@@ -195,7 +195,7 @@ enum								e_pipeline
 struct								s_pipeline
 {
 	enum e_pipeline	type;
-	t_ptree			*pipe_sequence;
+	t_pipe_sequence	*pseq;
 };
 
 struct								s_io_here
@@ -259,7 +259,7 @@ union								u_node
 	t_cmd_suffix		cmd_suffix;
 	t_cmd_word			cmd_word;
 	t_cmd_prefix		cmd_prefix;
-	t_spcommand			sp_command;
+	t_simple_command	sp_command;
 	t_cmd_name			cmd_name;
 	t_filename			filename;
 	t_io_file			io_file;
@@ -282,32 +282,31 @@ int									parser_expect(t_parser *p,
 int									parser_peek(t_parser *p,
 		enum e_token type);
 
-t_ptree								*and_or(t_parser *p);
-t_ptree								*complete_command(t_parser *p);
-t_ptree								*list(t_parser *p);
-t_ptree								*pipeline(t_parser *p);
-t_ptree								*simple_command(t_parser *p);
-t_ptree								*cmd_name(t_parser *p);
+t_and_or							*and_or(t_parser *p);
+t_cmd_name							*cmd_name(t_parser *p);
 t_ptree								*cmd_word(t_parser *p);
 t_ptree								*cmd_prefix(t_parser *p);
 t_ptree								*cmd_suffix(t_parser *p);
+t_ptree								*command(t_parser *p);
+t_ptree								*complete_command(t_parser *p);
+t_ptree								*compound_command(t_parser *p);
+t_compound_list						*compound_list(t_parser *p);
+t_ptree								*filename(t_parser *p);
+t_ptree								*here_end(t_parser *p);
 t_ptree								*io_file(t_parser *p);
 t_ptree								*io_here(t_parser *p);
-t_ptree								*redirect_list(t_parser *p);
-t_ptree								*here_end(t_parser *p);
 t_ptree								*io_redirect(t_parser *p);
-t_ptree								*filename(t_parser *p);
 t_ptree								*linebreak(t_parser *p);
+t_ptree								*list(t_parser *p);
 t_ptree								*newline_list(t_parser *p);
-t_ptree								*command(t_parser *p);
-t_ptree								*subshell(t_parser *p);
-t_ptree								*pipeline(t_parser *p);
-t_ptree								*compound_command(t_parser *p);
-t_term								*term(t_parser *p);
-t_compound_list						*compound_list(t_parser *p);
+t_pipe_sequence						*pipe_sequence(t_parser *p);
+t_pipeline							*pipeline(t_parser *p);
+t_ptree								*redirect_list(t_parser *p);
 t_ptree								*separator(t_parser	*p);
 t_ptree								*separator_op(t_parser *p);
-t_ptree								*pipe_sequence(t_parser *p);
+t_simple_command					*simple_command(t_parser *p);
+t_ptree								*subshell(t_parser *p);
+t_term								*term(t_parser *p);
 
 void								and_or_free(union u_node *and_or);
 void								complete_command_free(
@@ -334,6 +333,7 @@ void								pipe_sequence_free(union u_node *content);
 void								term_free(union u_node *content);
 
 void								free_term(t_term **t);
+void								free_and_or(t_and_or **and_or);
 
 /*
 ** cmd_suffix.c

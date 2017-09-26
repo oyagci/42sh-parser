@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 14:42:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/07 15:18:17 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 16:58:13 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int				cmds_exec_pipeline_single(t_process *p)
 
 int				cmds_exec_pipeline(t_ptree *pline)
 {
+	/*
 	t_process	*proc;
 	int			ret;
 
@@ -79,4 +80,7 @@ int				cmds_exec_pipeline(t_ptree *pline)
 	else if (proc)
 		cmds_exec_pipeline_single(proc);;
 	return (ret);
+	*/
+	(void)pline;
+	return (0);
 }

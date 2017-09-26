@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 15:52:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 15:54:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 16:42:36 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void			free_term(t_term **t)
 {
 	// TODO: free `t_list *andlst`
 	free(*t);
+	*t = NULL;
 }
 
-int				add_and(t_term *term, t_ptree *and)
+int				add_and(t_term *term, t_and_or *and)
 {
 	t_list	*elem;
 
@@ -35,8 +36,8 @@ int				add_and(t_term *term, t_ptree *and)
 
 int				add_next_and_or(t_parser *p, t_term *term)
 {
-	t_list	*head;
-	t_ptree	*andor;
+	t_list		*head;
+	t_and_or	*andor;
 
 	head = p->tlst;
 	if (!parser_expect(p, T_SEMICOL))
@@ -48,7 +49,7 @@ int				add_next_and_or(t_parser *p, t_term *term)
 	}
 	if (!add_and(term, andor))
 	{
-		ptree_free(&andor);
+		free_and_or(&andor);
 		return (0);
 	}
 	return (1);
@@ -56,9 +57,9 @@ int				add_next_and_or(t_parser *p, t_term *term)
 
 t_term			*term(t_parser *p)
 {
-	t_term	*term;
-	t_ptree	*and;
-	int		ret;
+	t_term		*term;
+	t_and_or	*and;
+	int			ret;
 
 	if ((term = ft_memalloc(sizeof(t_term))))
 	{
