@@ -259,12 +259,12 @@ void	print_term(t_ptree *node, int indent)
 	node->content->term.andlst = head;
 }
 
-void	print_compound_list(t_ptree *node, int indent)
+void	print_compound_list(t_compound_list *cl, int indent)
 {
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!cl || cl == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[compound_list]", indent);
-	print_term(node->content->compound_list.term, indent + 2);
+	print_term(cl->term, indent + 2);
 }
 
 void	print_subshell(t_ptree *node, int indent)

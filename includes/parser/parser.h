@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/14 13:37:41 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 15:43:32 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ struct								s_compound_list
 
 struct								s_subshell
 {
-	t_ptree	*compound_list;
+	t_compound_list	*compound_list;
 };
 
 union								u_node
@@ -304,7 +304,7 @@ t_ptree								*subshell(t_parser *p);
 t_ptree								*pipeline(t_parser *p);
 t_ptree								*compound_command(t_parser *p);
 t_ptree								*term(t_parser *p);
-t_ptree								*compound_list(t_parser *p);
+t_compound_list						*compound_list(t_parser *p);
 t_ptree								*separator(t_parser	*p);
 t_ptree								*separator_op(t_parser *p);
 t_ptree								*pipe_sequence(t_parser *p);
