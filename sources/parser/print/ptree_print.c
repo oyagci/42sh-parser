@@ -227,20 +227,20 @@ void	print_pipeline(t_ptree *node, int indent)
 	print_pipe_sequence(node->content->pipeline.pipe_sequence, indent + 2);
 }
 
-void	print_and_or(t_ptree *node, int indent)
+void	print_and_or(t_and_or *and_or, int indent)
 {
 	t_list	*head;
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!and_or || and_or == (void *)ERR_SYNTAX)
 		return ;
 
-	head = node->content->and_or.pipelines;
+	head = and_or->pipelines;
 	putendl_indent("[and_or]", indent);
-	while (node->content->and_or.pipelines)
+	while (and_or->pipelines)
 	{
-		print_pipeline(node->content->and_or.pipelines->content, indent + 2);
-		node->content->and_or.pipelines = node->content->and_or.pipelines->next;
+		print_pipeline(and_or->pipelines->content, indent + 2);
+		and_or->pipelines = and_or->pipelines->next;
 	}
-	node->content->and_or.pipelines = head;
+	and_or->pipelines = head;
 }
 
 void	print_term(t_term *term, int indent)

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 12:50:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/14 14:28:20 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 16:26:57 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 #include <parser/parser.h>
 #include <stdlib.h>
 
-int				add_pipeline(t_ptree *pline, t_ptree *node)
+void			free_and_or(t_and_or **andor)
+{
+	// TODO: free t_list *pipelines
+	free(*andor);
+}
+
+int				add_pipeline(t_ptree *pline, t_and_or *andor)
 {
 	t_list	*elem;
 
@@ -23,7 +29,7 @@ int				add_pipeline(t_ptree *pline, t_ptree *node)
 		if ((elem = ft_lstnew(NULL, 0)))
 		{
 			elem->content = pline;
-			ft_lstpush(&node->content->and_or.pipelines, elem);
+			ft_lstpush(&andor->pipelines, elem);
 			return (1);
 		}
 	}
@@ -39,7 +45,7 @@ enum e_pipeline	get_and_or_type(t_parser *p)
 	return (PL_DEFAULT);
 }
 
-int				add_next_pipeline(t_parser *p, t_ptree *node)
+int				add_next_pipeline(t_parser *p, t_and_or *andor)
 {
 	enum e_pipeline	type;
 	t_ptree			*pline;
@@ -54,39 +60,39 @@ int				add_next_pipeline(t_parser *p, t_ptree *node)
 		return (ERR_SYNTAX);
 	}
 	pline->content->pipeline.type = type;
-	if (!add_pipeline(pline, node))
+	if (!add_pipeline(pline, andor))
 	{
-		ptree_free(&node);
+		free_and_or(&andor);
 		return (0);
 	}
 	return (1);
 }
 
-t_ptree			*and_or(t_parser *p)
+t_and_or		*and_or(t_parser *p)
 {
-	t_ptree			*node;
+	t_and_or		*andor;
 	t_ptree			*pline;
 	int				ret;
 
-	if (!(node = ptree_new(NT_AND_OR)))
+	if (!(andor = ft_memalloc(sizeof(t_and_or))))
 		return (NULL);
 	if ((pline = pipeline(p)) == (void *)ERR_SYNTAX)
 	{
-		ptree_free(&node);
+		free_and_or(&andor);
 		return ((void *)ERR_SYNTAX);
 	}
-	if (!add_pipeline(pline, node))
-		ptree_free(&node);
+	if (!add_pipeline(pline, andor))
+		free_and_or(&andor);
 	else
 	{
 		pline->content->pipeline.type = PL_DEFAULT;
-		while ((ret = add_next_pipeline(p, node)) == 1)
+		while ((ret = add_next_pipeline(p, andor)) == 1)
 			;
 		if (ret == ERR_SYNTAX)
 		{
-			ptree_free(&node);
+			free_and_or(&andor);
 			return ((void *)ERR_SYNTAX);
 		}
 	}
-	return (node);
+	return (andor);
 }
