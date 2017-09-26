@@ -6,27 +6,34 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 15:52:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 17:20:18 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 15:54:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
+#include <stdlib.h>
 
-int				add_and(t_ptree *node, t_ptree *and)
+void			free_term(t_term **t)
+{
+	// TODO: free `t_list *andlst`
+	free(*t);
+}
+
+int				add_and(t_term *term, t_ptree *and)
 {
 	t_list	*elem;
 
 	if ((elem = ft_lstnew(NULL, 0)))
 	{
 		elem->content = and;
-		ft_lstpush(&node->content->term.andlst, elem);
+		ft_lstpush(&term->andlst, elem);
 		return (1);
 	}
 	return (0);
 }
 
-int				add_next_and_or(t_parser *p, t_ptree *node)
+int				add_next_and_or(t_parser *p, t_term *term)
 {
 	t_list	*head;
 	t_ptree	*andor;
@@ -39,7 +46,7 @@ int				add_next_and_or(t_parser *p, t_ptree *node)
 		p->tlst = head;
 		return (ERR_SYNTAX);
 	}
-	if (!add_and(node, andor))
+	if (!add_and(term, andor))
 	{
 		ptree_free(&andor);
 		return (0);
@@ -47,28 +54,28 @@ int				add_next_and_or(t_parser *p, t_ptree *node)
 	return (1);
 }
 
-t_ptree			*term(t_parser *p)
+t_term			*term(t_parser *p)
 {
-	t_ptree	*node;
+	t_term	*term;
 	t_ptree	*and;
 	int		ret;
 
-	if ((node = ptree_new(NT_TERM)))
+	if ((term = ft_memalloc(sizeof(t_term))))
 	{
 		if ((and = and_or(p)) == (void *)ERR_SYNTAX)
 		{
-			ptree_free(&node);
+			free_term(&term);
 			return ((void *)ERR_SYNTAX);
 		}
-		if (!add_and(node, and))
-			ptree_free(&node);
-		while ((ret = add_next_and_or(p, node)) == 1)
+		if (!add_and(term, and))
+			free_term(&term);
+		while ((ret = add_next_and_or(p, term)) == 1)
 			;
 		if (ret == ERR_SYNTAX)
 		{
-			ptree_free(&node);
+			free_term(&term);
 			return ((void *)ERR_SYNTAX);
 		}
 	}
-	return (node);
+	return (term);
 }

@@ -243,20 +243,20 @@ void	print_and_or(t_ptree *node, int indent)
 	node->content->and_or.pipelines = head;
 }
 
-void	print_term(t_ptree *node, int indent)
+void	print_term(t_term *term, int indent)
 {
 	t_list	*head;
 
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!term || term == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[term]", indent);
-	head = node->content->term.andlst;
-	while (node->content->term.andlst)
+	head = term->andlst;
+	while (term->andlst)
 	{
-		print_and_or(node->content->term.andlst->content, indent + 2);
-		node->content->term.andlst = node->content->term.andlst->next;
+		print_and_or(term->andlst->content, indent + 2);
+		term->andlst = term->andlst->next;
 	}
-	node->content->term.andlst = head;
+	term->andlst = head;
 }
 
 void	print_compound_list(t_compound_list *cl, int indent)

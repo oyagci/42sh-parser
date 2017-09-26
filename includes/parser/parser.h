@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 15:43:32 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/26 15:49:51 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ struct								s_compound_command
 
 struct								s_compound_list
 {
-	t_ptree	*term;
+	t_term		*term;
 };
 
 struct								s_subshell
@@ -303,7 +303,7 @@ t_ptree								*command(t_parser *p);
 t_ptree								*subshell(t_parser *p);
 t_ptree								*pipeline(t_parser *p);
 t_ptree								*compound_command(t_parser *p);
-t_ptree								*term(t_parser *p);
+t_term								*term(t_parser *p);
 t_compound_list						*compound_list(t_parser *p);
 t_ptree								*separator(t_parser	*p);
 t_ptree								*separator_op(t_parser *p);
@@ -332,6 +332,8 @@ void								compound_command_free(
 void								compound_list_free(union u_node *content);
 void								pipe_sequence_free(union u_node *content);
 void								term_free(union u_node *content);
+
+void								free_term(t_term **t);
 
 /*
 ** cmd_suffix.c
