@@ -16,7 +16,9 @@
 
 void				free_compound_list(t_compound_list **cl)
 {
-	free(cl);
+	free_term(&((*cl)->term));
+	free(*cl);
+	*cl = NULL;
 }
 
 t_compound_list		*compound_list(t_parser *p)
