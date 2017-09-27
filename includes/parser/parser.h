@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 14:54:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 15:00:31 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define ERR_SYNTAX	0x0000DEAD
 
 typedef struct s_parser				t_parser;
-typedef struct s_ptree				t_ptree;
 typedef struct s_root				t_root;
 typedef struct s_cmd_prefix			t_cmd_prefix;
 typedef struct s_cmd_name			t_cmd_name;
@@ -92,13 +91,6 @@ enum								e_ntype
 struct								s_term
 {
 	t_list	*andlst;
-};
-
-struct								s_ptree
-{
-	enum e_ntype	type;
-	union u_node	*content;
-	void			(*del)(union u_node *);
 };
 
 struct								s_root
@@ -259,38 +251,6 @@ struct								s_linebreak
 {
 };
 
-union								u_node
-{
-	t_root				root;
-	t_complete_command	cpcmd;
-	t_nlist				list;
-	t_and_or			and_or;
-	t_pipeline			pipeline;
-	t_io_here			io_here;
-	t_here_end			here_end;
-	t_redirect_list		redirect_list;
-	t_separator_op		separator_op;
-	t_cmd_suffix		cmd_suffix;
-	t_cmd_word			cmd_word;
-	t_cmd_prefix		cmd_prefix;
-	t_simple_command	sp_command;
-	t_cmd_name			cmd_name;
-	t_filename			filename;
-	t_io_file			io_file;
-	t_io_redirect		io_redirect;
-	t_pipe_sequence		pipe_sequence;
-	t_command			command;
-	t_compound_command	compound_command;
-	t_subshell			subshell;
-	t_term				term;
-	t_compound_list		compound_list;
-	t_separator			separator;
-};
-
-t_ptree								*ptree_init(void);
-t_ptree								*ptree_new(enum e_ntype type);
-void								ptree_free(t_ptree **tree);
-
 int									parser_expect(t_parser *p,
 		enum e_token type);
 int									parser_peek(t_parser *p,
@@ -321,30 +281,6 @@ t_separator_op						*separator_op(t_parser *p);
 t_simple_command					*simple_command(t_parser *p);
 t_subshell							*subshell(t_parser *p);
 t_term								*term(t_parser *p);
-
-void								and_or_free(union u_node *and_or);
-void								complete_command_free(
-		union u_node *content);
-void								list_free(union u_node *content);
-void								simple_command_free(union u_node *sp);
-void								cmd_name_free(union u_node *name);
-void								cmd_word_free(union u_node *word);
-void								cmd_prefix_free(union u_node *prefix);
-void								cmd_suffix_free(union u_node *suffix);
-void								io_file_free(union u_node *f);
-void								io_here_free(union u_node *here);
-void								redirect_list_free(union u_node *redirect);
-void								here_end_free(union u_node *hend);
-void								io_redirect_free(union u_node *redirect);
-void								filename_free(union u_node *f);
-void								command_free(union u_node *content);
-void								subshell_free(union u_node *content);
-void								pipeline_free(union u_node *content);
-void								compound_command_free(
-		union u_node *content);
-void								compound_list_free(union u_node *content);
-void								pipe_sequence_free(union u_node *content);
-void								term_free(union u_node *content);
 
 void								free_and_or(t_and_or **and_or);
 void								free_command(t_command **cmd);

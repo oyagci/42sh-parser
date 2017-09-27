@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
-#    Updated: 2017/09/27 14:02:07 by oyagci           ###   ########.fr        #
+#    Updated: 2017/09/27 15:01:56 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,8 +129,7 @@ _FILES_			+= lexer/lexer.c \
 				   lexer/is_last_op_char.c \
 				   lexer/is_opstart.c \
 
-_FILES_			+= parser/ptree_init.c \
-				   parser/cmd_name.c \
+_FILES_			+= parser/cmd_name.c \
 				   parser/cmd_prefix.c \
 				   parser/cmd_suffix.c \
 				   parser/filename.c \
@@ -140,22 +139,9 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/here_end.c \
 				   parser/parser_expect.c \
 				   parser/parser_peek.c \
-				   parser/ptree_free.c \
-				   parser/ptree_new.c \
 				   parser/cmd_word.c \
 				   parser/simple_command.c \
 				   parser/print/ptree_print.c \
-				   parser/simple_command_free.c \
-				   parser/io_here_free.c \
-				   parser/here_end_free.c \
-				   parser/redirect_list_free.c \
-				   parser/io_redirect_free.c \
-				   parser/io_file_free.c \
-				   parser/filename_free.c \
-				   parser/cmd_name_free.c \
-				   parser/cmd_word_free.c \
-				   parser/cmd_prefix_free.c \
-				   parser/cmd_suffix_free.c \
 				   parser/linebreak.c \
 				   parser/newline_list.c \
 				   parser/command.c \
@@ -170,29 +156,7 @@ _FILES_			+= parser/ptree_init.c \
 				   parser/and_or.c \
 				   parser/pipeline.c \
 				   parser/list.c \
-				   parser/and_or_free.c \
-				   parser/complete_command_free.c \
-				   parser/list_free.c \
-				   parser/pipeline_free.c \
-				   parser/pipe_sequence_free.c \
-				   parser/command_free.c \
-				   parser/subshell_free.c \
-				   parser/compound_list_free.c \
-				   parser/compound_command_free.c \
-				   parser/term_free.c \
 				   parser/complete_command.c
-
-_FILES_			+= commands/cmds_exec.c \
-				   commands/cmds_exec_and_or.c \
-				   commands/cmds_exec_pipeline.c \
-				   commands/cmds_exec_pipe_sequence.c \
-				   commands/cmds_exec_command.c \
-				   commands/cmds_exec_compound_command.c \
-				   commands/cmds_simple_command_process.c \
-				   commands/execve_pipeline.c \
-				   commands/bin_exists.c \
-				   commands/cmds_exec_single_command.c \
-				   commands/run_builtin.c
 
 SRCFOLDER		= $(addprefix $(_BASEFOLDER),$(_SOURCES))
 SOURCES			= $(addprefix $(SRCFOLDER),$(_FILES_))
