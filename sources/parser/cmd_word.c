@@ -6,29 +6,38 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 16:17:15 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/19 16:32:03 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 11:16:42 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
-t_ptree			*cmd_word(t_parser *p)
+void		free_word(t_cmd_word **word)
 {
-	t_ptree	*node;
+	if ((*word)->data)
+		free((*word)->data);
+	free(*word);
+	*word = NULL;
+}
 
-	if ((node = ptree_new(NT_CMD_WORD)))
+t_cmd_word	*cmd_word(t_parser *p)
+{
+	t_cmd_word	*word;
+
+	if ((word = ft_memalloc(sizeof(t_cmd_word))))
 	{
 		if (((t_token *)p->tlst->content)->type == T_WORD)
 		{
-			if ((node->content->cmd_word.data =
+			if ((word->data =
 						ft_strdup(((t_token *)p->tlst->content)->data)))
 				p->tlst = p->tlst->next;
 			else
-				ptree_free(&node);
+				free_word(&word);
 		}
 		else
-			ptree_free(&node);
+			free_word(&word);
 	}
-	return (node);
+	return (word);
 }

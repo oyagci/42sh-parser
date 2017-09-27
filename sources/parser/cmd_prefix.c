@@ -6,15 +6,20 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:12:51 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 12:33:21 by oyagci           ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2017/09/27 11:06:24 by oyagci           ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
 #include <stdlib.h>
 
-int				add_assignement(t_parser *p, t_ptree *node)
+void			free_prefix(t_cmd_prefix **prefix)
+{
+	free(*prefix);
+	*prefix = NULL;
+}
+
+int				add_assignement(t_parser *p, t_cmd_prefix *prefix)
 {
 	t_list	*elem;
 
@@ -26,7 +31,7 @@ int				add_assignement(t_parser *p, t_ptree *node)
 							data)))
 			{
 				p->tlst = p->tlst->next;
-				ft_lstpush(&node->content->cmd_prefix.assignements, elem);
+				ft_lstpush(&prefix->assignements, elem);
 				return (1);
 			}
 		}
@@ -35,7 +40,7 @@ int				add_assignement(t_parser *p, t_ptree *node)
 	return (0);
 }
 
-int				prefix_add_redirection(t_parser *p, t_ptree *node)
+int				prefix_add_redirection(t_parser *p, t_cmd_prefix *prefix)
 {
 	t_list	*elem;
 	t_list	*head;
@@ -49,7 +54,7 @@ int				prefix_add_redirection(t_parser *p, t_ptree *node)
 		if ((elem = ft_lstnew(NULL, 0)))
 		{
 			elem->content = redir_node;
-			ft_lstpush(&node->content->cmd_prefix.redirections, elem);
+			ft_lstpush(&prefix->redirections, elem);
 			return (1);
 		}
 		ptree_free(&redir_node);
@@ -60,38 +65,38 @@ int				prefix_add_redirection(t_parser *p, t_ptree *node)
 	return (0);
 }
 
-int				prefix_add(t_parser *p, t_ptree *node)
+int				prefix_add(t_parser *p, t_cmd_prefix *prefix)
 {
 	int		ret;
 
-	if ((ret = prefix_add_redirection(p, node)) == 0)
-		return (add_assignement(p, node));
+	if ((ret = prefix_add_redirection(p, prefix)) == 0)
+		return (add_assignement(p, prefix));
 	return (ret);
 }
 
-t_ptree			*cmd_prefix(t_parser *p)
+t_cmd_prefix	*cmd_prefix(t_parser *p)
 {
-	t_ptree			*node;
+	t_cmd_prefix	*prefix;
 	t_list			*head;
 	unsigned int	ret;
 
 	ret = 0;
-	if ((node = ptree_new(NT_CMD_PREFIX)))
+	if ((prefix = ft_memalloc(sizeof(t_cmd_prefix))))
 	{
 		head = p->tlst;
-		if ((ret = prefix_add(p, node)) == 1)
-			while ((ret = prefix_add(p, node)) == 1)
+		if ((ret = prefix_add(p, prefix)) == 1)
+			while ((ret = prefix_add(p, prefix)) == 1)
 				;
 		else
 		{
 			p->tlst = head;
-			ptree_free(&node);
+			free_prefix(&prefix);
 		}
 	}
 	if (ret == ERR_SYNTAX)
 	{
-		ptree_free(&node);
+		free_prefix(&prefix);
 		return ((void *)ERR_SYNTAX);
 	}
-	return (node);
+	return (prefix);
 }

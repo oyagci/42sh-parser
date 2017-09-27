@@ -6,51 +6,64 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 16:35:01 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 10:50:31 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
-int				cmd_add_redir(t_parser *p, t_ptree *node)
+void			free_command(t_command **cmd)
+{
+	free(*cmd);
+	*cmd = NULL;
+}
+
+int				cmd_add_redir(t_parser *p, t_command *cmd)
 {
 	t_ptree	*redir;
 
 	redir = redirect_list(p);
 	if (redir != (void *)ERR_SYNTAX)
-		node->content->command.redirect = redir;
+		cmd->redirect = redir;
 	else
 	{
-		ptree_free(&node);
+		free_command(&cmd);
 		return (ERR_SYNTAX);
 	}
 	return (1);
 }
 
-t_ptree			*command(t_parser *p)
+t_command		*command(t_parser *p)
 {
-	t_ptree		*node;
-	t_ptree		*cmd;
+	t_command			*cmd;
+	t_simple_command	*scmd;
+	t_ptree				*cpcmd;
 
-	if ((node = ptree_new(NT_COMMAND)))
+	scmd = NULL;
+	if ((cmd = ft_memalloc(sizeof(t_command))))
 	{
-		if (!(cmd = simple_command(p)))
-			cmd = compound_command(p);
-		if (!cmd || cmd == (void *)ERR_SYNTAX)
+		if (!(scmd = simple_command(p)))
+			cpcmd = compound_command(p);
+		if ((scmd == (void*)ERR_SYNTAX || cpcmd == (void*)ERR_SYNTAX))
 		{
-			ptree_free(&node);
+			free_command(&cmd);
 			return ((void *)ERR_SYNTAX);
 		}
-		else if (cmd == NULL)
+		else if (scmd == NULL && cpcmd == NULL)
 		{
-			ptree_free(&node);
+			free_command(&cmd);
 			return (NULL);
 		}
-		if (cmd && cmd->type == NT_COMPOUND_COMMAND)
-			if (cmd_add_redir(p, node) != 1)
+		if (cpcmd)
+		{
+			cmd->type = CT_COMPOUND_COMMAND;
+			cmd->cpcmd = cpcmd;
+			if (cmd_add_redir(p, cmd) != 1)
 				return ((void *)ERR_SYNTAX);
-		node->content->command.cmd = cmd;
+		}
+		cmd->scmd = scmd;
 	}
-	return (node);
+	return (cmd);
 }

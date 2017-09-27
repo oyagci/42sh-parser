@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 10:53:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 16:50:47 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 11:02:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void			free_pipe_sequence(t_pipe_sequence **pseq)
 
 int				add_command(t_parser *p, t_pipe_sequence *pseq)
 {
-	t_list	*elem;
-	t_ptree	*cmd;
+	t_list		*elem;
+	t_command	*cmd;
 
 	if ((cmd = command(p)))
 	{
@@ -36,7 +36,7 @@ int				add_command(t_parser *p, t_pipe_sequence *pseq)
 			return (1);
 		}
 		else
-			ptree_free(&cmd);
+			free_command(&cmd);
 	}
 	return (0);
 }

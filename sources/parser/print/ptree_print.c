@@ -88,22 +88,15 @@ void	print_io_redirect(t_ptree *node, int indent)
 	redirect->io_here ? print_io_here(redirect->io_here, indent + 2) : 0;
 }
 
-void	print_prefix(t_ptree *node, int indent)
+void	print_prefix(t_cmd_prefix *prefix, int indent)
 {
-	t_cmd_prefix	*prefix;
 	t_list			*head;
 
-	if (!node)
+	if (!prefix)
 		return ;
-	if (node->type != NT_CMD_PREFIX)
-	{
-		putendl_indent("!NT_CMD_PREFIX", indent);
-		return ;
-	}
 
 	putendl_indent("[cmd_prefix]", indent);
 	indent += 2;
-	prefix = &node->content->cmd_prefix;
 	head = prefix->redirections;
 	while (prefix->redirections)
 	{
@@ -120,21 +113,13 @@ void	print_prefix(t_ptree *node, int indent)
 	prefix->assignements = head;
 }
 
-void	print_suffix(t_ptree *node, int indent)
+void	print_suffix(t_cmd_suffix *suffix, int indent)
 {
-	t_cmd_suffix	*suffix;
 	t_list			*head;
 
-	if (!node)
+	if (!suffix)
 		return ;
-	if (node->type != NT_CMD_SUFFIX)
-	{
-		putendl_indent("!NT_CMD_SUFFIX", indent);
-		return ;
-	}
 	putendl_indent("[cmd_suffix]", indent);
-
-	suffix = &node->content->cmd_suffix;
 	head = suffix->words;
 	while (suffix->words)
 	{
@@ -161,14 +146,11 @@ void	print_cmd_name(t_cmd_name *cmdname, int indent)
 	putendl_indent(cmdname->data, indent + 2);
 }
 
-void	print_cmd_word(t_ptree *node, int indent)
+void	print_cmd_word(t_cmd_word *word, int indent)
 {
-	t_cmd_word	*word;
-
-	if (!node)
+	if (!word)
 		return ;
 	putendl_indent("[cmd_word]", indent);
-	word = &node->content->cmd_word;
 	putendl_indent(word->data, indent + 2);
 }
 
@@ -282,24 +264,20 @@ void	print_redirect_list(t_ptree *node, int indent)
 	}
 }
 
-void	print_command(t_ptree *node, int indent)
+void	print_command(t_command *cmd, int indent)
 {
-	t_command *cmd;
-
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!cmd || cmd == (void *)ERR_SYNTAX)
 	{
 		putendl_indent("NULL!", indent);
 		return ;
 	}
 
-	cmd = &node->content->command;
-
 	putendl_indent("[command]", indent);
-	if (cmd->cmd->type == NT_SIMPLE_COMMAND)
-		print_simple_command(cmd->cmd, indent + 2);
-	else if (cmd->cmd->type == NT_COMPOUND_COMMAND)
+	if (cmd->type == CT_SIMPLE_COMMAND)
+		print_simple_command(cmd->scmd, indent + 2);
+	else if (cmd->type == CT_COMPOUND_COMMAND)
 	{
-		print_compound_command(cmd->cmd, indent + 2);
+		print_compound_command(cmd->cpcmd, indent + 2);
 		print_redirect_list(cmd->redirect, indent + 2);
 	}
 }

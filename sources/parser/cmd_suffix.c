@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 13:10:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 12:35:23 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 11:12:58 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 #include <lexer/lexer.h>
 #include <stdlib.h>
 
-int				suffix_add_word(t_parser *p, t_ptree *node)
+void			free_suffix(t_cmd_suffix **suffix)
+{
+	free(*suffix);
+	suffix = NULL;
+}
+
+int				suffix_add_word(t_parser *p, t_cmd_suffix *suffix)
 {
 	t_list	*elem;
 
@@ -26,7 +32,7 @@ int				suffix_add_word(t_parser *p, t_ptree *node)
 							data)))
 			{
 				p->tlst = p->tlst->next;
-				ft_lstpush(&node->content->cmd_suffix.words, elem);
+				ft_lstpush(&suffix->words, elem);
 				return (1);
 			}
 		}
@@ -35,7 +41,7 @@ int				suffix_add_word(t_parser *p, t_ptree *node)
 	return (0);
 }
 
-int				add_redirection(t_parser *p, t_ptree *node)
+int				add_redirection(t_parser *p, t_cmd_suffix *suffix)
 {
 	t_list	*elem;
 	t_list	*head;
@@ -49,7 +55,7 @@ int				add_redirection(t_parser *p, t_ptree *node)
 		if ((elem = ft_lstnew(NULL, 0)))
 		{
 			elem->content = redir_node;
-			ft_lstpush(&node->content->cmd_suffix.redirections, elem);
+			ft_lstpush(&suffix->redirections, elem);
 			return (1);
 		}
 		else
@@ -63,38 +69,38 @@ int				add_redirection(t_parser *p, t_ptree *node)
 	return (0);
 }
 
-int				suffix_add(t_parser *p, t_ptree *node)
+int				suffix_add(t_parser *p, t_cmd_suffix *suffix)
 {
 	int		ret;
 
-	if ((ret = add_redirection(p, node)) == 0)
-		return (suffix_add_word(p, node));
+	if ((ret = add_redirection(p, suffix)) == 0)
+		return (suffix_add_word(p, suffix));
 	return (ret);
 }
 
-t_ptree			*cmd_suffix(t_parser *p)
+t_cmd_suffix	*cmd_suffix(t_parser *p)
 {
+	t_cmd_suffix	*suffix;
 	t_list			*head;
-	t_ptree			*node;
 	unsigned int	ret;
 
 	ret = 0;
-	if ((node = ptree_new(NT_CMD_SUFFIX)))
+	if ((suffix = ft_memalloc(sizeof(t_cmd_suffix))))
 	{
 		head = p->tlst;
-		if ((ret = suffix_add(p, node)) == 1)
-			while ((ret = suffix_add(p, node)) == 1)
+		if ((ret = suffix_add(p, suffix)) == 1)
+			while ((ret = suffix_add(p, suffix)) == 1)
 				;
 		else
 		{
 			p->tlst = head;
-			ptree_free(&node);
+			free_suffix(&suffix);
 		}
 	}
 	if (ret == ERR_SYNTAX)
 	{
-		ptree_free(&node);
+		free_suffix(&suffix);
 		return ((void *)ERR_SYNTAX);
 	}
-	return (node);
+	return (suffix);
 }

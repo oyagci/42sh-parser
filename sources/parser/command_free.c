@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:04:49 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 14:05:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 10:55:39 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void			command_free(union u_node *content)
 {
-	ptree_free((t_ptree **)&content->command.cmd);
-	ptree_free((t_ptree **)&content->command.redirect);
+	(void)content;
+//	ptree_free((t_ptree **)&content->command.cmd);
+//	ptree_free((t_ptree **)&content->command.redirect);
 }

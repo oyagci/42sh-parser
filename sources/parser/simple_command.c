@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 15:51:26 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 17:12:55 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 11:13:37 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int				simple_prefix(t_parser *p, t_simple_command *scmd)
 			return (ERR_SYNTAX);
 		if ((scmd->word = cmd_word(p)) == (void *)ERR_SYNTAX)
 		{
-			ptree_free(&scmd->prefix);
+			free_prefix(&scmd->prefix);
 			return (ERR_SYNTAX);
 		}
 	}
@@ -53,8 +53,7 @@ t_simple_command		*simple_command(t_parser *p)
 	{
 		if ((ret = simple_prefix(p, scmd)) == 1)
 		{
-			if ((scmd->suffix = cmd_suffix(p)) ==
-				(void *)ERR_SYNTAX)
+			if ((scmd->suffix = cmd_suffix(p)) == (void *)ERR_SYNTAX)
 			{
 				free_simple_command(&scmd);
 				return ((void *)ERR_SYNTAX);

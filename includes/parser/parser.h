@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 17:24:43 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 11:17:08 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ struct								s_pipe_sequence
 
 struct								s_simple_command
 {
-	t_ptree	*prefix;
-	t_ptree	*suffix;
-	t_cmd_name	*name;
-	t_ptree	*word;
+	t_cmd_prefix	*prefix;
+	t_cmd_suffix	*suffix;
+	t_cmd_name		*name;
+	t_cmd_word		*word;
 };
 
 struct								s_cmd_prefix
@@ -224,10 +224,18 @@ struct								s_separator_op
 	enum e_separator	op;
 };
 
+enum								e_command_type
+{
+	CT_COMPOUND_COMMAND,
+	CT_SIMPLE_COMMAND
+};
+
 struct								s_command
 {
-	t_ptree	*cmd;
+	enum e_command_type	type;
+	t_simple_command	*scmd;
 	t_ptree	*redirect;
+	t_ptree *cpcmd;
 };
 
 struct								s_compound_command
@@ -284,10 +292,10 @@ int									parser_peek(t_parser *p,
 
 t_and_or							*and_or(t_parser *p);
 t_cmd_name							*cmd_name(t_parser *p);
-t_ptree								*cmd_word(t_parser *p);
-t_ptree								*cmd_prefix(t_parser *p);
-t_ptree								*cmd_suffix(t_parser *p);
-t_ptree								*command(t_parser *p);
+t_cmd_word							*cmd_word(t_parser *p);
+t_cmd_prefix						*cmd_prefix(t_parser *p);
+t_cmd_suffix						*cmd_suffix(t_parser *p);
+t_command							*command(t_parser *p);
 t_ptree								*complete_command(t_parser *p);
 t_ptree								*compound_command(t_parser *p);
 t_compound_list						*compound_list(t_parser *p);
@@ -332,16 +340,18 @@ void								compound_list_free(union u_node *content);
 void								pipe_sequence_free(union u_node *content);
 void								term_free(union u_node *content);
 
-void								free_term(t_term **t);
 void								free_and_or(t_and_or **and_or);
+void								free_command(t_command **cmd);
+void								free_prefix(t_cmd_prefix **prefix);
+void								free_term(t_term **t);
 
 /*
 ** cmd_suffix.c
 */
-int									add_redirection(t_parser *p, t_ptree *node);
+int									add_redirection(t_parser *p, t_cmd_suffix *suffix);
 
 void								print_list(t_ptree *node, int indent);
-void								print_command(t_ptree *node, int indent);
-void	print_simple_command(t_simple_command *scmd, int indent);
+void								print_command(t_command *cmd, int indent);
+void								print_simple_command(t_simple_command *scmd, int indent);
 
 #endif

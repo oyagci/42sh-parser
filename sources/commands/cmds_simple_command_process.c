@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:42:48 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/01 14:09:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 10:57:22 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ t_list		*get_spcmd_suffixes(t_ptree *suffixes)
 	return (lst);
 }
 
-char		**get_spcmd_av(t_spcommand *spcmd)
+char		**get_spcmd_av(t_simple_command *spcmd)
 {
+	(void)spcmd;
+	/*
 	t_list	*avlst;
 	t_list	*elem;
 
@@ -57,15 +59,20 @@ char		**get_spcmd_av(t_spcommand *spcmd)
 	if ((elem = get_spcmd_suffixes(spcmd->suffix)))
 		ft_lstpush(&avlst, elem);
 	return (ft_lststr(avlst));
+	*/
+	return (NULL);
 }
 
 t_process	*cmds_simple_command_get_process(t_ptree *spcmd)
 {
+	(void)spcmd;
+	/*
 	t_process	*p;
 
 	if ((p = ft_memalloc(sizeof(t_process))))
 	{
 		p->argv = get_spcmd_av(&spcmd->content->sp_command);
 	}
-	return (p);
+	*/
+	return (NULL);
 }
