@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:12:51 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 11:06:24 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:31:40 by oyagci           ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
@@ -42,9 +42,9 @@ int				add_assignement(t_parser *p, t_cmd_prefix *prefix)
 
 int				prefix_add_redirection(t_parser *p, t_cmd_prefix *prefix)
 {
-	t_list	*elem;
-	t_list	*head;
-	t_ptree	*redir_node;
+	t_list			*elem;
+	t_list			*head;
+	t_io_redirect	*redir_node;
 
 	head = p->tlst;
 	if ((redir_node = io_redirect(p)))
@@ -57,11 +57,9 @@ int				prefix_add_redirection(t_parser *p, t_cmd_prefix *prefix)
 			ft_lstpush(&prefix->redirections, elem);
 			return (1);
 		}
-		ptree_free(&redir_node);
+		free_io_redirect(&redir_node);
 		p->tlst = head;
 	}
-	else
-		ptree_free(&redir_node);
 	return (0);
 }
 

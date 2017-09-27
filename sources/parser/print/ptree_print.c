@@ -51,24 +51,14 @@ void	print_here_end(t_here_end *hend, int indent)
 	putendl_indent(hend->data, indent + 2);
 }
 
-void	print_io_here(t_ptree *node, int indent)
+void	print_io_here(t_io_here *iohere, int indent)
 {
-	t_io_here	*file;
-
-	file = &node->content->io_here;
 	putendl_indent("[io_here]", indent);
-	print_here_end(file->here_end, indent + 2);
+	print_here_end(iohere->here_end, indent + 2);
 }
 
-void	print_io_redirect(t_ptree *node, int indent)
+void	print_io_redirect(t_io_redirect *redirect, int indent)
 {
-	t_io_redirect *redirect;
-
-	if (node->type != NT_IO_REDIRECT)
-		return ;
-
-	redirect = &node->content->io_redirect;
-
 	putendl_indent("[io_redirect]", indent);
 	putstr_indent("is_default: ", indent + 2);
 	ft_putnbr(redirect->is_default);
@@ -94,7 +84,7 @@ void	print_prefix(t_cmd_prefix *prefix, int indent)
 	head = prefix->redirections;
 	while (prefix->redirections)
 	{
-		print_io_redirect(((t_ptree *)prefix->redirections->content), indent);
+		print_io_redirect(prefix->redirections->content, indent);
 		prefix->redirections = prefix->redirections->next;
 	}
 	prefix->redirections = head;
@@ -243,14 +233,14 @@ void	print_compound_command(t_compound_command *cpndcmd, int indent)
 	print_subshell(cpndcmd->subshell, indent + 2);
 }
 
-void	print_redirect_list(t_ptree *node, int indent)
+void	print_redirect_list(t_redirect_list *rlist, int indent)
 {
 	t_list	*head;
 
-	if (!node)
+	if (!rlist)
 		return ;
 
-	head = node->content->redirect_list.list;
+	head = rlist->list;
 	while (head)
 	{
 		print_io_redirect(head->content, indent);
@@ -272,7 +262,7 @@ void	print_command(t_command *cmd, int indent)
 	else if (cmd->type == CT_COMPOUND_COMMAND)
 	{
 		print_compound_command(cmd->cpndcmd, indent + 2);
-		print_redirect_list(cmd->redirect, indent + 2);
+		print_redirect_list(cmd->rlist, indent + 2);
 	}
 	else
 		putendl_indent("unknown command", indent);

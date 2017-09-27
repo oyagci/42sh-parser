@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:45:43 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:06:39 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ struct								s_io_redirect
 	int			is_default;
 	int			io_number;
 	t_io_file	*io_file;
-	t_ptree		*io_here;
+	t_io_here	*io_here;
 };
 
 enum								e_io_type
@@ -234,7 +234,7 @@ struct								s_command
 {
 	enum e_command_type	type;
 	t_simple_command	*scmd;
-	t_ptree				*redirect;
+	t_redirect_list		*rlist;
 	t_compound_command	*cpndcmd;
 };
 
@@ -309,7 +309,7 @@ t_ptree								*list(t_parser *p);
 t_ptree								*newline_list(t_parser *p);
 t_pipe_sequence						*pipe_sequence(t_parser *p);
 t_pipeline							*pipeline(t_parser *p);
-t_ptree								*redirect_list(t_parser *p);
+t_redirect_list						*redirect_list(t_parser *p);
 t_ptree								*separator(t_parser	*p);
 t_ptree								*separator_op(t_parser *p);
 t_simple_command					*simple_command(t_parser *p);
@@ -343,6 +343,7 @@ void								term_free(union u_node *content);
 void								free_and_or(t_and_or **and_or);
 void								free_command(t_command **cmd);
 void								free_complete_command(t_complete_command **cplcmd);
+void								free_io_redirect(t_io_redirect **ioredir);
 void								free_prefix(t_cmd_prefix **prefix);
 void								free_term(t_term **t);
 

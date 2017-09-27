@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/22 17:24:21 by oyagci            #+#    #+#              #
-#    Updated: 2017/06/14 13:28:48 by oyagci           ###   ########.fr        #
+#    Updated: 2017/09/27 14:02:07 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CCYELLOW		= \033[0;33m
 CCEND			= \033[0m
 
 CC				= clang
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra -Werror -g
 
 NAME			= 42sh
 

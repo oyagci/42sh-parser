@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 13:10:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 11:12:58 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:47:50 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int				suffix_add_word(t_parser *p, t_cmd_suffix *suffix)
 
 int				add_redirection(t_parser *p, t_cmd_suffix *suffix)
 {
-	t_list	*elem;
-	t_list	*head;
-	t_ptree	*redir_node;
+	t_list			*elem;
+	t_list			*head;
+	t_io_redirect	*redir_node;
 
 	head = p->tlst;
 	if ((redir_node = io_redirect(p)))
@@ -60,12 +60,10 @@ int				add_redirection(t_parser *p, t_cmd_suffix *suffix)
 		}
 		else
 		{
-			ptree_free(&redir_node);
+			free_io_redirect(&redir_node);
 			p->tlst = head;
 		}
 	}
-	else
-		ptree_free(&redir_node);
 	return (0);
 }
 

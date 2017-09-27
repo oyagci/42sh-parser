@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:14:07 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:15:51 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void			free_command(t_command **cmd)
 
 int				cmd_add_redir(t_parser *p, t_command *cmd)
 {
-	t_ptree	*redir;
+	t_redirect_list	*redir;
 
 	redir = redirect_list(p);
 	if (redir != (void *)ERR_SYNTAX)
-		cmd->redirect = redir;
+		cmd->rlist = redir;
 	else
 	{
 		free_command(&cmd);

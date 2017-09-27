@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:51:34 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:39:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:58:34 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ int				get_io_number(t_parser *p, t_io_redirect *ioredir)
 t_io_redirect	*io_redirect(t_parser *p)
 {
 	t_io_file		*iofile;
-	t_ptree			*iohere;
+	t_io_here		*iohere;
 	t_io_redirect	*ioredir;
 	t_list			*head;
 	int				ionumber;
 
 	ionumber = 0;
 	iofile = NULL;
+	iohere = NULL;
 	if ((ioredir = ft_memalloc(sizeof(t_io_redirect))))
 	{
 		head = p->tlst;
@@ -51,6 +52,11 @@ t_io_redirect	*io_redirect(t_parser *p)
 			iohere = io_here(p);
 		if (iofile == (void*)ERR_SYNTAX || iohere == (void*)ERR_SYNTAX)
 			free_io_redirect(&ioredir);
+		else if (iofile == NULL && iohere == NULL)
+		{
+			free_io_redirect(&ioredir);
+			return (NULL);
+		}
 		else
 		{
 			ioredir->io_here = iohere;
