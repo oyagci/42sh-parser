@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:29:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:15:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 14:54:44 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_complete_command	*complete_command(t_parser *p)
 			free_complete_command(&cplcmd);
 			return ((void *)ERR_SYNTAX);
 		}
-		cplcmd->separator_op = separator_op(p);
+		cplcmd->sepop = separator_op(p);
 	}
 	return (cplcmd);
 }

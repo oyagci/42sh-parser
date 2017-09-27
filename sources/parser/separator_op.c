@@ -6,31 +6,38 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 12:59:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/24 17:16:11 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 14:50:03 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
-t_ptree				*separator_op(t_parser *p)
+void			free_separator_op(t_separator_op **sepop)
 {
-	t_ptree	*node;
+	free(*sepop);
+	*sepop = NULL;
+}
 
-	if ((node = ptree_new(NT_SEPARATOR_OP)))
+t_separator_op	*separator_op(t_parser *p)
+{
+	t_separator_op *sepop;
+
+	if ((sepop = ft_memalloc(sizeof(t_separator_op))))
 	{
 		if (((t_token *)p->tlst->content)->type == T_SEMICOL)
 		{
-			node->content->separator_op.op = SP_SEMICOL;
+			sepop->op = SP_SEMICOL;
 			p->tlst = p->tlst->next;
 		}
 		else if (((t_token *)p->tlst->content)->type == T_AND)
 		{
-			node->content->separator_op.op = SP_AND;
+			sepop->op = SP_AND;
 			p->tlst = p->tlst->next;
 		}
 		else
-			ptree_free(&node);
+			free_separator_op(&sepop);
 	}
-	return (node);
+	return (sepop);
 }

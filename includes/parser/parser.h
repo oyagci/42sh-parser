@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:06:39 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 14:54:40 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ typedef struct s_subshell			t_subshell;
 typedef struct s_term				t_term;
 typedef struct s_compound_list		t_compound_list;
 typedef struct s_separator			t_separator;
+typedef struct s_linebreak			t_linebreak;
+typedef struct s_newline_list		t_newline_list;
 
 struct								s_separator
 {
-	t_ptree	*separator_op;
+	t_separator_op	*sepop;
 };
 
 struct								s_parser
@@ -171,8 +173,8 @@ struct								s_io_file
 
 struct								s_complete_command
 {
-	t_ptree	*list;
-	t_ptree	*separator_op;
+	t_nlist			*list;
+	t_separator_op	*sepop;
 };
 
 struct								s_nlist
@@ -240,7 +242,7 @@ struct								s_command
 
 struct								s_compound_command
 {
-	t_ptree	*subshell;
+	t_subshell	*subshell;
 };
 
 struct								s_compound_list
@@ -251,6 +253,10 @@ struct								s_compound_list
 struct								s_subshell
 {
 	t_compound_list	*compound_list;
+};
+
+struct								s_linebreak
+{
 };
 
 union								u_node
@@ -304,16 +310,16 @@ t_here_end							*here_end(t_parser *p);
 t_io_file							*io_file(t_parser *p);
 t_io_here							*io_here(t_parser *p);
 t_io_redirect						*io_redirect(t_parser *p);
-t_ptree								*linebreak(t_parser *p);
-t_ptree								*list(t_parser *p);
-t_ptree								*newline_list(t_parser *p);
+t_linebreak							*linebreak(t_parser *p);
+t_nlist								*list(t_parser *p);
+t_newline_list						*newline_list(t_parser *p);
 t_pipe_sequence						*pipe_sequence(t_parser *p);
 t_pipeline							*pipeline(t_parser *p);
 t_redirect_list						*redirect_list(t_parser *p);
-t_ptree								*separator(t_parser	*p);
-t_ptree								*separator_op(t_parser *p);
+t_separator							*separator(t_parser *p);
+t_separator_op						*separator_op(t_parser *p);
 t_simple_command					*simple_command(t_parser *p);
-t_ptree								*subshell(t_parser *p);
+t_subshell							*subshell(t_parser *p);
 t_term								*term(t_parser *p);
 
 void								and_or_free(union u_node *and_or);
@@ -353,7 +359,7 @@ void								free_term(t_term **t);
 int									add_redirection(t_parser *p, t_cmd_suffix *suffix);
 
 void								print_complete_command(t_complete_command *cplcmd, int indent);
-void								print_list(t_ptree *node, int indent);
+void								print_list(t_nlist *lst, int indent);
 void								print_command(t_command *cmd, int indent);
 void								print_simple_command(t_simple_command *scmd, int indent);
 

@@ -216,12 +216,12 @@ void	print_compound_list(t_compound_list *cl, int indent)
 	print_term(cl->term, indent + 2);
 }
 
-void	print_subshell(t_ptree *node, int indent)
+void	print_subshell(t_subshell *sub, int indent)
 {
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!sub || sub == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[subshell]", indent);
-	print_compound_list(node->content->subshell.compound_list, indent + 2);
+	print_compound_list(sub->compound_list, indent + 2);
 }
 
 void	print_compound_command(t_compound_command *cpndcmd, int indent)
@@ -268,14 +268,14 @@ void	print_command(t_command *cmd, int indent)
 		putendl_indent("unknown command", indent);
 }
 
-void	print_list(t_ptree *node, int indent)
+void	print_list(t_nlist *lst, int indent)
 {
 	t_list	*head;
 
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!lst || lst == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[list]", indent);
-	head = node->content->list.andlst;
+	head = lst->andlst;
 	while (head)
 	{
 		print_and_or(head->content, indent + 2);
@@ -283,36 +283,33 @@ void	print_list(t_ptree *node, int indent)
 	}
 }
 
-void	print_separator_op(t_ptree *node, int indent)
+void	print_separator_op(t_separator_op *sepop, int indent)
 {
-	t_separator_op	*sp;
-
-	if (!node)
+	if (!sepop)
 		return ;
-	sp = &node->content->separator_op;
 	putendl_indent("[separator_op]", indent);
-	if (sp->op == SP_AND)
+	if (sepop->op == SP_AND)
 		putendl_indent("AND", indent + 2);
-	else if (sp->op == SP_SEMICOL)
+	else if (sepop->op == SP_SEMICOL)
 		putendl_indent("SEMICOL", indent + 2);
 }
 
-void	print_separator(t_ptree *node, int indent)
+void	print_separator(t_separator *sep, int indent)
 {
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!sep || sep == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[separator]", indent);
-	print_separator_op(node->content->separator.separator_op, indent + 2);
+	print_separator_op(sep->sepop, indent + 2);
 }
 
 void	print_complete_command(t_complete_command *cplcmd, int indent)
 {
-	t_ptree	*head;
+	t_nlist	*head;
 
 	if (!cplcmd || cplcmd == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[complete_command]", indent);
 	head = cplcmd->list;
 	print_list(head, indent + 2);
-	print_separator_op(cplcmd->separator_op, indent + 2);
+	print_separator_op(cplcmd->sepop, indent + 2);
 }

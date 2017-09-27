@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:58:03 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:13:02 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 14:53:28 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void				free_compound_command(t_compound_command **cpndcmd)
 t_compound_command	*compound_command(t_parser *p)
 {
 	t_compound_command	*cpndcmd;
-	t_ptree	*sub;
+	t_subshell			*sub;
 
 	if ((cpndcmd = ft_memalloc(sizeof(t_compound_command))))
 	{

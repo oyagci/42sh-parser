@@ -6,23 +6,23 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 16:47:35 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 12:28:56 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 14:54:03 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
 
-t_ptree			*separator(t_parser *p)
+t_separator	*separator(t_parser *p)
 {
-	t_ptree	*node;
+	t_separator	*sep;
 
-	if ((node = ptree_new(NT_SEPARATOR)))
+	if ((sep = ft_memalloc(sizeof(t_separator))))
 	{
-		if ((node->content->separator.separator_op = separator_op(p)))
+		if ((sep->sepop = separator_op(p)))
 			linebreak(p);
 		else
 			newline_list(p);
 	}
-	return (node);
+	return (sep);
 }

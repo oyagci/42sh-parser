@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:43:29 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:19:08 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 14:38:43 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 #include <parser/parser.h>
 #include <stdlib.h>
 
-int				add_to_list(t_parser *p, t_ptree *node)
+void			free_list(t_nlist **lst)
+{
+	free(*lst);
+	*lst = NULL;
+}
+
+int				add_to_list(t_parser *p, t_nlist *lst)
 {
 	t_list		*elem;
 	t_and_or	*andor;
@@ -24,7 +30,7 @@ int				add_to_list(t_parser *p, t_ptree *node)
 		if ((andor = and_or(p)) && andor != (void *)ERR_SYNTAX)
 		{
 			elem->content = andor;
-			ft_lstpush(&node->content->list.andlst, elem);
+			ft_lstpush(&lst->andlst, elem);
 			return (1);
 		}
 		free(elem);
@@ -34,23 +40,23 @@ int				add_to_list(t_parser *p, t_ptree *node)
 	return (0);
 }
 
-t_ptree			*list(t_parser *p)
+t_nlist		*list(t_parser *p)
 {
 	int		ret;
-	t_ptree	*node;
+	t_nlist	*lst;
 	t_list	*save;
 
 	ret = 0;
-	if (!(node = ptree_new(NT_LIST)))
+	if (!(lst = ft_memalloc(sizeof(t_list))))
 		return (NULL);
-	if ((ret = add_to_list(p, node)) == 1)
+	if ((ret = add_to_list(p, lst)) == 1)
 	{
 		save = p->tlst;
 		while (parser_expect(p, T_SEMICOL))
 		{
-			if ((ret = add_to_list(p, node)) == ERR_SYNTAX)
+			if ((ret = add_to_list(p, lst)) == ERR_SYNTAX)
 			{
-				ptree_free(&node);
+				free_list(&lst);
 				return ((void *)ERR_SYNTAX);
 			}
 			else if (ret == 0)
@@ -62,6 +68,6 @@ t_ptree			*list(t_parser *p)
 		}
 	}
 	else
-		ptree_free(&node);
-	return (ret == ERR_SYNTAX ? (void *)ERR_SYNTAX : node);
+		free_list(&lst);
+	return (ret == ERR_SYNTAX ? (void *)ERR_SYNTAX : lst);
 }
