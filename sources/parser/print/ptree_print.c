@@ -280,6 +280,8 @@ void	print_command(t_command *cmd, int indent)
 		print_compound_command(cmd->cpcmd, indent + 2);
 		print_redirect_list(cmd->redirect, indent + 2);
 	}
+	else
+		putendl_indent("unknown command", indent);
 }
 
 void	print_list(t_ptree *node, int indent)
@@ -319,14 +321,14 @@ void	print_separator(t_ptree *node, int indent)
 	print_separator_op(node->content->separator.separator_op, indent + 2);
 }
 
-void	print_complete_command(t_ptree *node, int indent)
+void	print_complete_command(t_complete_command *cplcmd, int indent)
 {
 	t_ptree	*head;
 
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!cplcmd || cplcmd == (void *)ERR_SYNTAX)
 		return ;
 	putendl_indent("[complete_command]", indent);
-	head = node->content->cpcmd.list;
+	head = cplcmd->list;
 	print_list(head, indent + 2);
-	print_separator_op(node->content->cpcmd.separator_op, indent + 2);
+	print_separator_op(cplcmd->separator_op, indent + 2);
 }

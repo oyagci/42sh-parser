@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 17:01:56 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:04:16 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 #include <commands/commands.h>
 #include <unistd.h>
 
-void	print_complete_command(t_ptree *node, int indent);
-
 int				process_line(char *input)
 {
 	t_lexer		*lex;
@@ -34,17 +32,13 @@ int				process_line(char *input)
 		return (ERR);
 	p = ft_memalloc(sizeof(t_parser));
 	p->tlst = lex->tlst;
-	p->ptree = complete_command(p);
-	if (p->ptree == (void *)ERR_SYNTAX || p->tlst->next)
+	p->cplcmd = complete_command(p);
+	if (p->cplcmd == (void *)ERR_SYNTAX || p->tlst->next)
 		ft_putendl("syntax error");
 	else
 	{
-		/* ----- Print ----- */
-			t_ptree *t = p->ptree;
-			print_complete_command(t, 0);
-		/* -----  End  ----- */
-	//	cmds_exec(p->ptree);
-		ptree_free(&p->ptree);
+		print_complete_command(p->cplcmd, 0);
+		free_complete_command(&p->cplcmd);
 	}
 	free(p);
 	lexer_delete(&lex);

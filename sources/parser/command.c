@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 10:50:31 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:07:48 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_command		*command(t_parser *p)
 	t_ptree				*cpcmd;
 
 	scmd = NULL;
+	cpcmd = NULL;
 	if ((cmd = ft_memalloc(sizeof(t_command))))
 	{
 		if (!(scmd = simple_command(p)))
@@ -56,6 +57,7 @@ t_command		*command(t_parser *p)
 			free_command(&cmd);
 			return (NULL);
 		}
+		cmd->type = CT_SIMPLE_COMMAND;
 		if (cpcmd)
 		{
 			cmd->type = CT_COMPOUND_COMMAND;

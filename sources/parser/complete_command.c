@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:29:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/14 14:27:18 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 11:58:15 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 #include <parser/parser.h>
 #include <stdlib.h>
 
-t_ptree			*complete_command(t_parser *p)
+void				free_complete_command(t_complete_command **cplcmd)
 {
-	t_ptree	*node;
+	free(*cplcmd);
+	*cplcmd = NULL;
+}
 
-	node = NULL;
-	if ((node = ptree_new(NT_COMPLETE_COMMAND)))
+t_complete_command	*complete_command(t_parser *p)
+{
+	t_complete_command *cplcmd;
+
+	if ((cplcmd = ft_memalloc(sizeof(t_complete_command))))
 	{
-		if ((node->content->cpcmd.list = list(p)) == NULL)
+		if (NULL == (cplcmd->list = list(p)))
 		{
-			ptree_free(&node);
+			free_complete_command(&cplcmd);
 			return (NULL);
 		}
-		else if (node->content->cpcmd.list == (void *)ERR_SYNTAX)
+		else if (cplcmd->list == (void *)ERR_SYNTAX)
 		{
-			ptree_free(&node);
+			free_complete_command(&cplcmd);
 			return ((void *)ERR_SYNTAX);
 		}
-		node->content->cpcmd.separator_op = separator_op(p);
+		cplcmd->separator_op = separator_op(p);
 	}
-	return (node);
+	return (cplcmd);
 }

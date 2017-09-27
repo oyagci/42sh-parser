@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 11:17:08 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:02:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ struct								s_separator
 
 struct								s_parser
 {
-	t_list		*tlst;
-	t_ptree		*ptree;
+	t_list				*tlst;
+	t_complete_command	*cplcmd;
 };
 
 enum								e_ntype
@@ -296,7 +296,7 @@ t_cmd_word							*cmd_word(t_parser *p);
 t_cmd_prefix						*cmd_prefix(t_parser *p);
 t_cmd_suffix						*cmd_suffix(t_parser *p);
 t_command							*command(t_parser *p);
-t_ptree								*complete_command(t_parser *p);
+t_complete_command					*complete_command(t_parser *p);
 t_ptree								*compound_command(t_parser *p);
 t_compound_list						*compound_list(t_parser *p);
 t_ptree								*filename(t_parser *p);
@@ -342,6 +342,7 @@ void								term_free(union u_node *content);
 
 void								free_and_or(t_and_or **and_or);
 void								free_command(t_command **cmd);
+void								free_complete_command(t_complete_command **cplcmd);
 void								free_prefix(t_cmd_prefix **prefix);
 void								free_term(t_term **t);
 
@@ -350,6 +351,7 @@ void								free_term(t_term **t);
 */
 int									add_redirection(t_parser *p, t_cmd_suffix *suffix);
 
+void								print_complete_command(t_complete_command *cplcmd, int indent);
 void								print_list(t_ptree *node, int indent);
 void								print_command(t_command *cmd, int indent);
 void								print_simple_command(t_simple_command *scmd, int indent);
