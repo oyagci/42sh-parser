@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 15:00:31 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 16:40:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,11 +283,18 @@ t_subshell							*subshell(t_parser *p);
 t_term								*term(t_parser *p);
 
 void								free_and_or(t_and_or **and_or);
+void								free_cmd_name(t_cmd_name **cmdname);
 void								free_command(t_command **cmd);
 void								free_complete_command(t_complete_command **cplcmd);
 void								free_io_redirect(t_io_redirect **ioredir);
+void								free_list(t_nlist **lst);
+void								free_pipe_sequence(t_pipe_sequence **pseq);
+void								free_pipeline(t_pipeline **pline);
 void								free_prefix(t_cmd_prefix **prefix);
+void								free_simple_command(t_simple_command **scmd);
+void								free_suffix(t_cmd_suffix **suffix);
 void								free_term(t_term **t);
+void								free_word(t_cmd_word **word);;
 
 /*
 ** cmd_suffix.c

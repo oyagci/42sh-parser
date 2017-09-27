@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:15:51 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 16:39:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void			free_command(t_command **cmd)
 {
+	free_simple_command(&(*cmd)->scmd);
 	free(*cmd);
 	*cmd = NULL;
 }

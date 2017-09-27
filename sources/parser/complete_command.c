@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:29:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 14:54:44 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 15:49:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void				free_complete_command(t_complete_command **cplcmd)
 {
+	free_list(&(*cplcmd)->list);
 	free(*cplcmd);
 	*cplcmd = NULL;
 }

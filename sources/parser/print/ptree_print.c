@@ -101,7 +101,7 @@ void	print_suffix(t_cmd_suffix *suffix, int indent)
 {
 	t_list			*head;
 
-	if (!suffix)
+	if (!suffix || suffix == (void*)ERR_SYNTAX)
 		return ;
 	putendl_indent("[cmd_suffix]", indent);
 	head = suffix->words;

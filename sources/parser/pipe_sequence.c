@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 10:53:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 11:02:35 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 16:34:31 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@
 
 void			free_pipe_sequence(t_pipe_sequence **pseq)
 {
+	t_list	*cmds;
+	t_list	*next;
+
+	cmds = (*pseq)->commands;
+	while (cmds)
+	{
+		next = (*pseq)->commands->next;
+		free_command((t_command**)&cmds->content);
+		free(cmds);
+		cmds = next;
+	}
 	free(*pseq);
 	pseq = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 12:50:56 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 16:43:10 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 16:24:38 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 
 void			free_and_or(t_and_or **andor)
 {
-	// TODO: free t_list *pipelines
+	t_list	*next;
+
+	while ((*andor)->pipelines)
+	{
+		next = (*andor)->pipelines->next;
+		free_pipeline((t_pipeline **)&(*andor)->pipelines->content);
+		free((*andor)->pipelines);
+		(*andor)->pipelines = next;
+	}
 	free(*andor);
 	*andor = NULL;
 }
