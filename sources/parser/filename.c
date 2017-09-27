@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:02:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/06/05 14:51:11 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:24:34 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include <parser/parser.h>
 #include <environ/environ.h>
 #include <stdlib.h>
+
+void			free_filename(t_filename **fname)
+{
+	*fname = NULL;
+}
 
 int				tilde_expansion(t_token *t)
 {
@@ -33,27 +38,27 @@ int				quote_removal(t_token *t)
 	return (OK);
 }
 
-t_ptree			*filename(t_parser *p)
+t_filename		*filename(t_parser *p)
 {
-	t_ptree	*node;
-	t_token	*t;
+	t_filename	*fname;
+	t_token		*t;
 
-	if ((node = ptree_new(NT_FILENAME)))
+	if ((fname = ft_memalloc(sizeof(t_filename))))
 	{
 		if ((t = p->tlst->content)->type == T_WORD)
 		{
 			tilde_expansion(t);
 			parameter_expansion(t);
 			quote_removal(t);
-			if ((node->content->filename.data = ft_strdup(t->data)) == NULL)
+			if ((fname->data = ft_strdup(t->data)) == NULL)
 			{
-				ptree_free(&node);
+				free_filename(&fname);
 				return (NULL);
 			}
 			p->tlst = p->tlst->next;
 		}
 		else
-			ptree_free(&node);
+			free_filename(&fname);
 	}
-	return (node);
+	return (fname);
 }

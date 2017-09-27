@@ -6,35 +6,42 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:58:03 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 11:53:18 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:13:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
-t_ptree			*compound_command(t_parser *p)
+void				free_compound_command(t_compound_command **cpndcmd)
 {
-	t_ptree	*node;
+	free(*cpndcmd);
+	*cpndcmd = NULL;
+}
+
+t_compound_command	*compound_command(t_parser *p)
+{
+	t_compound_command	*cpndcmd;
 	t_ptree	*sub;
 
-	if ((node = ptree_new(NT_COMPOUND_COMMAND)))
+	if ((cpndcmd = ft_memalloc(sizeof(t_compound_command))))
 	{
 		if ((sub = subshell(p)))
 		{
 			if (sub != (void *)ERR_SYNTAX)
-				node->content->compound_command.subshell = sub;
+				cpndcmd->subshell = sub;
 			else
 			{
-				ptree_free(&node);
+				free_compound_command(&cpndcmd);
 				return ((void *)ERR_SYNTAX);
 			}
 		}
 		else
 		{
-			ptree_free(&node);
+			free_compound_command(&cpndcmd);
 			return (NULL);
 		}
 	}
-	return (node);
+	return (cpndcmd);
 }

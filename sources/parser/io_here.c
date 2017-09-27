@@ -6,35 +6,42 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:53:18 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 12:50:09 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:45:52 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
-t_ptree			*io_here(t_parser *p)
+void		free_io_here(t_io_here **iohere)
 {
-	t_list	*head;
-	t_ptree	*node;
+	free(*iohere);
+	*iohere = NULL;
+}
 
-	if ((node = ptree_new(NT_IO_HERE)))
+t_io_here	*io_here(t_parser *p)
+{
+	t_list		*head;
+	t_io_here	*iohere;
+
+	if ((iohere = ft_memalloc(sizeof(t_io_here))))
 	{
 		head = p->tlst;
 		if (parser_expect(p, T_DLESS))
 		{
-			if (!(node->content->io_here.here_end = here_end(p)))
+			if (!(iohere->here_end = here_end(p)))
 			{
-				ptree_free(&node);
+				free_io_here(&iohere);
 				p->tlst = head;
 				return ((void *)ERR_SYNTAX);
 			}
 		}
 		else
 		{
-			ptree_free(&node);
+			free_io_here(&iohere);
 			p->tlst = head;
 		}
 	}
-	return (node);
+	return (iohere);
 }

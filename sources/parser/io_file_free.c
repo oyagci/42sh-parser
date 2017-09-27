@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 15:42:52 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 13:18:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:48:30 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 void			io_file_free(union u_node *node)
 {
+	(void)node;
+	/*
 	t_io_file	*f;
 
 	f = &node->io_file;
@@ -24,4 +26,5 @@ void			io_file_free(union u_node *node)
 		free(f->filename->content);
 		free(f->filename);
 	}
+	*/
 }

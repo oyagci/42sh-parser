@@ -6,51 +6,57 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:51:34 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 12:27:35 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:39:40 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
+#include <stdlib.h>
 
-int				get_io_number(t_parser *p, t_ptree *node)
+void			free_io_redirect(t_io_redirect **ioredir)
+{
+	free(*ioredir);
+	*ioredir = NULL;
+}
+
+int				get_io_number(t_parser *p, t_io_redirect *ioredir)
 {
 	if (((t_token *)p->tlst->content)->type == T_IO_NUMBER)
 	{
-		node->content->io_redirect.io_number =
-			ft_atoi(((t_token *)p->tlst->content)->data);
-		node->content->io_redirect.is_default = 0;
+		ioredir->io_number = ft_atoi(((t_token *)p->tlst->content)->data);
+		ioredir->is_default = 0;
 		p->tlst = p->tlst->next;
 	}
 	else
-		node->content->io_redirect.is_default = 1;
+		ioredir->is_default = 1;
 	return (0);
 }
 
-t_ptree			*io_redirect(t_parser *p)
+t_io_redirect	*io_redirect(t_parser *p)
 {
-	t_ptree	*io;
-	t_ptree	*node;
-	t_list	*head;
-	int		ionumber;
+	t_io_file		*iofile;
+	t_ptree			*iohere;
+	t_io_redirect	*ioredir;
+	t_list			*head;
+	int				ionumber;
 
 	ionumber = 0;
-	io = NULL;
-	if ((node = ptree_new(NT_IO_REDIRECT)))
+	iofile = NULL;
+	if ((ioredir = ft_memalloc(sizeof(t_io_redirect))))
 	{
 		head = p->tlst;
-		get_io_number(p, node);
-		io = io_file(p);
-		!io ? io = io_here(p) : 0;
-		if (io && io != (void *)ERR_SYNTAX)
-		{
-			if (io->type == NT_IO_HERE)
-				node->content->io_redirect.io_here = io;
-			else if (io->type == NT_IO_FILE)
-				node->content->io_redirect.io_file = io;
-		}
+		get_io_number(p, ioredir);
+		if (NULL == (iofile = io_file(p)))
+			iohere = io_here(p);
+		if (iofile == (void*)ERR_SYNTAX || iohere == (void*)ERR_SYNTAX)
+			free_io_redirect(&ioredir);
 		else
-			ptree_free(&node);
+		{
+			ioredir->io_here = iohere;
+			ioredir->io_file = iofile;
+		}
 	}
-	return ((io == (void *)ERR_SYNTAX) ? (void *)ERR_SYNTAX : node);
+	return ((iofile == (void*)ERR_SYNTAX)
+			|| iohere == (void*)ERR_SYNTAX ? (void *)ERR_SYNTAX : ioredir);
 }

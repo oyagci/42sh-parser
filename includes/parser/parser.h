@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:02:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:45:43 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ struct								s_io_redirect
 {
 	int			is_default;
 	int			io_number;
-	t_ptree		*io_file;
+	t_io_file	*io_file;
 	t_ptree		*io_here;
 };
 
@@ -166,7 +166,7 @@ enum								e_io_type
 struct								s_io_file
 {
 	enum e_io_type	type;
-	t_ptree			*filename;
+	t_filename		*filename;
 };
 
 struct								s_complete_command
@@ -200,7 +200,7 @@ struct								s_pipeline
 
 struct								s_io_here
 {
-	t_ptree	*here_end;
+	t_here_end	*here_end;
 };
 
 struct								s_here_end
@@ -234,8 +234,8 @@ struct								s_command
 {
 	enum e_command_type	type;
 	t_simple_command	*scmd;
-	t_ptree	*redirect;
-	t_ptree *cpcmd;
+	t_ptree				*redirect;
+	t_compound_command	*cpndcmd;
 };
 
 struct								s_compound_command
@@ -297,13 +297,13 @@ t_cmd_prefix						*cmd_prefix(t_parser *p);
 t_cmd_suffix						*cmd_suffix(t_parser *p);
 t_command							*command(t_parser *p);
 t_complete_command					*complete_command(t_parser *p);
-t_ptree								*compound_command(t_parser *p);
+t_compound_command					*compound_command(t_parser *p);
 t_compound_list						*compound_list(t_parser *p);
-t_ptree								*filename(t_parser *p);
-t_ptree								*here_end(t_parser *p);
-t_ptree								*io_file(t_parser *p);
-t_ptree								*io_here(t_parser *p);
-t_ptree								*io_redirect(t_parser *p);
+t_filename							*filename(t_parser *p);
+t_here_end							*here_end(t_parser *p);
+t_io_file							*io_file(t_parser *p);
+t_io_here							*io_here(t_parser *p);
+t_io_redirect						*io_redirect(t_parser *p);
 t_ptree								*linebreak(t_parser *p);
 t_ptree								*list(t_parser *p);
 t_ptree								*newline_list(t_parser *p);

@@ -18,11 +18,8 @@ void	putstr_indent(char *s, int indent)
 	ft_putstr(s);
 }
 
-void	print_filename(t_ptree *node, int indent)
+void	print_filename(t_filename *f, int indent)
 {
-	t_filename	*f;
-
-	f = &node->content->filename;
 	putendl_indent("[filename]", indent);
 	putendl_indent(f->data, indent + 2);
 }
@@ -41,20 +38,17 @@ void	print_io_type(enum e_io_type type, int indent)
 		putendl_indent("IT_LESSAND", indent);
 }
 
-void	print_io_file(t_ptree *node, int indent)
+void	print_io_file(t_io_file *file, int indent)
 {
-	t_io_file	*file;
-
-	file = &node->content->io_file;
 	putendl_indent("[io_file]", indent);
 	print_io_type(file->type, indent + 2);
 	print_filename(file->filename, indent + 2);
 }
 
-void	print_here_end(t_ptree *node, int indent)
+void	print_here_end(t_here_end *hend, int indent)
 {
 	putendl_indent("[here_end]", indent);
-	putendl_indent(node->content->here_end.data, indent + 2);
+	putendl_indent(hend->data, indent + 2);
 }
 
 void	print_io_here(t_ptree *node, int indent)
@@ -240,13 +234,13 @@ void	print_subshell(t_ptree *node, int indent)
 	print_compound_list(node->content->subshell.compound_list, indent + 2);
 }
 
-void	print_compound_command(t_ptree *node, int indent)
+void	print_compound_command(t_compound_command *cpndcmd, int indent)
 {
-	if (!node || node == (void *)ERR_SYNTAX)
+	if (!cpndcmd || cpndcmd == (void *)ERR_SYNTAX)
 		return ;
 
 	putendl_indent("[compound_command]", indent);
-	print_subshell(node->content->compound_command.subshell, indent + 2);
+	print_subshell(cpndcmd->subshell, indent + 2);
 }
 
 void	print_redirect_list(t_ptree *node, int indent)
@@ -277,7 +271,7 @@ void	print_command(t_command *cmd, int indent)
 		print_simple_command(cmd->scmd, indent + 2);
 	else if (cmd->type == CT_COMPOUND_COMMAND)
 	{
-		print_compound_command(cmd->cpcmd, indent + 2);
+		print_compound_command(cmd->cpndcmd, indent + 2);
 		print_redirect_list(cmd->redirect, indent + 2);
 	}
 	else

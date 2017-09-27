@@ -6,13 +6,19 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:05:07 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/22 12:39:03 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:29:31 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexer/lexer.h>
 #include <parser/parser.h>
 #include <stdlib.h>
+
+void				free_io_file(t_io_file **iofile)
+{
+	free(*iofile);
+	*iofile = NULL;
+}
 
 enum e_io_type		is_redir_token(enum e_token type)
 {
@@ -29,29 +35,29 @@ enum e_io_type		is_redir_token(enum e_token type)
 	return (IT_NONE);
 }
 
-t_ptree				*io_file(t_parser *p)
+t_io_file			*io_file(t_parser *p)
 {
-	t_ptree			*node;
+	t_io_file		*iofile;
 	t_list			*head;
 	enum e_io_type	type;
 
-	if ((node = ptree_new(NT_IO_FILE)))
+	if ((iofile = ft_memalloc(sizeof(t_io_file))))
 	{
 		if ((type = is_redir_token(((t_token *)p->tlst->content)->type)) !=
 				IT_NONE)
 		{
 			head = p->tlst;
 			p->tlst = p->tlst->next;
-			node->content->io_file.type = type;
-			if (!(node->content->io_file.filename = filename(p)))
+			iofile->type = type;
+			if (!(iofile->filename = filename(p)))
 			{
-				ptree_free(&node);
+				free_io_file(&iofile);
 				p->tlst = head;
 				return ((void *)ERR_SYNTAX);
 			}
 		}
 		else
-			ptree_free(&node);
+			free_io_file(&iofile);
 	}
-	return (node);
+	return (iofile);
 }

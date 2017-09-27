@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:34:32 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:07:48 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:14:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_command		*command(t_parser *p)
 {
 	t_command			*cmd;
 	t_simple_command	*scmd;
-	t_ptree				*cpcmd;
+	t_compound_command	*cpcmd;
 
 	scmd = NULL;
 	cpcmd = NULL;
@@ -61,7 +61,7 @@ t_command		*command(t_parser *p)
 		if (cpcmd)
 		{
 			cmd->type = CT_COMPOUND_COMMAND;
-			cmd->cpcmd = cpcmd;
+			cmd->cpndcmd = cpcmd;
 			if (cmd_add_redir(p, cmd) != 1)
 				return ((void *)ERR_SYNTAX);
 		}

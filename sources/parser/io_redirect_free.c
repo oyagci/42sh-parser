@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 15:38:27 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/26 13:22:36 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:48:09 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 void			io_redirect_free(union u_node *content)
 {
+	(void)content;
+	/*
 	t_io_redirect	*redirect;
 
 	redirect = &content->io_redirect;
@@ -30,4 +32,5 @@ void			io_redirect_free(union u_node *content)
 		free(redirect->io_here->content);
 		free(redirect->io_here);
 	}
+	*/
 }

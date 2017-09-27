@@ -6,24 +6,32 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:59:44 by oyagci            #+#    #+#             */
-/*   Updated: 2017/05/18 17:35:24 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/27 12:26:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
+#include <stdlib.h>
 
-t_ptree			*here_end(t_parser *p)
+void		free_here_end(t_here_end **hend)
 {
-	t_ptree	*node;
+	free((*hend)->data);
+	free(*hend);
+	*hend = NULL;
+}
 
-	if ((node = ptree_new(NT_HERE_END)))
+t_here_end	*here_end(t_parser *p)
+{
+	t_here_end	*hend;
+
+	if ((hend = ft_memalloc(sizeof(t_here_end))))
 	{
-		if (parser_peek(p, T_WORD) && (node->content->here_end.data =
+		if (parser_peek(p, T_WORD) && (hend->data =
 				ft_strdup(((t_token *)p->tlst->content)->data)))
 			p->tlst = p->tlst->next;
 		else
-			ptree_free(&node);
+			free_here_end(&hend);
 	}
-	return (node);
+	return (hend);
 }
