@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:51:34 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:58:34 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:09:17 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void			free_io_redirect(t_io_redirect **ioredir)
 {
+	free_io_file(&(*ioredir)->io_file);
 	free(*ioredir);
 	*ioredir = NULL;
 }

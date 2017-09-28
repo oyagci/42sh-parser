@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 13:53:10 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 16:17:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:29:43 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void		free_pipeline(t_pipeline **pline)
 {
+	if (!*pline || *pline == (void*)ERR_SYNTAX)
+		return ;
 	free_pipe_sequence(&(*pline)->pseq);
 	free(*pline);
 	*pline = NULL;

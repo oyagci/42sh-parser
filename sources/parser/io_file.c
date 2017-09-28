@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:05:07 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:58:00 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:13:28 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 void				free_io_file(t_io_file **iofile)
 {
+	if (!*iofile || *iofile == (void*)ERR_SYNTAX)
+		return ;
+	free_filename(&(*iofile)->filename);
 	free(*iofile);
 	*iofile = NULL;
 }

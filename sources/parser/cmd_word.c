@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 16:17:15 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 11:16:42 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:01:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void		free_word(t_cmd_word **word)
 {
-	if ((*word)->data)
+	if (*word != (void*)ERR_SYNTAX && *word && (*word)->data)
 		free((*word)->data);
 	free(*word);
 	*word = NULL;

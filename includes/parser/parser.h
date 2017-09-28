@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:58:54 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 16:40:02 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:23:13 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,11 +286,14 @@ void								free_and_or(t_and_or **and_or);
 void								free_cmd_name(t_cmd_name **cmdname);
 void								free_command(t_command **cmd);
 void								free_complete_command(t_complete_command **cplcmd);
+void								free_filename(t_filename **fname);
+void								free_io_file(t_io_file **iofile);
 void								free_io_redirect(t_io_redirect **ioredir);
 void								free_list(t_nlist **lst);
 void								free_pipe_sequence(t_pipe_sequence **pseq);
 void								free_pipeline(t_pipeline **pline);
 void								free_prefix(t_cmd_prefix **prefix);
+void								free_separator_op(t_separator_op **sepop);
 void								free_simple_command(t_simple_command **scmd);
 void								free_suffix(t_cmd_suffix **suffix);
 void								free_term(t_term **t);

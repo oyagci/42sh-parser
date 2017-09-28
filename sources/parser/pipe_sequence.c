@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 10:53:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 16:34:31 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:30:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,25 @@
 #include <lexer/lexer.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 void			free_pipe_sequence(t_pipe_sequence **pseq)
 {
 	t_list	*cmds;
 	t_list	*next;
 
+	if (!*pseq || *pseq == (void*)ERR_SYNTAX)
+		return ;
 	cmds = (*pseq)->commands;
 	while (cmds)
 	{
-		next = (*pseq)->commands->next;
+		next = cmds->next;
 		free_command((t_command**)&cmds->content);
 		free(cmds);
 		cmds = next;
 	}
 	free(*pseq);
-	pseq = NULL;
+	*pseq = NULL;
 }
 
 int				add_command(t_parser *p, t_pipe_sequence *pseq)

@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:12:51 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:31:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:15:49 by oyagci           ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
@@ -15,6 +15,8 @@
 
 void			free_prefix(t_cmd_prefix **prefix)
 {
+	if (!*prefix || *prefix == (void*)ERR_SYNTAX)
+		return ;
 	free(*prefix);
 	*prefix = NULL;
 }

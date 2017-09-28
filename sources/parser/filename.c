@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:02:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:24:34 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:13:16 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 
 void			free_filename(t_filename **fname)
 {
+	if (!*fname || *fname == (void*)ERR_SYNTAX)
+		return ;
+	free((*fname)->data);
+	free(*fname);
 	*fname = NULL;
 }
 

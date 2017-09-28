@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 13:10:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 13:47:50 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:14:28 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,21 @@
 
 void			free_suffix(t_cmd_suffix **suffix)
 {
+	t_list	*next;
+	t_list	*redirs;
+
+	if (!*suffix || *suffix == (void*)ERR_SYNTAX)
+		return ;
+	redirs = (*suffix)->redirections;
+	while (redirs)
+	{
+		next = redirs->next;
+		free_io_redirect((t_io_redirect **)&redirs->content);
+		free(redirs);
+		redirs = next;
+	}
 	free(*suffix);
-	suffix = NULL;
+	*suffix = NULL;
 }
 
 int				suffix_add_word(t_parser *p, t_cmd_suffix *suffix)

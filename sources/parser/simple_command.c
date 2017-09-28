@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 15:51:26 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 16:38:00 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:16:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void			free_simple_command(t_simple_command **scmd)
 {
+	if (!*scmd || *scmd == (void*)ERR_SYNTAX)
+		return ;
 	free_prefix(&(*scmd)->prefix);
 	free_suffix(&(*scmd)->suffix);
 	free_cmd_name(&(*scmd)->name);

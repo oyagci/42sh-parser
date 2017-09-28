@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:29:06 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 15:49:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:23:21 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 
 void				free_complete_command(t_complete_command **cplcmd)
 {
+	if (!*cplcmd || *cplcmd == (void*)ERR_SYNTAX)
+		return ;
 	free_list(&(*cplcmd)->list);
+	free_separator_op(&(*cplcmd)->sepop);
 	free(*cplcmd);
 	*cplcmd = NULL;
 }

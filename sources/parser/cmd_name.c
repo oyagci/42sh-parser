@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 13:43:31 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 17:04:54 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 12:15:17 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void			free_cmd_name(t_cmd_name **cmdname)
 {
+	if (!*cmdname || *cmdname == (void*)ERR_SYNTAX)
+		return ;
 	free((*cmdname)->data);
 	free(*cmdname);
 	*cmdname = NULL;
