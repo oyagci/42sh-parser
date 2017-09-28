@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:20:47 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/28 13:18:43 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:56:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,13 @@ int				process_line(char *input)
 	p->tlst = lex->tlst;
 	p->cplcmd = complete_command(p);
 	if (p->cplcmd == (void *)ERR_SYNTAX || p->tlst->next)
+	{
 		ft_putendl("syntax error");
+		free_complete_command(&p->cplcmd);
+	}
 	else
 	{
-		print_complete_command(p->cplcmd, 0);
+		//print_complete_command(p->cplcmd, 0);
 		free_complete_command(&p->cplcmd);
 	}
 	free(p);
