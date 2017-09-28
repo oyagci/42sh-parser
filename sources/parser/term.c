@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 15:52:04 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/26 16:42:36 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:27:13 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,24 @@
 #include <lexer/lexer.h>
 #include <stdlib.h>
 
+void			free_term_andlst(t_list *andlst)
+{
+	t_list	*next;
+
+	while (andlst)
+	{
+		next = andlst->next;
+		free_and_or((t_and_or **)&andlst->content);
+		free(andlst);
+		andlst = next;
+	}
+}
+
 void			free_term(t_term **t)
 {
-	// TODO: free `t_list *andlst`
+	if (!*t || *t == (void*)ERR_SYNTAX)
+		return ;
+	free_term_andlst((*t)->andlst);
 	free(*t);
 	*t = NULL;
 }

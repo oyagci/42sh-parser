@@ -6,13 +6,26 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 13:10:58 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/28 12:14:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:18:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
 #include <stdlib.h>
+
+void			free_suffix_words(t_list *wlist)
+{
+	t_list	*next;
+
+	while (wlist)
+	{
+		next = wlist->next;
+		free(wlist->content);
+		free(wlist);
+		wlist = next;
+	}
+}
 
 void			free_suffix(t_cmd_suffix **suffix)
 {
@@ -29,6 +42,7 @@ void			free_suffix(t_cmd_suffix **suffix)
 		free(redirs);
 		redirs = next;
 	}
+	free_suffix_words((*suffix)->words);
 	free(*suffix);
 	*suffix = NULL;
 }

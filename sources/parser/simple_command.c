@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 15:51:26 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/28 12:16:35 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:38:42 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void			free_simple_command(t_simple_command **scmd)
 	free_cmd_name(&(*scmd)->name);
 	free_word(&(*scmd)->word);
 	free(*scmd);
+	*scmd = NULL;
 }
 
 int				simple_prefix(t_parser *p, t_simple_command *scmd)

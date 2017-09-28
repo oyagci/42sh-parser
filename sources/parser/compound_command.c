@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:58:03 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 14:53:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:25:04 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 void				free_compound_command(t_compound_command **cpndcmd)
 {
+	if (!*cpndcmd || *cpndcmd == (void*)ERR_SYNTAX)
+		return ;
+	free_subshell(&(*cpndcmd)->subshell);
 	free(*cpndcmd);
 	*cpndcmd = NULL;
 }

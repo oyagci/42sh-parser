@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:59:44 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:26:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:30:09 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void		free_here_end(t_here_end **hend)
 {
+	if (!*hend || *hend == (void*)ERR_SYNTAX)
+		return ;
 	free((*hend)->data);
 	free(*hend);
 	*hend = NULL;

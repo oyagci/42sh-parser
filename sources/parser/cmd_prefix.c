@@ -6,17 +6,47 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:12:51 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/28 12:15:49 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:21:43 by oyagci           ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
 #include <stdlib.h>
 
+void			free_prefix_redirections(t_list *redirections)
+{
+	t_list	*next;
+
+	while (redirections)
+	{
+		next = redirections->next;
+		free_io_redirect((t_io_redirect **)&redirections->content);
+		free(redirections);
+		redirections = next;
+	}
+}
+
+void			free_prefix_assignements(t_list *assignements)
+{
+	t_list	*head;
+	t_list	*next;
+
+	head = assignements;
+	while (head)
+	{
+		next = head->next;
+		free((t_io_redirect **)&head->content);
+		free(head);
+		head = next;
+	}
+}
+
 void			free_prefix(t_cmd_prefix **prefix)
 {
 	if (!*prefix || *prefix == (void*)ERR_SYNTAX)
 		return ;
+	free_prefix_redirections((*prefix)->redirections);
+	free_prefix_assignements((*prefix)->assignements);
 	free(*prefix);
 	*prefix = NULL;
 }

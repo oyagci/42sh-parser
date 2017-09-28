@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:53:18 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 12:45:52 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:31:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 void		free_io_here(t_io_here **iohere)
 {
+	if (!*iohere || *iohere == (void*)ERR_SYNTAX)
+		return ;
+	free_here_end(&(*iohere)->here_end);
 	free(*iohere);
 	*iohere = NULL;
 }

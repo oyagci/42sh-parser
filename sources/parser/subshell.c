@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:06:52 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 14:52:08 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:29:24 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 void			free_subshell(t_subshell **subshell)
 {
+	if (!*subshell || *subshell == (void*)ERR_SYNTAX)
+		return ;
+	free_compound_list(&(*subshell)->compound_list);
 	free(*subshell);
 	*subshell = NULL;
 }

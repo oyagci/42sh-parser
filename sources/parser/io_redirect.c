@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 15:51:34 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/28 12:09:17 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:32:55 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 
 void			free_io_redirect(t_io_redirect **ioredir)
 {
+	if (!*ioredir || *ioredir == (void*)ERR_SYNTAX)
+		return ;
 	free_io_file(&(*ioredir)->io_file);
+	free_io_here(&(*ioredir)->io_here);
 	free(*ioredir);
 	*ioredir = NULL;
 }

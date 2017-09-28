@@ -6,12 +6,22 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 16:47:35 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/27 14:54:03 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/09/28 13:37:28 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser/parser.h>
 #include <lexer/lexer.h>
+#include <stdlib.h>
+
+void		free_separator(t_separator **s)
+{
+	if (!*s || *s == (void*)ERR_SYNTAX)
+		return ;
+	free_separator_op(&(*s)->sepop);
+	free(*s);
+	*s = NULL;
+}
 
 t_separator	*separator(t_parser *p)
 {
