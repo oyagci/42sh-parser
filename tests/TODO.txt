@@ -1,1 +1,0 @@
-change ptree_free to accept function pointer as argument
