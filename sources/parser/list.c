@@ -6,7 +6,7 @@
 /*   By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 16:43:29 by oyagci            #+#    #+#             */
-/*   Updated: 2017/09/28 12:27:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2017/10/04 15:19:18 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void			free_list(t_nlist **lst)
 	t_list	*next;
 	t_list	*andlst;
 
-	if (!*list || *list == (void*)ERR_SYNTAX)
+	if (!*lst || *lst == (void*)ERR_SYNTAX)
 		return ;
 	andlst = (*lst)->andlst;
 	while (andlst)
