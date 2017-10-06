@@ -6,7 +6,7 @@
 #    By: oyagci <oyagci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/03 10:27:13 by oyagci            #+#    #+#              #
-#    Updated: 2017/09/27 15:37:29 by oyagci           ###   ########.fr        #
+#    Updated: 2017/10/04 16:10:31 by oyagci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,14 +53,14 @@ NAME		= libft.a
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(DEPS)
-	@echo "Creating $(NAME)..."
+	@echo "Creating $(NAME)"
 	@ar rc $(NAME) $(OBJECTS)
 	@ranlib $(NAME)
-	@echo "Done $(NAME)!"
+	@echo "Done $(NAME)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	@echo "Compiling '$<'..."
+	@echo "Building $<"
 	@$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
 clean:
